@@ -66,7 +66,7 @@ def xod(game):
                 text='Ты агент'
             elif game['players'][g]['role']=='killer':
                 text='Ты киллер'
-            bot.send_message(game['players'][g], text)
+            bot.send_message(game['players'][g]['id'], text)
             
         
         
@@ -82,7 +82,8 @@ def creategame(id):
 def createuser(id, name):
     return{id:{
         'role':None,
-        'name':name
+        'name':name,
+        'id':id
     }
           }
     
