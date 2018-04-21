@@ -34,7 +34,7 @@ def start(m):
 @bot.message_handler(commands=['startgame'])
 def startgame(m):
     if m.chat.id not in games:
-        t=threading.Timer(20, begin, args=[m.chat.id])
+        t=threading.Timer(10, begin, args=[m.chat.id])
         t.start()
         games.update(creategame(m.chat.id))
         Keyboard=types.InlineKeyboardMarkup()
@@ -78,7 +78,7 @@ def xod(game):
         elif game['players'][g]['role']=='glavar':
             text='Ты главарь'
         bot.send_message(game['players'][g]['id'], text)
-    t=threading.Timer(20, shoot, args=[game])
+    t=threading.Timer(10, shoot, args=[game])
     t.start()
             
         
@@ -90,7 +90,8 @@ def shoot(game):
             if game['players'][ids]['id']!=game['players'][g]['id']:
                 Keyboard.add(types.InlineKeyboardButton(text=game['players'][ids]['name'], callback_data=str(game['players'][ids]['number'])))
         bot.send_message(game['players'][g]['id'], 'В кого ты хочешь выстрельнуть?', reply_markup=Keyboard)
-    t=threading.Timer(endshoot, 20, args=[game])
+    t=threading.Timer(endshoot, 10, args=[game])
+    t.start()
         
 
         
