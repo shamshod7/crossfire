@@ -49,7 +49,7 @@ def creategame(id):
         
 
 def createuser(id, name):
-    return{'id':{
+    return{id:{
         'role':None,
         'name':name
     }
