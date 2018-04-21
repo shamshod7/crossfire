@@ -17,7 +17,7 @@ games={}
 
 @bot.message_handler(commands=['start'])
 def start(m):
-    x=m.text.split('/start ')
+    x=m.text.split('/start')
     if len(x)==1:
         if int(x[1])<0:
             games[int(x[1])]['players'].update(createuser(m.from_user.id, m.from_user.first_name))
