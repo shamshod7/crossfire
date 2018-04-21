@@ -15,7 +15,7 @@ bot = telebot.TeleBot(token)
 games={}
 
 
-@bot.send_message(commands=['start'])
+@bot.message_handler(commands=['start'])
 def start(m):
     x=m.text.split('/start')
     z=x[0].split(' ')
