@@ -15,6 +15,15 @@ bot = telebot.TeleBot(token)
 games={}
 
 
+@bot.send_message(commands=['start'])
+def start(m):
+    x=m.text.split('/start')
+    if len(x)==2:
+        if x[0]>0 and x[1]<0:
+            if x[0]==m.from_user.id:
+                games[x[1]]['players'].update(createuser(m.from_user.id, m.from_user.first_name))
+                bot.send_message(m.from_user.id, 'Вы успешно присоединились!')
+
 @bot.message_handler(commands=['startgame'])
 def startgame(m):
     if m.chat.id not in games:
@@ -34,6 +43,16 @@ def creategame(id):
            }
         
 
+def createuser(id, name):
+    return{'id':{
+        'role':None,
+        'name':name
+    }
+          }
+    
+                      
+                      
+                      
 
 
 
