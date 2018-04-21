@@ -44,12 +44,28 @@ def startgame(m):
 def begin(id):
     if len(games[id]['players'])>1:
         bot.send_message(id, 'Игра начинается!')
+        xod(games[id])
     else:
         bot.send_message(id, 'Недостаточно игроков!')
         del games[id]
 
 
-
+def xod(game):
+    if len(game['players'])==2:
+        roles=['agent','killer']
+        pick=[]
+        for g in game['players']:
+            x=random.randint(0, len(game['players']))
+            while x in pick:
+                x=random.randint(0, len(game['players']))
+            game['players'][g]['role']=roles[x]
+            pick.append(x)
+            print(game)
+            
+        
+        
+        
+        
 def creategame(id):
     return {id:{
         'players':{}
