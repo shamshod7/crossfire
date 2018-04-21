@@ -50,7 +50,10 @@ def begin(id):
         xod(games[id])
     else:
         bot.send_message(id, 'Недостаточно игроков!')
-        del games[id]
+        try:
+            del games[id]
+        except:
+            pass
 
 
 def xod(game):
