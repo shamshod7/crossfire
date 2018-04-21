@@ -105,10 +105,13 @@ def inline(call):
         if call.from_user.id in games[ids]['players']: 
             game=games[ids]
             x=1
+            print('1')
     if x==1:
+            print('2')
             for z in game['players']:
                 if game['players'][z]['number']==int(call.data):
                     target=game['players'][z]
+                    print('3')
             game['players'][call.from_user.id]['text']=game['players'][call.from_user.id]['name']+' стреляет в '+target['name']
             
         
