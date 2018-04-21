@@ -20,17 +20,20 @@ def start(m):
     x=m.text.split('/start')
     z=x[0].split(' ')
     if len(z)==2:
-        if z[0]>0 and z[1]<0:
-            if z[0]==m.from_user.id:
-                games[z[1]]['players'].update(createuser(m.from_user.id, m.from_user.first_name))
+      try:
+        if int(z[0])>0 and int(z[1])<0:
+            if int(z[0])==m.from_user.id:
+                games[int(z[1])]['players'].update(createuser(m.from_user.id, m.from_user.first_name))
                 bot.send_message(m.from_user.id, 'Вы успешно присоединились!')
+      except:
+        pass
 
 @bot.message_handler(commands=['startgame'])
 def startgame(m):
     if m.chat.id not in games:
         games.update(creategame(m.chat.id))
         Keyboard=types.InlineKeyboardMarkup()
-        Keyboard.add(types.InlineKeyboardButton(text='Join', url='telegram.me/crossfirebot?start='+m.from_user.id+' '+m.chat.id))
+        Keyboard.add(types.InlineKeyboardButton(text='Join', url='telegram.me/crossfirebot?start='+str(m.from_user.id)+' '+str(m.chat.id)))
         bot.send_message(m.chat.id, 'Присоединиться', reply_markup=Keyboard)
     else:
         bot.send_message(m.chat.id, 'Игра уже запущена! Жмите "присоединиться"!')
