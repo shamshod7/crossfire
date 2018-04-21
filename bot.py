@@ -56,12 +56,17 @@ def xod(game):
         pick=[]
         for g in game['players']:
             x=random.randint(0, len(game['players']))
-            print(str(len(game['players'])))
             while x in pick:
                 x=random.randint(0, (len(game['players'])-1))
             game['players'][g]['role']=roles[x]
             pick.append(x)
             print(game)
+        for g in game['players']:
+            if game['players']['role']=='agent':
+                text='Ты агент'
+            elif game['players']['role']=='killer':
+                text='Ты киллер'
+            bot.send_message(game['players'][g], text)
             
         
         
