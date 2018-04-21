@@ -22,7 +22,6 @@ def start(m):
        try:
         if m.from_user.id not in games[int(x[1])]['players']:
           if int(x[1])<0:
-            print('2')
             games[int(x[1])]['players'].update(createuser(m.from_user.id, m.from_user.first_name))
             bot.send_message(m.from_user.id, 'Вы успешно присоединились!')
        except:
@@ -32,6 +31,7 @@ def start(m):
 @bot.message_handler(commands=['startgame'])
 def startgame(m):
     if m.chat.id not in games:
+        t=threading.Timer(20, begin, args=[m.chat.id])
         games.update(creategame(m.chat.id))
         Keyboard=types.InlineKeyboardMarkup()
         Keyboard.add(types.InlineKeyboardButton(text='Join', url='telegram.me/crossfirebot?start='+str(m.chat.id)))
@@ -40,6 +40,14 @@ def startgame(m):
         bot.send_message(m.chat.id, 'Игра уже запущена! Жмите "присоединиться"!')
     
    
+def begin(id):
+    if len(games[id]['players'])>1:
+        bot.send_message(id, 'Игра начинается!')
+    else:
+        bot.send_message(id, 'Недостаточно игроков!')
+        games[id].del()
+
+
 
 def creategame(id):
     return {id:{
