@@ -22,7 +22,10 @@ def start(m):
        try:
         if m.from_user.id not in games[int(x[1])]['players']:
           if int(x[1])<0:
-            games[int(x[1])]['players'].update(createuser(m.from_user.id, m.from_user.first_name))
+            i=0
+            for ids in games[int(x[1])]['players']:
+                i+=1
+            games[int(x[1])]['players'].update(createuser(m.from_user.id, m.from_user.first_name, i+1))
             bot.send_message(m.from_user.id, 'Вы успешно присоединились!')
        except:
         if m.chat.id==m.from_user.id:
@@ -53,21 +56,40 @@ def begin(id):
 def xod(game):
     if len(game['players'])==2:
         roles=['agent','killer']
-        pick=[]
-        for g in game['players']:
+    elif len(game['players'])==5:
+        roles=['agent','killer', 'glavar', 'prohojii', 'primanka']
+    pick=[]
+    for g in game['players']:
+        x=random.randint(0, len(game['players'])-1)
+        while x in pick:
             x=random.randint(0, len(game['players'])-1)
-            while x in pick:
-                x=random.randint(0, len(game['players'])-1)
-            game['players'][g]['role']=roles[x]
-            pick.append(x)
-            print(game)
-        for g in game['players']:
-            if game['players'][g]['role']=='agent':
-                text='Ты агент'
-            elif game['players'][g]['role']=='killer':
-                text='Ты киллер'
-            bot.send_message(game['players'][g]['id'], text)
+        game['players'][g]['role']=roles[x]
+        pick.append(x)
+        print(game)
+    for g in game['players']:
+        if game['players'][g]['role']=='agent':
+            text='Ты агент'
+        elif game['players'][g]['role']=='killer':
+            text='Ты киллер'
+        elif game['players'][g]['role']=='prohojii':
+            text='Ты прохожий'
+        elif game['players'][g]['role']=='primanka':
+            text='Ты приманка'
+        elif game['players'][g]['role']=='glavar':
+            text='Ты главарь'
+        bot.send_message(game['players'][g]['id'], text)
+    t=threading.Timer(20, shoot, args=[game])
+    t.start()
             
+        
+
+def shoot(game):
+    for g in game['players']:
+        Keyboard=types.InlineKeyboardMarkup()
+        for ids in game['players']:
+            if game['players'][ids]['id']!=game['players'][g]['id']:
+                Keyboard.add(types.InlineKeyboardButton(text=game['players'][ids]['name'], callback_data=str(game['players'][ids]['number']))
+        bot.send_message(game['players'][g]['id'], 'В кого ты хочешь выстрельнуть?', reply_markup=Keyboard)
         
         
         
@@ -79,11 +101,12 @@ def creategame(id):
            }
         
 
-def createuser(id, name):
+def createuser(id, name, x):
     return{id:{
         'role':None,
         'name':name,
-        'id':id
+        'id':id,
+        'number':x
     }
           }
     
