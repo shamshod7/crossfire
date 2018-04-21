@@ -55,9 +55,9 @@ def xod(game):
         roles=['agent','killer']
         pick=[]
         for g in game['players']:
-            x=random.randint(0, len(game['players']))
+            x=random.randint(0, len(game['players'])-1)
             while x in pick:
-                x=random.randint(0, (len(game['players'])-1))
+                x=random.randint(0, len(game['players'])-1)
             game['players'][g]['role']=roles[x]
             pick.append(x)
             print(game)
