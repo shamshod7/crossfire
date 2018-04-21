@@ -28,9 +28,10 @@ def startgame(m):
    
 
 def creategame(id):
-    return id:{
+    return {id:{
         'players':{}
     }
+           }
         
 
 
