@@ -19,7 +19,7 @@ games={}
 def start(m):
     x=m.text.split('/start')
     if len(x)==2:
-      if m.from_user.id not in games[x[1]]['players']:
+      if m.from_user.id not in games[int(x[1])]['players']:
        try:
         if int(x[1])<0:
             print('2')
