@@ -32,6 +32,7 @@ def start(m):
 def startgame(m):
     if m.chat.id not in games:
         t=threading.Timer(20, begin, args=[m.chat.id])
+        t.start()
         games.update(creategame(m.chat.id))
         Keyboard=types.InlineKeyboardMarkup()
         Keyboard.add(types.InlineKeyboardButton(text='Join', url='telegram.me/crossfirebot?start='+str(m.chat.id)))
