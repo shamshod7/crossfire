@@ -62,9 +62,9 @@ def xod(game):
             pick.append(x)
             print(game)
         for g in game['players']:
-            if game['players']['role']=='agent':
+            if game['players'][g]['role']=='agent':
                 text='Ты агент'
-            elif game['players']['role']=='killer':
+            elif game['players'][g]['role']=='killer':
                 text='Ты киллер'
             bot.send_message(game['players'][g], text)
             
