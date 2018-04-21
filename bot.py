@@ -18,7 +18,7 @@ games={}
 @bot.message_handler(commands=['start'])
 def start(m):
     x=m.text.split('/start')
-    if len(x)==1:
+    if len(x)==2:
         print('1')
         if int(x[1])<0:
             print('2')
