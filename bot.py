@@ -19,7 +19,9 @@ games={}
 def start(m):
     x=m.text.split('/start')
     if len(x)==1:
+        print('1')
         if int(x[1])<0:
+            print('2')
             games[int(x[1])]['players'].update(createuser(m.from_user.id, m.from_user.first_name))
             bot.send_message(m.from_user.id, 'Вы успешно присоединились!')
 
