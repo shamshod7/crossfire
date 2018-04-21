@@ -102,20 +102,20 @@ def inline(call):
             game=games[ids]
             x=1
     if x==1:
-            for z in game:
-                if game[z]['number']==int(call.data):
-                    target=game[z]
-            game[call.from_user.id]['text']=game[call.from_user.id]['name']+' стреляет в '+target['name']
+            for z in game['players']:
+                if game['players'][z]['number']==int(call.data):
+                    target=game['players'][z]
+            game['players'][call.from_user.id]['text']=game['players'][call.from_user.id]['name']+' стреляет в '+target['name']
             
         
 
 def endshoot(game):
     text=''
-    for ids in game:
-        if game[ids]['text']!=None:
-            text+=game[ids]['text']+'\n'
+    for ids in game['players']:
+        if game['players'][ids]['text']!=None:
+            text+=game['players'][ids]['text']+'\n'
         else:
-            text+=game[ids]['name']+' не стреляет\n'
+            text+=game['players'][ids]['name']+' не стреляет\n'
     bot.send_message(game['id'], text)
         
         
