@@ -18,10 +18,11 @@ games={}
 @bot.send_message(commands=['start'])
 def start(m):
     x=m.text.split('/start')
-    if len(x)==2:
-        if x[0]>0 and x[1]<0:
-            if x[0]==m.from_user.id:
-                games[x[1]]['players'].update(createuser(m.from_user.id, m.from_user.first_name))
+    z=x[0].split(' ')
+    if len(z)==2:
+        if z[0]>0 and z[1]<0:
+            if z[0]==m.from_user.id:
+                games[z[1]]['players'].update(createuser(m.from_user.id, m.from_user.first_name))
                 bot.send_message(m.from_user.id, 'Вы успешно присоединились!')
 
 @bot.message_handler(commands=['startgame'])
