@@ -90,13 +90,39 @@ def shoot(game):
             if game['players'][ids]['id']!=game['players'][g]['id']:
                 Keyboard.add(types.InlineKeyboardButton(text=game['players'][ids]['name'], callback_data=str(game['players'][ids]['number'])))
         bot.send_message(game['players'][g]['id'], 'В кого ты хочешь выстрельнуть?', reply_markup=Keyboard)
+    t=threading.Timer(endshoot, 20, args=[game])
         
+
         
+@bot.callback_query_handler(func=lambda call:True)
+def inline(call):
+    x=0
+    for ids in games:
+        if call.from_user.id in games[ids]['players']: 
+            game=games[ids]
+            x=1
+    if x==1:
+            for z in game:
+                if game[z]['number']==int(call.data):
+                    target=game[z]
+            game[call.from_user.id]['text']=game[call.from_user.id]['name']+' стреляет в '+target['name']
+            
+        
+
+def endshoot(game):
+    text=''
+    for ids in game:
+        if game[ids]['text']!=None:
+            text+=game[ids]['text']+'\n'
+        else:
+            text+=game[ids]['name']+' не стреляет\n'
+    bot.send_message(game['id'], text)
         
         
 def creategame(id):
     return {id:{
-        'players':{}
+        'players':{},
+        'id':id
     }
            }
         
@@ -106,7 +132,8 @@ def createuser(id, name, x):
         'role':None,
         'name':name,
         'id':id,
-        'number':x
+        'number':x,
+        'text':None
     }
           }
     
