@@ -20,6 +20,7 @@ def start(m):
     x=m.text.split('/start')
     if len(x)==2:
       try:
+       if m.from_user.id not in games[x[1]]['players']:
         if int(x[1])<0:
             print('2')
             games[int(x[1])]['players'].update(createuser(m.from_user.id, m.from_user.first_name))
