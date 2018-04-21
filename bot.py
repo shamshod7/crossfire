@@ -93,7 +93,7 @@ def shoot(game):
             if game['players'][ids]['id']!=game['players'][g]['id']:
                 Keyboard.add(types.InlineKeyboardButton(text=game['players'][ids]['name'], callback_data=str(game['players'][ids]['number'])))
         bot.send_message(game['players'][g]['id'], 'В кого ты хочешь выстрельнуть?', reply_markup=Keyboard)
-    t=threading.Timer(endshoot, 10, args=[game])
+    t=threading.Timer(10, endshoot, args=[game])
     t.start()
         
 
