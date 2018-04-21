@@ -46,7 +46,7 @@ def begin(id):
         bot.send_message(id, 'Игра начинается!')
     else:
         bot.send_message(id, 'Недостаточно игроков!')
-        games[id].clear()
+        del games[id]
 
 
 
