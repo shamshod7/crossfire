@@ -21,7 +21,7 @@ def startgame(m):
         games.update(creategame(m.chat.id))
         Keyboard=types.InlineKeyboardMarkup()
         Keyboard.add(types.InlineKeyboardButton(text='Join', url='telegram.me/crossfirebot?start='+str(m.from_user.id)))
-        bot.send_message(m.chat.id, 'telegram.me/crossfirebot?start='+str(m.from_user.id), reply_markup=Keyboard)
+        bot.send_message(m.chat.id, 'Присоединиться', reply_markup=Keyboard)
     else:
         bot.send_message(m.chat.id, 'Игра уже запущена! Жмите "присоединиться"!')
     
