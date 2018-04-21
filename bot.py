@@ -19,12 +19,16 @@ games={}
 def start(m):
     x=m.text.split('/start')
     if len(x)==2:
-        print('1')
+      try:
         if int(x[1])<0:
             print('2')
             games[int(x[1])]['players'].update(createuser(m.from_user.id, m.from_user.first_name))
             bot.send_message(m.from_user.id, 'Вы успешно присоединились!')
-
+      except:
+        try:
+            bot.send_message(m.from_user.id, 'Игра crossfire')
+        except:
+            pass
 @bot.message_handler(commands=['startgame'])
 def startgame(m):
     if m.chat.id not in games:
