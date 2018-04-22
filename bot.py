@@ -36,7 +36,7 @@ def start(m):
 @bot.message_handler(commands=['startgame'])
 def startgame(m):
     if m.chat.id not in games:
-        t=threading.Timer(10, begin, args=[m.chat.id])
+        t=threading.Timer(15, begin, args=[m.chat.id])
         t.start()
         games.update(creategame(m.chat.id))
         Keyboard=types.InlineKeyboardMarkup()
