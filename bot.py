@@ -82,10 +82,48 @@ def xod(game):
         elif game['players'][g]['role']=='glavar':
             text='Ты главарь'
         bot.send_message(game['players'][g]['id'], text)
-    t=threading.Timer(10, shoot, args=[game])
+    players=[]
+    text=''
+    for g in game['players']:
+        players.append(game['players'][g]['name'])
+    for g in players:
+        text+=players[g]+'\n'
+    bot.send_message(game['id'], 'Игроки: \n'+'*'+text+'*')
+    t=threading.Timer(10, shuffle1, args=[game])
     t.start()
             
+ 
+def shuffle1(game):
+    roles=[]
+    for ids in game['players']:
+        roles.append(game['players'][ids]['role'])
+    i=0
+    for ids in game['players']:
+        try:
+            game['players'][ids]['role']=roles[i+1]
+        except:
+            game['players'][ids]['role']=roles[0]
+    bot.send_message(game['id'], 'Ваши роли были переданы следующему после вас человеку! Теперь посмотрите ваши новые роли.')
+    for g in game['players']:
+        if game['players'][g]['role']=='agent':
+            text='Ты агент'
+        elif game['players'][g]['role']=='killer':
+            text='Ты киллер'
+        elif game['players'][g]['role']=='prohojii':
+            text='Ты прохожий'
+        elif game['players'][g]['role']=='primanka':
+            text='Ты приманка'
+        elif game['players'][g]['role']=='glavar':
+            text='Ты главарь'
+        bot.send_message(game['players'][g]['id'], text)
+        t=threading.Timer(10, shuffle2, args=[game])
         
+    
+                     
+
+def shuffle2(game):
+    bot.send_message(game['id'], 'Всё')
+
 
 def shoot(game):
     for g in game['players']:
@@ -141,7 +179,8 @@ def createuser(id, name, x):
         'name':name,
         'id':id,
         'number':x,
-        'text':None
+        'text':None,
+        'shuffle':0
     }
           }
     
