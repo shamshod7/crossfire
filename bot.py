@@ -349,17 +349,17 @@ def reallyshoot(game):
         for ids in game['players']:
             if game['players'][ids]['role']=='glavar':
                 glavar=game['players'][ids]
-        if game['players'][ids]['color']=='blue':
+        if game['players'][ids]['blue']==1:
             if glavar['killed']==0:
                 win=pobeda+'Выиграл'
             else:
                 win=porajenie+'Проиграл'
-        elif game['players'][ids]['color']=='red':
+        elif game['players'][ids]['red']==1:
             if glavar['killed']==1:
                 win=pobeda+'Выиграл'
             else:
                 win=porajenie+'Проиграл'
-        elif game['players'][ids]['color']=='yellow':
+        elif game['players'][ids]['yellow']==1:
             if game['players'][ids]['role']=='prohojii':
                 if game['players'][ids]['killed']==1:
                     win=porajenie+'Проиграл'
