@@ -273,7 +273,7 @@ def inline(call):
                 if game['players'][z]['number']==int(call.data):
                     target=game['players'][z]
             game['players'][call.from_user.id]['text']=game['players'][call.from_user.id]['name']+' стреляет в '+target['name']
-            medit('Выбор сделан: '+target['name'],call.message.message_id, call.from_user.id)
+            medit('Выбор сделан: '+target['name'],call.from_user.id,call.message.message_id)
             game['players'][call.from_user.id]['target']=target
             
         
