@@ -351,20 +351,20 @@ def reallyshoot(game):
                 glavar=game['players'][ids]
         if game['players'][ids]['blue']==1:
             if glavar['killed']==0:
-                win=pobeda+'Выиграл'
+                win=pobeda+'Выиграл\n'
             else:
-                win=porajenie+'Проиграл'
+                win=porajenie+'Проиграл\n'
         elif game['players'][ids]['red']==1:
             if glavar['killed']==1:
-                win=pobeda+'Выиграл'
+                win=pobeda+'Выиграл\n'
             else:
-                win=porajenie+'Проиграл'
+                win=porajenie+'Проиграл\n'
         elif game['players'][ids]['yellow']==1:
             if game['players'][ids]['role']=='prohojii':
                 if game['players'][ids]['killed']==1:
-                    win=porajenie+'Проиграл'
+                    win=porajenie+'Проиграл\n'
                 else:
-                    win=pobeda+'Выиграл'
+                    win=pobeda+'Выиграл\n'
         text+=game['players'][ids]['name']+': '+color+','+alive+','+win
     bot.send_message(game['id'], 'Результаты игры:\n'+text)
         
