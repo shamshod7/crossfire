@@ -67,8 +67,19 @@ def begin(id):
         
 @bot.message_handler(commands=['forcestart'])
 def forcem(m):
-    if m.chat.id in games:
-        begin(m.chat.id)
+    i=0
+    x=bot.get_chat_administrators()
+    for z in x:       
+        if m.from_user.id==z.user.id:
+           i=1
+        else:
+            if i!=1:
+                i=10
+    if i==1:
+        if m.chat.id in games:
+            begin(m.chat.id)
+    else:
+        bot.send_message(m.chat.id, 'Только администратор может использовать эту команду!')
         
         
 
