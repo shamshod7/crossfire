@@ -161,10 +161,12 @@ def shuffle2(game):
     if shuffles<1:
         shuffles=1
     i=0
+    centers=[]
     while i<shuffles:
         for ids in game['players']:
             if game['players'][ids]['number']==first:
                 mid=game['players'][ids]
+                centers.append(mid['name'])
             if first+1<=len(game['players']):
                 if game['players'][ids]['number']==first+1:
                     bottom=game['players'][ids]
@@ -199,7 +201,10 @@ def shuffle2(game):
         else:
             first+=2
         i+=1
-    bot.send_message(game['id'], 'Ваши роли были перемешаны по 3 штуки! Центры перемешивания: ')
+    text2=''
+    for ids in centers:
+        text2+=ids+'\n'
+    bot.send_message(game['id'], 'Ваши роли были перемешаны по 3 штуки! Центры перемешивания: *\n'+text2+'*')
     for g in game['players']:
         if game['players'][g]['role']=='agent':
             text='Ты агент'
