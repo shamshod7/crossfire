@@ -58,7 +58,7 @@ def startgame(m):
     
    
 def begin(id):
-    if len(games[id]['players'])>1:
+    if len(games[id]['players'])>=2:
         bot.send_message(id, 'Игра начинается!')
         try:
             games[id]['timer'].cancel()
@@ -97,6 +97,8 @@ def xod(game):
         roless=['glavar','killer']
     elif len(game['players'])==3:
         roless=['agent','killer', 'glavar']
+    elif len(game['players'])==4:
+        roless=['agent','killer', 'glavar', 'prohojii']
     elif len(game['players'])==5:
         roless=['agent','killer', 'glavar', 'prohojii', 'primanka']
     elif len(game['players'])==6:
