@@ -381,7 +381,7 @@ def reallyshoot(game):
                 win=porajenie+'Проиграл\n'
             if game['players'][ids]['killany']['role']=='prohojii':
                     win=porajenie+'Проиграл (убил прохожего)\n'
-                if game['players'][ids]['killany']['role']=='primanka':
+            if game['players'][ids]['killany']['role']=='primanka':
                     win=porajenie+'Проиграл (убил приманку)\n'
         elif game['players'][ids]['yellow']==1:
             if game['players'][ids]['role']=='prohojii':
