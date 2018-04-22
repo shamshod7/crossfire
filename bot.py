@@ -129,19 +129,26 @@ def xod(game):
         game['players'][g]['role']=roless[x]
         pick.append(x)
         print(game)
+    roletext=''
     for g in game['players']:
         if game['players'][g]['role']=='agent':
             text='Ты агент'
+            roletext+='Агент\n'
         elif game['players'][g]['role']=='killer':
             text='Ты киллер'
+            roletext+='Киллер\n'
         elif game['players'][g]['role']=='prohojii':
             text='Ты прохожий'
+            roletext+='Прохожий\n'
         elif game['players'][g]['role']=='primanka':
             text='Ты приманка'
+            roletext+='Приманка\n'
         elif game['players'][g]['role']=='glavar':
             text='Ты главарь'
+            roletext+='Главарь\n'
         elif game['players'][g]['role']=='telohranitel':
             text='Ты телохранитель'
+            roletext+='Телохранитель\n'
         bot.send_message(game['players'][g]['id'], text)
     players=[]
     text=''
@@ -149,6 +156,7 @@ def xod(game):
         players.append(game['players'][g]['name'])
     for gg in players:
         text+=gg+'\n'
+    bot.send_message(game['id'], 'Роли: \n*'+roletext+'*')
     bot.send_message(game['id'], 'Игроки: \n'+'*'+text+'*', parse_mode='markdown')
     t=threading.Timer(5, shuffle1, args=[game])
     t.start()
