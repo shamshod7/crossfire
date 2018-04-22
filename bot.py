@@ -339,11 +339,23 @@ def reallyshoot(game):
     porajenie=emojize(':-1:', use_aliases=True)
     for ids in game['players']:
         if game['players'][ids]['blue']==1:
-            color=blue+'Синий'
+            color=blue
         elif game['players'][ids]['red']==1:
-            color=red+'Красный'
+            color=red
         else:
-            color=yellow+'Жёлтый'
+            color=yellow
+        if game['players'][ids]['role']=='agent':
+            role='Агент'
+        elif game['players'][ids]['role']=='killer':
+            role='Киллер'
+        elif game['players'][ids]['role']=='prohojii':
+            role='Прохожий'
+        elif game['players'][ids]['role']=='primanka':
+            role='Приманка'
+        elif game['players'][ids]['role']=='glavar':
+            role='Главарь'
+        elif game['players'][ids]['role']=='telohranitel':
+            role='Телохранитель'
         if game['players'][ids]['killed']==1:
             alive=dead+'Мёртв'
         else:
@@ -367,7 +379,7 @@ def reallyshoot(game):
                     win=porajenie+'Проиграл\n'
                 else:
                     win=pobeda+'Выиграл\n'
-        text+=game['players'][ids]['name']+': '+color+','+alive+','+win
+        text+=game['players'][ids]['name']+': '+color+role+','+alive+','+win
     bot.send_message(game['id'], 'Результаты игры:\n'+text)
     del games[game['id']]
         
