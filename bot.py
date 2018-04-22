@@ -282,6 +282,7 @@ def endshoot(game):
             text+=game['players'][ids]['name']+' не стреляет\n'
     bot.send_message(game['id'], text)
     t=threading.Timer(10, reallyshoot, args=[game])
+    t.start()
         
 
 def reallyshoot(game):
