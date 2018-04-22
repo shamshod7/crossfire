@@ -283,7 +283,8 @@ def shoot(game):
         for ids in game['players']:
             if game['players'][ids]['id']!=game['players'][g]['id']:
                 Keyboard.add(types.InlineKeyboardButton(text=game['players'][ids]['name'], callback_data=str(game['players'][ids]['number'])))
-        bot.send_message(game['players'][g]['id'], 'Кого ты выбираешь целью?', reply_markup=Keyboard)
+        msg=bot.send_message(game['players'][g]['id'], 'Кого ты выбираешь целью?', reply_markup=Keyboard)
+        game['toedit'].append(msg)
     t=threading.Timer(30, endshoot, args=[game])
     t.start()
         
@@ -308,6 +309,9 @@ def inline(call):
 
 def endshoot(game):
     text=''
+    for ids in game['toedit']:
+        if 'Кого ты выбираешь целью?' in game['toedit'][ids].text:
+            medit('Время вышло!', game['id'], game['toedit'][ids].message_id)
     for ids in game['players']:
         if game['players'][ids]['text']!=None:
             text+=game['players'][ids]['text']+'\n'
@@ -431,7 +435,8 @@ def creategame(id, t):
         'players':{},
         'id':id,
         'timer':t,
-        'todel':[]
+        'todel':[],
+        'toedit':[]
     }
            }
         
