@@ -161,23 +161,23 @@ def shuffle2(game):
             x=random.randint(0, len(roles)-1)
             while x in pick:
                 x=random.randint(0, len(roles)-1)
-            g['role']=roles[x]
+            g['role']=roles[x]['role']
             pick.append(x)
         i+=1
     bot.send_message(game['id'], 'Ваши роли были перемешаны по 3 штуки!')
     text='bez roli'
-    for ggg in game['players']:
-        if game['players'][ggg]['role']=='agent':
+    for g in game['players']:
+        if game['players'][g]['role']=='agent':
             text='Ты агент'
-        elif game['players'][ggg]['role']=='killer':
+        elif game['players'][g]['role']=='killer':
             text='Ты киллер'
-        elif game['players'][ggg]['role']=='prohojii':
+        elif game['players'][g]['role']=='prohojii':
             text='Ты прохожий'
-        elif game['players'][ggg]['role']=='primanka':
+        elif game['players'][g]['role']=='primanka':
             text='Ты приманка'
-        elif game['players'][ggg]['role']=='glavar':
+        elif game['players'][g]['role']=='glavar':
             text='Ты главарь'
-        bot.send_message(game['players'][ggg]['id'], text)
+        bot.send_message(game['players'][g]['id'], text)
         
 
 
