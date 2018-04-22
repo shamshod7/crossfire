@@ -370,17 +370,30 @@ def reallyshoot(game):
                 win=pobeda+'Выиграл\n'
             else:
                 win=porajenie+'Проиграл\n'
+            if game['players'][ids]['killany']['role']=='prohojii':
+                win=porajenie+'Проиграл (убил прохожего)\n'
+            if game['players'][ids]['killany']['role']=='primanka':
+                win=porajenie+'Проиграл (убил приманку)\n'
         elif game['players'][ids]['red']==1:
             if glavar['killed']==1:
                 win=pobeda+'Выиграл\n'
             else:
                 win=porajenie+'Проиграл\n'
+            if game['players'][ids]['killany']['role']=='prohojii':
+                    win=porajenie+'Проиграл (убил прохожего)\n'
+                if game['players'][ids]['killany']['role']=='primanka':
+                    win=porajenie+'Проиграл (убил приманку)\n'
         elif game['players'][ids]['yellow']==1:
             if game['players'][ids]['role']=='prohojii':
                 if game['players'][ids]['killed']==1:
                     win=porajenie+'Проиграл\n'
                 else:
                     win=pobeda+'Выиграл\n'
+                if game['players'][ids]['role']=='primanka':
+                    if game['players'][ids]['killed']==1:
+                        win=pobeda+'Выиграл\n'
+                    else:
+                        win=porajenie+'Проиграл\n'
         text+=game['players'][ids]['name']+': '+color+role+','+alive+','+win
     bot.send_message(game['id'], 'Результаты игры:\n'+text)
     del games[game['id']]
