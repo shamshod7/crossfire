@@ -107,7 +107,7 @@ def shuffle1(game):
             i+=1
         except:
             game['players'][ids]['role']=roles[0]
-    bot.send_message(game['id'], 'Ваши роли были переданы следующему после вас человеку! Теперь посмотрите ваши новые роли.')
+    bot.send_message(game['id'], 'Ваши роли были переданы человеку над вами! Теперь посмотрите свои новые роли.')
     for g in game['players']:
         if game['players'][g]['role']=='agent':
             text='Ты агент'
@@ -131,7 +131,7 @@ def shuffle2(game):
     for ids in game['players']:
         roles.append(game['players'][ids]['role'])
     first=random.randint(1, len(game['players']))
-    shuffles=int(len(game['players'])/3)
+    shuffles=len(game['players'])/3
     if shuffles<1:
         shuffles=1
     i=0
@@ -150,8 +150,7 @@ def shuffle2(game):
                     top=game['players'][ids]
             else:
                 if game['players'][ids]['number']==len(game['players']):
-                    top=game['players'][ids]
-                    
+                    top=game['players'][ids]              
         roles=[]
         roles.append(mid)
         roles.append(bottom)
@@ -163,9 +162,14 @@ def shuffle2(game):
                 x=random.randint(0, len(roles)-1)
             g['role']=roles[x]['role']
             pick.append(x)
+        if first==len(game['players']):
+            first=2
+        elif first==len(game['players'])-1:
+            first=1
+        else:
+            first+=2
         i+=1
     bot.send_message(game['id'], 'Ваши роли были перемешаны по 3 штуки!')
-    text='bez roli'
     for g in game['players']:
         if game['players'][g]['role']=='agent':
             text='Ты агент'
