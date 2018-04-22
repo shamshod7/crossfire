@@ -68,7 +68,7 @@ def startgame(m):
     
    
 def begin(id):
-    if len(games[id]['players'])>=3:
+    if len(games[id]['players'])>=2:
         for ids in games[id]['todel']:
             bot.delete_message(id, ids)
         bot.send_message(id, 'Игра начинается!')
