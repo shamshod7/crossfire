@@ -26,8 +26,9 @@ def start(m):
             i=0
             for ids in games[int(x[1])]['players']:
                 i+=1
-            games[int(x[1])]['players'].update(createuser(m.from_user.id, m.from_user.first_name, i+1))
-            bot.send_message(m.from_user.id, 'Вы успешно присоединились!')
+            if len(games[int(x[1])]['players'])<=2:
+                games[int(x[1])]['players'].update(createuser(m.from_user.id, m.from_user.first_name, i+1))
+                bot.send_message(m.from_user.id, 'Вы успешно присоединились!')
        except:
         if m.chat.id==m.from_user.id:
             bot.send_message(m.from_user.id, 'Игра crossfire')
