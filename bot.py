@@ -87,8 +87,8 @@ def xod(game):
     for g in game['players']:
         players.append(game['players'][g]['name'])
     for gg in players:
-        text+=players[gg]+'\n'
-    bot.send_message(game['id'], 'Игроки: \n'+'*'+text+'*')
+        text+=gg+'\n'
+    bot.send_message(game['id'], 'Игроки: \n'+'*'+text+'*', parse_mode='markdown')
     t=threading.Timer(10, shuffle1, args=[game])
     t.start()
             
