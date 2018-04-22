@@ -151,16 +151,20 @@ def shuffle2(game):
             else:
                 if game['players'][ids]['number']==len(game['players']):
                     top=game['players'][ids]              
+        users=[]
         roles=[]
-        roles.append(mid)
-        roles.append(bottom)
-        roles.append(top)
+        users.append(mid)
+        users.append(bottom)
+        users.append(top)
+        roles.append(bottom['role'])
+        roles.append(mid['role'])
+        roles.append(top['role'])
         pick=[]
-        for g in roles:
-            x=random.randint(0, len(roles)-1)
+        for g in users:
+            x=random.randint(0, 2)
             while x in pick:
-                x=random.randint(0, len(roles)-1)
-            g['role']=roles[x]['role']
+                x=random.randint(0, 2)
+            g['role']=roles[x]
             pick.append(x)
         if first==len(game['players']):
             first=2
