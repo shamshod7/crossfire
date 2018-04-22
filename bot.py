@@ -119,8 +119,8 @@ def shuffle1(game):
         elif game['players'][g]['role']=='glavar':
             text='Ты главарь'
         bot.send_message(game['players'][g]['id'], text)
-        t=threading.Timer(10, shuffle2, args=[game])
-        t.start()
+    t=threading.Timer(10, shuffle2, args=[game])
+    t.start()
         
     
                      
