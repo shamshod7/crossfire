@@ -282,10 +282,26 @@ def endshoot(game):
 
 def reallyshoot(game):
     for ids in game['players']:
-        
-    for ids in game['players']:
         game['players'][ids]['text']=''
+        if game['players'][ids]['candef']==1:
+            if game['players'][ids]['target']!=None:
+                game['players'][ids]['target']['defence']=1
+                game['players'][ids]['text']+=game['players'][ids]['name']+' Защищает '+game['players'][ids]['target']['name']+'!'
+                
+    for ids in game['players']:
+        if game['players'][ids]['blue']==1:
+            if game['players'][ids]['target']!=None:
+                if game['players'][ids]['cankill']==1:
+                    if game['players'][ids]['target']['defence']!=1:
+                        game['players'][ids]['target']['killed']=1
+                        game['players'][ids]['killany']=game['players'][ids]['target']          
+                    else:
+                        game['players'][ids]['killany']=None
+                    game['players'][ids]['text']+=game['players'][ids]['name']+' стреляет в '+game['players'][ids]['target']['name']+'!'
+                
+    for ids in game['players']:
         if game['players'][ids]['target']!=None:
+          if game['players'][ids]['red']==1:
             if game['players'][ids]['cankill']==1:
                 if game['players'][ids]['target']['defence']!=1:
                     game['players'][ids]['target']['killed']=1
@@ -317,7 +333,9 @@ def createuser(id, name, x):
         'cankill':0,
         'defence':0,
         'killany':None,
-        'candef':0
+        'candef':0,
+        'blue':0,
+        'red':0
     }
           }
     
