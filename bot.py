@@ -204,7 +204,7 @@ def shuffle2(game):
     text2=''
     for ids in centers:
         text2+=ids+'\n'
-    bot.send_message(game['id'], 'Ваши роли были перемешаны по 3 штуки! Центры перемешивания: *\n'+text2+'*')
+    bot.send_message(game['id'], 'Ваши роли были перемешаны по 3 штуки! Центры перемешивания: *\n'+text2+'*', parse_mode='markdown')
     for g in game['players']:
         if game['players'][g]['role']=='agent':
             text='Ты агент'
