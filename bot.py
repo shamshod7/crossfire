@@ -59,15 +59,15 @@ def begin(id):
 
 def xod(game):
     if len(game['players'])==2:
-        roles=['agent','killer']
+        roless=['agent','killer']
     elif len(game['players'])==5:
-        roles=['agent','killer', 'glavar', 'prohojii', 'primanka']
+        roless=['agent','killer', 'glavar', 'prohojii', 'primanka']
     pick=[]
     for g in game['players']:
         x=random.randint(0, len(game['players'])-1)
         while x in pick:
             x=random.randint(0, len(game['players'])-1)
-        game['players'][g]['role']=roles[x]
+        game['players'][g]['role']=roless[x]
         pick.append(x)
         print(game)
     for g in game['players']:
