@@ -139,13 +139,13 @@ def shuffle2(game):
             if game['players'][ids]['number']==first:
                 mid=game['players'][ids]
             if first+1<=len(game['players']):
-                elif game['players'][ids]['number']==first+1:
+                if game['players'][ids]['number']==first+1:
                     bottom=game['players'][ids]
             else:
                 if game['players'][ids]['number']==1:
                     bottom=game['players'][ids]
             if first-1>=1:                
-                elif game['players'][ids]['number']==first-1:
+                if game['players'][ids]['number']==first-1:
                     top=game['players'][ids]
             else:
                 if game['players'][ids]['number']==len(game['players']):
