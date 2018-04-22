@@ -269,6 +269,7 @@ def inline(call):
                 if game['players'][z]['number']==int(call.data):
                     target=game['players'][z]
             game['players'][call.from_user.id]['text']=game['players'][call.from_user.id]['name']+' стреляет в '+target['name']
+            medit('Выбор сделан: '+target['name'],call.message.message_id, call.from_user.id)
             game['players'][call.from_user.id]['target']=target
             
         
@@ -318,6 +319,46 @@ def reallyshoot(game):
     for ids in game['players']:
         text+=game['players'][ids]['text']+'\n'
     bot.send_message(game['id'],'По-настоящему выстрельнувшие:\n'+text)
+    text=''
+    live=emojize(':neutral_face:', use_aliases=True)
+    dead=emojize(':skull:', use_aliases=True)
+    blue=emojize(':large_blue_circle:', use_aliases=True)
+    red=emojize(':red_circle:', use_aliases=True)
+    yellow=emojize(':full_moon:', use_aliases=True)
+    pobeda=emojize(':thumbsup:', use_aliases=True)
+    porajenie=emojize(':-1:', use_aliases=True)
+    for ids in game['players']:
+        if game['players'][ids]['blue']==1:
+            color=blue+'Синий'
+        elif game['players'][ids]['red']==1:
+            color=red+'Красный'
+        else:
+            color=yellow+'Жёлтый'
+        if game['players'][ids]['killed']==1:
+            alive=dead+'Мёртв'
+        else:
+            alive=live+'Жив'
+        for ids in game['players']:
+            if game['players'][ids]['role']=='glavar':
+                glavar=game['players'][ids]
+        if game['players'][ids]['color']=='blue':
+            if glavar['killed']==0:
+                win=pobeda+'Выиграл'
+            else:
+                win=porajenie+'Проиграл'
+        elif game['players'][ids]['color']=='red':
+            if glavar['killed']==1:
+                win=pobeda+'Выиграл'
+            else:
+                win=porajenie+'Проиграл'
+        elif game['players'][ids]['color']=='yellow':
+            if game['players'][ids]['role']=='prohojii':
+                if game['players'][ids]['killed']==1:
+                    win=porajenie+'Проиграл'
+                else:
+                    win=pobeda+'Выиграл'
+        text+=game['players'][ids]['name']+': '+color+','+alive+','+win
+    bot.send_message(game['id'], 'Результаты игры:\n'+text
         
         
 def creategame(id, t):
@@ -344,7 +385,8 @@ def createuser(id, name, x):
         'killany':None,
         'candef':0,
         'blue':0,
-        'red':0
+        'red':0,
+        'win':0
     }
           }
     
