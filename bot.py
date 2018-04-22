@@ -311,6 +311,8 @@ def endshoot(game):
     text=''
     for msg in game['toedit']:
         if 'Кого ты выбираешь целью?' in msg.text:
+            print(str(msg.from_user.id))
+            print(str(msg.message_id))
             medit('Время вышло!', msg.from_user.id, msg.message_id)
     for ids in game['players']:
         if game['players'][ids]['text']!=None:
