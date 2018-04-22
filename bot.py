@@ -78,6 +78,8 @@ def begin(id):
             pass
         xod(games[id])
     else:
+        for ids in games[id]['todel']:
+            bot.delete_message(id, ids)
         bot.send_message(id, 'Недостаточно игроков!')
         try:
             del games[id]
