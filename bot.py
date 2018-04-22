@@ -67,8 +67,9 @@ def begin(id):
         
 @bot.message_handler(commands=['forcestart'])
 def forcem(m):
+  if m.chat.id in games:
     i=0
-    x=bot.get_chat_administrators()
+    x=bot.get_chat_administrators(m.chat.id)
     for z in x:       
         if m.from_user.id==z.user.id:
            i=1
