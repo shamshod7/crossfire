@@ -316,7 +316,7 @@ def endshoot(game):
             print(str(msg.message_id))
             print(str(msg.from_user.id))
             try:
-                medit('Время вышло!', msg.from_user.id, msg.message_id)
+                medit('Время вышло!', msg.chat.id, msg.message_id)
             except:
                 pass
     for ids in game['players']:
