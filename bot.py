@@ -101,6 +101,7 @@ def shuffle1(game):
     for ids in game['players']:
         try:
             game['players'][ids]['role']=roles[i+1]
+            i+=1
         except:
             game['players'][ids]['role']=roles[0]
     bot.send_message(game['id'], 'Ваши роли были переданы следующему после вас человеку! Теперь посмотрите ваши новые роли.')
