@@ -367,6 +367,7 @@ def reallyshoot(game):
                     win=pobeda+'Выиграл\n'
         text+=game['players'][ids]['name']+': '+color+','+alive+','+win
     bot.send_message(game['id'], 'Результаты игры:\n'+text)
+    del games[game['id']]
         
         
 def creategame(id, t):
