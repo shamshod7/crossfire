@@ -310,8 +310,8 @@ def inline(call):
 def endshoot(game):
     text=''
     for ids in game['toedit']:
-        if 'Кого ты выбираешь целью?' in game['toedit'][ids].text:
-            medit('Время вышло!', game['id'], game['toedit'][ids].message_id)
+        if 'Кого ты выбираешь целью?' in ids.text:
+            medit('Время вышло!', game['id'], ids.message_id)
     for ids in game['players']:
         if game['players'][ids]['text']!=None:
             text+=game['players'][ids]['text']+'\n'
