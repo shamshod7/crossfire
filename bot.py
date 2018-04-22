@@ -53,7 +53,7 @@ def begin(id):
     if len(games[id]['players'])>1:
         bot.send_message(id, 'Игра начинается!')
         try:
-            games[id]['timer'].stop()
+            games[id]['timer'].cancel()
         except:
             pass
         xod(games[id])
