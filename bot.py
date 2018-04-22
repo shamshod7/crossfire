@@ -91,6 +91,12 @@ def xod(game):
         roless=['agent','killer', 'glavar']
     elif len(game['players'])==5:
         roless=['agent','killer', 'glavar', 'prohojii', 'primanka']
+    elif len(game['players'])==6:
+        roless=['agent','killer', 'glavar', 'prohojii', 'primanka','mirotvorets']
+    elif len(game['players'])==7:
+        roless=['agent','killer', 'glavar', 'prohojii', 'primanka','agent', 'killer']
+    elif len(game['players'])==8:
+        roless=['glavar', 'prohojii', 'podrivnik','gangster','killer', 'killer', 'telohranitel','redprimanka']
     pick=[]
     for g in game['players']:
         x=random.randint(0, len(game['players'])-1)
@@ -110,6 +116,8 @@ def xod(game):
             text='Ты приманка'
         elif game['players'][g]['role']=='glavar':
             text='Ты главарь'
+        elif game['players'][g]['role']=='telohranitel':
+            text='Ты телохранитель'
         bot.send_message(game['players'][g]['id'], text)
     players=[]
     text=''
@@ -145,6 +153,8 @@ def shuffle1(game):
             text='Ты приманка'
         elif game['players'][g]['role']=='glavar':
             text='Ты главарь'
+        elif game['players'][g]['role']=='telohranitel':
+            text='Ты телохранитель'
         bot.send_message(game['players'][g]['id'], text)
     t=threading.Timer(10, shuffle2, args=[game])
     t.start()
@@ -207,17 +217,27 @@ def shuffle2(game):
     bot.send_message(game['id'], 'Ваши роли были перемешаны по 3 штуки! Центры перемешивания: *\n'+text2+'*', parse_mode='markdown')
     for g in game['players']:
         if game['players'][g]['role']=='agent':
+            game['players'][g]['cankill']=1
             text='Ты агент'
         elif game['players'][g]['role']=='killer':
+            game['players'][g]['cankill']=1
             text='Ты киллер'
         elif game['players'][g]['role']=='prohojii':
+            game['players'][g]['cankill']=0
             text='Ты прохожий'
         elif game['players'][g]['role']=='primanka':
+            game['players'][g]['cankill']=0
             text='Ты приманка'
         elif game['players'][g]['role']=='glavar':
+            game['players'][g]['cankill']=0
             text='Ты главарь'
+        elif game['players'][g]['role']=='telohranitel':
+            game['players'][g]['candef']=1
+            text='Ты телохранитель'
         bot.send_message(game['players'][g]['id'], text)
-        
+    t=threading.Timer(10, shoot, args=[game])
+    t.start()
+      
 
 
 
@@ -227,7 +247,7 @@ def shoot(game):
         for ids in game['players']:
             if game['players'][ids]['id']!=game['players'][g]['id']:
                 Keyboard.add(types.InlineKeyboardButton(text=game['players'][ids]['name'], callback_data=str(game['players'][ids]['number'])))
-        bot.send_message(game['players'][g]['id'], 'В кого ты хочешь выстрельнуть?', reply_markup=Keyboard)
+        bot.send_message(game['players'][g]['id'], 'Кого ты выбираешь целью?', reply_markup=Keyboard)
     t=threading.Timer(10, endshoot, args=[game])
     t.start()
         
@@ -240,14 +260,12 @@ def inline(call):
         if call.from_user.id in games[ids]['players']: 
             game=games[ids]
             x=1
-            print('1')
     if x==1:
-            print('2')
             for z in game['players']:
                 if game['players'][z]['number']==int(call.data):
                     target=game['players'][z]
-                    print('3')
             game['players'][call.from_user.id]['text']=game['players'][call.from_user.id]['name']+' стреляет в '+target['name']
+            game['players'][call.from_user.id]['target']=target
             
         
 
@@ -259,6 +277,22 @@ def endshoot(game):
         else:
             text+=game['players'][ids]['name']+' не стреляет\n'
     bot.send_message(game['id'], text)
+    t=threading.Timer(10, reallyshoot, args=[game])
+        
+
+def reallyshoot(game):
+    for ids in game['players']:
+        
+    for ids in game['players']:
+        game['players'][ids]['text']=''
+        if game['players'][ids]['target']!=None:
+            if game['players'][ids]['cankill']==1:
+                if game['players'][ids]['target']['defence']!=1:
+                    game['players'][ids]['target']['killed']=1
+                    game['players'][ids]['killany']=game['players'][ids]['target']          
+                else:
+                    game['players'][ids]['killany']=None
+                game['players'][ids]['text']+=game['players'][ids]['name']+' стреляет в '+game['players'][ids]['target']['name']+'!'
         
         
 def creategame(id, t):
@@ -277,7 +311,13 @@ def createuser(id, name, x):
         'id':id,
         'number':x,
         'text':None,
-        'shuffle':0
+        'shuffle':0,
+        'target':None,
+        'killed':0,
+        'cankill':0,
+        'defence':0,
+        'killany':None,
+        'candef':0
     }
           }
     
