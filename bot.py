@@ -332,6 +332,7 @@ def reallyshoot(game):
                 if game['players'][ids]['cankill']==1:
                     if game['players'][ids]['target']['defence']!=1:
                         game['players'][ids]['target']['killed']=1
+                        game['players'][ids]['target']['golos']=0
                         game['players'][ids]['killany']=game['players'][ids]['target']          
                     else:
                         game['players'][ids]['killany']=None
@@ -341,12 +342,16 @@ def reallyshoot(game):
         if game['players'][ids]['target']!=None:
           if game['players'][ids]['red']==1:
             if game['players'][ids]['cankill']==1:
+              if game['players'][ids]['golos']==1:
                 if game['players'][ids]['target']['defence']!=1:
                     game['players'][ids]['target']['killed']=1
                     game['players'][ids]['killany']=game['players'][ids]['target']          
                 else:
                     game['players'][ids]['killany']=None
                 game['players'][ids]['text']+=game['players'][ids]['name']+' стреляет в '+game['players'][ids]['target']['name']+'!'
+              else:
+                game['players'][ids]['text']+=game['players'][ids]['name']+' Убит! (не стреляет)'
+                
     text=''
     for ids in game['players']:
         text+=game['players'][ids]['text']+'\n'
@@ -447,7 +452,8 @@ def createuser(id, name, x):
         'candef':0,
         'blue':0,
         'red':0,
-        'win':0
+        'win':0,
+        'golos':1
     }
           }
     
