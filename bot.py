@@ -136,7 +136,7 @@ def xod(game):
     for gg in players:
         text+=gg+'\n'
     bot.send_message(game['id'], 'Игроки: \n'+'*'+text+'*', parse_mode='markdown')
-    t=threading.Timer(10, shuffle1, args=[game])
+    t=threading.Timer(5, shuffle1, args=[game])
     t.start()
             
  
@@ -166,7 +166,7 @@ def shuffle1(game):
         elif game['players'][g]['role']=='telohranitel':
             text='Ты телохранитель'
         bot.send_message(game['players'][g]['id'], text)
-    t=threading.Timer(10, shuffle2, args=[game])
+    t=threading.Timer(5, shuffle2, args=[game])
     t.start()
         
     
@@ -249,7 +249,7 @@ def shuffle2(game):
             text='Ты телохранитель'
             game['players'][g]['blue']=1
         bot.send_message(game['players'][g]['id'], text)
-    t=threading.Timer(10, shoot, args=[game])
+    t=threading.Timer(30, shoot, args=[game])
     t.start()
       
 
