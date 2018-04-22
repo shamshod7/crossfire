@@ -346,9 +346,9 @@ def reallyshoot(game):
             alive=dead+'Мёртв'
         else:
             alive=live+'Жив'
-        for ids in game['players']:
-            if game['players'][ids]['role']=='glavar':
-                glavar=game['players'][ids]
+        for idss in game['players']:
+            if game['players'][idss]['role']=='glavar':
+                glavar=game['players'][idss]
         if game['players'][ids]['blue']==1:
             if glavar['killed']==0:
                 win=pobeda+'Выиграл\n'
