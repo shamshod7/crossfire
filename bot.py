@@ -53,7 +53,7 @@ def begin(id):
     if len(games[id]['players'])>1:
         bot.send_message(id, 'Игра начинается!')
         try:
-            games[id]['timer'].cancel()
+            games[id]['timer'].stop()
         except:
             pass
         xod(games[id])
@@ -199,7 +199,7 @@ def shuffle2(game):
         else:
             first+=2
         i+=1
-    bot.send_message(game['id'], 'Ваши роли были перемешаны по 3 штуки!')
+    bot.send_message(game['id'], 'Ваши роли были перемешаны по 3 штуки! Центры перемешивания: ')
     for g in game['players']:
         if game['players'][g]['role']=='agent':
             text='Ты агент'
