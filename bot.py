@@ -218,9 +218,11 @@ def shuffle2(game):
     for g in game['players']:
         if game['players'][g]['role']=='agent':
             game['players'][g]['cankill']=1
+            game['players'][g]['blue']=1
             text='Ты агент'
         elif game['players'][g]['role']=='killer':
             game['players'][g]['cankill']=1
+            game['players'][g]['red']=1
             text='Ты киллер'
         elif game['players'][g]['role']=='prohojii':
             game['players'][g]['cankill']=0
@@ -231,9 +233,11 @@ def shuffle2(game):
         elif game['players'][g]['role']=='glavar':
             game['players'][g]['cankill']=0
             text='Ты главарь'
+            game['players'][g]['blue']=1
         elif game['players'][g]['role']=='telohranitel':
             game['players'][g]['candef']=1
             text='Ты телохранитель'
+            game['players'][g]['blue']=1
         bot.send_message(game['players'][g]['id'], text)
     t=threading.Timer(10, shoot, args=[game])
     t.start()
@@ -309,6 +313,10 @@ def reallyshoot(game):
                 else:
                     game['players'][ids]['killany']=None
                 game['players'][ids]['text']+=game['players'][ids]['name']+' стреляет в '+game['players'][ids]['target']['name']+'!'
+    text=''
+    for ids in game['players']:
+        text+=game['players'][ids]['text']+'\n'
+    bot.send_message(game['id'],'По-настоящему выстрельнувшие:\n'+text)
         
         
 def creategame(id, t):
