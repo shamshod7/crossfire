@@ -60,7 +60,7 @@ def startgame(m):
     
    
 def begin(id):
-    if len(games[id]['players'])>=2:
+    if len(games[id]['players'])>=3:
         bot.send_message(id, 'Игра начинается!')
         try:
             games[id]['timer'].cancel()
@@ -370,19 +370,21 @@ def reallyshoot(game):
                 win=pobeda+'Выиграл\n'
             else:
                 win=porajenie+'Проиграл\n'
-            if game['players'][ids]['killany']['role']=='prohojii':
-                win=porajenie+'Проиграл (убил прохожего)\n'
-            if game['players'][ids]['killany']['role']=='primanka':
-                win=porajenie+'Проиграл (убил приманку)\n'
+            if game['players'][ids]['killany']!=None:
+                if game['players'][ids]['killany']['role']=='prohojii':
+                    win=porajenie+'Проиграл (убил прохожего)\n'
+                if game['players'][ids]['killany']['role']=='primanka':
+                    win=porajenie+'Проиграл (убил приманку)\n'
         elif game['players'][ids]['red']==1:
             if glavar['killed']==1:
                 win=pobeda+'Выиграл\n'
             else:
                 win=porajenie+'Проиграл\n'
-            if game['players'][ids]['killany']['role']=='prohojii':
-                    win=porajenie+'Проиграл (убил прохожего)\n'
-            if game['players'][ids]['killany']['role']=='primanka':
-                    win=porajenie+'Проиграл (убил приманку)\n'
+            if game['players'][ids]['killany']!=None:
+                if game['players'][ids]['killany']['role']=='prohojii':
+                        win=porajenie+'Проиграл (убил прохожего)\n'
+                if game['players'][ids]['killany']['role']=='primanka':
+                        win=porajenie+'Проиграл (убил приманку)\n'
         elif game['players'][ids]['yellow']==1:
             if game['players'][ids]['role']=='prohojii':
                 if game['players'][ids]['killed']==1:
