@@ -175,6 +175,7 @@ def shuffle2(game):
             text='Ты приманка'
         elif game['players'][g]['role']=='glavar':
             text='Ты главарь'
+        bot.send_message(game['players'][g]['id'], text)
         
 
 
