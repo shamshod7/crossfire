@@ -156,7 +156,7 @@ def xod(game):
         players.append(game['players'][g]['name'])
     for gg in players:
         text+=gg+'\n'
-    bot.send_message(game['id'], 'Роли: \n*'+roletext+'*')
+    bot.send_message(game['id'], 'Роли: \n*'+roletext+'*', parse_mode='markdown')
     bot.send_message(game['id'], 'Игроки: \n'+'*'+text+'*', parse_mode='markdown')
     t=threading.Timer(5, shuffle1, args=[game])
     t.start()
