@@ -31,6 +31,7 @@ def start(m):
             for ids in games[int(x[1])]['players']:
                 i+=1
             if len(games[int(x[1])]['players'])<=2:
+              if games[int(x[1])]['play']==0:
                 games[int(x[1])]['players'].update(createuser(m.from_user.id, m.from_user.first_name, i+1))
                 for ids in games[int(x[1])]['players']:
                     if games[int(x[1])]['players'][ids]['id']==m.from_user.id:
@@ -76,6 +77,7 @@ def begin(id):
             games[id]['timer'].cancel()
         except:
             pass
+        games[id]['play']=1
         xod(games[id])
     else:
         for ids in games[id]['todel']:
@@ -441,7 +443,8 @@ def creategame(id, t):
         'id':id,
         'timer':t,
         'todel':[],
-        'toedit':[]
+        'toedit':[],
+        'play':0
     }
            }
         
