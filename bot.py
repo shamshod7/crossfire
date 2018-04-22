@@ -118,12 +118,63 @@ def shuffle1(game):
             text='Ты главарь'
         bot.send_message(game['players'][g]['id'], text)
         t=threading.Timer(10, shuffle2, args=[game])
+        t.start()
         
     
                      
 
 def shuffle2(game):
-    bot.send_message(game['id'], 'Всё')
+    roles=[]
+    for ids in game['players']:
+        roles.append(game['players'][ids]['role'])
+    first=random.randint(1, len(game['players']))
+    shuffles=int(len(game['players'])/3)
+    if shuffles<1:
+        shuffles=1
+    i=0
+    while i<shuffles:
+        for ids in game['players']:
+            if game['players'][ids]['number']==first:
+                mid=game['players'][ids]
+            if first+1<=len(game['players']):
+                elif game['players'][ids]['number']==first+1:
+                    bottom=game['players'][ids]
+            else:
+                if game['players'][ids]['number']==1:
+                    bottom=game['players'][ids]
+            if first-1>=1:                
+                elif game['players'][ids]['number']==first-1:
+                    top=game['players'][ids]
+            else:
+                if game['players'][ids]['number']==len(game['players']):
+                    top=game['players'][ids]
+                    
+        roles=[]
+        roles.append(mid)
+        roles.append(bottom)
+        roles.append(top)
+        pick=[]
+        for g in roles:
+            x=random.randint(0, len(roles)-1)
+            while x in pick:
+                x=random.randint(0, len(roles)-1)
+            g['role']=roles[x]
+            pick.append(x)
+        i+=1
+    bot.send_message(game['id'], 'Ваши роли были перемешаны по 3 штуки!')
+    for g in game['players']:
+        if game['players'][g]['role']=='agent':
+            text='Ты агент'
+        elif game['players'][g]['role']=='killer':
+            text='Ты киллер'
+        elif game['players'][g]['role']=='prohojii':
+            text='Ты прохожий'
+        elif game['players'][g]['role']=='primanka':
+            text='Ты приманка'
+        elif game['players'][g]['role']=='glavar':
+            text='Ты главарь'
+        
+
 
 
 def shoot(game):
