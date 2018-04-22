@@ -60,6 +60,8 @@ def begin(id):
 def xod(game):
     if len(game['players'])==2:
         roless=['agent','killer']
+    elif len(game['players'])==3:
+        roless=['agent','killer', 'glavar']
     elif len(game['players'])==5:
         roless=['agent','killer', 'glavar', 'prohojii', 'primanka']
     pick=[]
