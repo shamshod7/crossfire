@@ -165,6 +165,7 @@ def shuffle2(game):
             pick.append(x)
         i+=1
     bot.send_message(game['id'], 'Ваши роли были перемешаны по 3 штуки!')
+    text='bez roli'
     for ggg in game['players']:
         if game['players'][ggg]['role']=='agent':
             text='Ты агент'
