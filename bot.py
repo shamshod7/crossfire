@@ -137,34 +137,43 @@ def xod(game):
         game['players'][g]['role']=roless[x]
         pick.append(x)
         print(game)
-    roletext=''
+    roletext=[]
     for g in game['players']:
         if game['players'][g]['role']=='agent':
             text='Ты агент'
-            roletext+='Агент\n'
+            roletext.append('Агент\n')
         elif game['players'][g]['role']=='killer':
             text='Ты киллер'
-            roletext+='Киллер\n'
+            roletext.append('Киллер\n')
         elif game['players'][g]['role']=='prohojii':
             text='Ты прохожий'
             roletext+='Прохожий\n'
         elif game['players'][g]['role']=='primanka':
             text='Ты приманка'
-            roletext+='Приманка\n'
+            roletext.append('Приманка\n')
         elif game['players'][g]['role']=='glavar':
             text='Ты главарь'
-            roletext+='Главарь\n'
+            roletext.append('Главарь\n')
         elif game['players'][g]['role']=='telohranitel':
             text='Ты телохранитель'
-            roletext+='Телохранитель\n'
+            roletext.append('Телохранитель\n')
         bot.send_message(game['players'][g]['id'], text)
     players=[]
+    roletext1=[]
+    numbers=[]
+    roletextfinal=''
+    while len(roletext1)<len(roletext):
+        i=random.randint(0, len(roletext)-1)
+        if i not in numbers:
+            roletext1.append(roletext[i])
+    for bb in roletext1:
+        roletextfinal+=bb      
     text=''
     for g in game['players']:
         players.append(game['players'][g]['name'])
     for gg in players:
         text+=gg+'\n'
-    bot.send_message(game['id'], 'Роли: \n*'+roletext+'*', parse_mode='markdown')
+    bot.send_message(game['id'], 'Роли: \n*'+roletextfinal+'*', parse_mode='markdown')
     bot.send_message(game['id'], 'Игроки: \n'+'*'+text+'*', parse_mode='markdown')
     t=threading.Timer(5, shuffle1, args=[game])
     t.start()
