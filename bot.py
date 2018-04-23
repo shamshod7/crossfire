@@ -613,7 +613,7 @@ def createuser(id, name, x):
         'text':'',
         'shuffle':0,
         'target':None,
-        'target2':None
+        'target2':None,
         'killed':0,
         'cankill':0,
         'defence':0,
