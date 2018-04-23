@@ -144,19 +144,23 @@ def xod(game):
             roletext.append('Агент\n')
         elif game['players'][g]['role']=='killer':
             text='Ты киллер'
-            roletext.append('Киллер\n')
+            roletext.append('Киллер')
         elif game['players'][g]['role']=='prohojii':
             text='Ты прохожий'
-            roletext+='Прохожий\n'
+            roletext+='Прохожий'
         elif game['players'][g]['role']=='primanka':
             text='Ты приманка'
-            roletext.append('Приманка\n')
+            roletext.append('Приманка')
         elif game['players'][g]['role']=='glavar':
             text='Ты главарь'
-            roletext.append('Главарь\n')
+            roletext.append('Главарь')
         elif game['players'][g]['role']=='telohranitel':
             text='Ты телохранитель'
-            roletext.append('Телохранитель\n')
+            roletext.append('Телохранитель')
+        elif game['players'][g]['role']=='mirotvorets':
+            text='Ты миротворец'
+            roletext.append('Миротворец')
+            
         bot.send_message(game['players'][g]['id'], text)
     players=[]
     roletext1=[]
@@ -168,7 +172,7 @@ def xod(game):
             roletext1.append(roletext[i])
             numbers.append(i)
     for bb in roletext1:
-        roletextfinal+=bb      
+        roletextfinal+=bb+'\n'     
     text=''
     for g in game['players']:
         players.append(game['players'][g]['name'])
@@ -291,7 +295,7 @@ def shuffle2(game):
             text='Ты телохранитель'
             game['players'][g]['blue']=1
         bot.send_message(game['players'][g]['id'], text)
-    t=threading.Timer(30, shoot, args=[game])
+    t=threading.Timer(240, shoot, args=[game])
     t.start()
       
 
@@ -306,7 +310,7 @@ def shoot(game):
         msg=bot.send_message(game['players'][g]['id'], 'Кого ты выбираешь целью?', reply_markup=Keyboard)
         game['toedit'].append(msg)
     bot.send_message(game['id'], 'Теперь выбирайте, на кого хотите направить пистолеты!')
-    t=threading.Timer(30, endshoot, args=[game])
+    t=threading.Timer(45, endshoot, args=[game])
     t.start()
         
 
