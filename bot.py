@@ -56,6 +56,7 @@ def startgame(m):
                 game=games[ids]
         game['todel'].append(msg.message_id)
     else:
+      if games[m.chat.id]['play']==0:
         Keyboard=types.InlineKeyboardMarkup()
         Keyboard.add(types.InlineKeyboardButton(text='Join', url='telegram.me/crossfirebot?start='+str(m.chat.id)))
         msg=bot.send_message(m.chat.id, 'Игра уже запущена! Жмите "присоединиться"!', reply_markup=Keyboard)
@@ -68,9 +69,15 @@ def startgame(m):
     
    
 def begin(id):
+  if id in games:
+   if games[id]['play']==0:
     if len(games[id]['players'])>=2:
         for ids in games[id]['todel']:
-            bot.delete_message(id, ids)
+            try:
+                bot.delete_message(id, ids)
+            except:
+                pass
+       
         bot.send_message(id, 'Игра начинается!')
         try:
             games[id]['timer'].cancel()
@@ -259,9 +266,11 @@ def shuffle2(game):
             text='Ты киллер'
         elif game['players'][g]['role']=='prohojii':
             game['players'][g]['cankill']=0
+            game['players'][g]['yellow']=1
             text='Ты прохожий'
         elif game['players'][g]['role']=='primanka':
             game['players'][g]['cankill']=0
+            game['players'][g]['yellow']=1
             text='Ты приманка'
         elif game['players'][g]['role']=='glavar':
             game['players'][g]['cankill']=0
@@ -319,7 +328,7 @@ def endshoot(game):
         else:
             text+=game['players'][ids]['name']+' не стреляет\n'
     bot.send_message(game['id'], text)
-    t=threading.Timer(10, reallyshoot, args=[game])
+    t=threading.Timer(8, reallyshoot, args=[game])
     t.start()
         
 
@@ -426,6 +435,15 @@ def reallyshoot(game):
                         win=pobeda+'Выиграл\n'
                     else:
                         win=porajenie+'Проиграл\n'
+                if game['players'][ids]['role']=='mirotvorets':
+                    i=0
+                    for prohojii in game['players']:
+                        if game['players'][prohojii]['role']=='prohojii' and game['players'][prohojii]['killed']==1:
+                            i=1
+                    if i==1:
+                        win=porajenie+'Проиграл\n'
+                    else:
+                        win=pobeda+'Выиграл\n'
         text+=game['players'][ids]['name']+': '+color+role+','+alive+','+win
     bot.send_message(game['id'], 'Результаты игры:\n'+text)
     del games[game['id']]
@@ -459,6 +477,7 @@ def createuser(id, name, x):
         'candef':0,
         'blue':0,
         'red':0,
+        'yellow':0,
         'win':0,
         'golos':1
     }
