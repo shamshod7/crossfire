@@ -323,7 +323,7 @@ def shuffle2(game):
             game['players'][g]['cankill']=0
             text='Ты подрывник'
             game['players'][g]['yellow']=1
-         elif game['players'][g]['role']=='mirotvorets':
+        elif game['players'][g]['role']=='mirotvorets':
             game['players'][g]['candef']=1
             text='Ты миротворец'
             game['players'][g]['yellow']=1
