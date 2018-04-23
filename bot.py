@@ -135,7 +135,7 @@ def xod(game):
     elif len(game['players'])==9:
         roless=['glavar', 'prohojii', 'podrivnik','agent','killer', 'killer', 'agent','killer', 'agent'] #'loialistblue','povstanetsred'
     elif len(game['players'])==10:
-        roless=['glavar', 'prohojii', 'mirotvorets','agent','killer', 'killer', 'agent','killer', 'agent'] 
+        roless=['glavar', 'prohojii', 'mirotvorets','agent','killer', 'killer', 'agent','killer', 'agent', 'podrivnik'] 
         
     pick=[]
     for g in game['players']:
