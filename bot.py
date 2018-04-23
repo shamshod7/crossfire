@@ -410,7 +410,7 @@ def endshoot(game):
         if game['players'][ids]['text']!=None:
             text+=game['players'][ids]['text']+'\n'
         else:
-            text+='*'game['players'][ids]['name']+'*'+'💨не стреляет\n'
+            text+='*'+game['players'][ids]['name']+'*'+'💨не стреляет\n'
     bot.send_message(game['id'], text, parse_mode='markdown')
     t=threading.Timer(8, reallyshoot, args=[game])
     t.start()
