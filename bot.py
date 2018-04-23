@@ -445,12 +445,12 @@ def reallyshoot(game):
                     win=porajenie+'Проиграл\n'
                 else:
                     win=pobeda+'Выиграл\n'
-                if game['players'][ids]['role']=='primanka':
+            if game['players'][ids]['role']=='primanka':
                     if game['players'][ids]['killed']==1:
                         win=pobeda+'Выиграл\n'
                     else:
                         win=porajenie+'Проиграл\n'
-                if game['players'][ids]['role']=='mirotvorets':
+            if game['players'][ids]['role']=='mirotvorets':
                     i=0
                     for prohojii in game['players']:
                         if game['players'][prohojii]['role']=='prohojii' and game['players'][prohojii]['killed']==1:
