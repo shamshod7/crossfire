@@ -26,6 +26,7 @@ def start(m):
     if len(x)==2:
        try:
         if m.from_user.id not in games[int(x[1])]['players']:
+         if len(games[int(x[1])]['players'])<=10:
           if int(x[1])<0:
             i=0
             for ids in games[int(x[1])]['players']:
@@ -37,6 +38,8 @@ def start(m):
                         player=games[int(x[1])]['players'][ids]
                 bot.send_message(m.from_user.id, 'Вы успешно присоединились!')
                 bot.send_message(games[int(x[1])]['id'], player['name']+' присоединился!')
+         else:
+            bot.send_message(m.from_user.id, 'Слишком много игроков! Мест не осталось!')
        except:
         if m.chat.id==m.from_user.id:
             bot.send_message(m.from_user.id, 'Игра crossfire')
@@ -356,18 +359,19 @@ def reallyshoot(game):
         game['players'][ids]['text']=''
         if game['players'][ids]['candef']==1:
             if game['players'][ids]['target']!=None:
-                game['players'][ids]['target']['defence']=1
+                game['players'][ids]['target']['defence']+=1
                 game['players'][ids]['text']+=game['players'][ids]['name']+' Защищает '+game['players'][ids]['target']['name']+'!'
                 
     for ids in game['players']:
         if game['players'][ids]['blue']==1:
             if game['players'][ids]['target']!=None:
                 if game['players'][ids]['cankill']==1:
-                    if game['players'][ids]['target']['defence']!=1:
+                    if game['players'][ids]['target']['defence']<1:
                         game['players'][ids]['target']['killed']=1
                         game['players'][ids]['target']['golos']=0
                         game['players'][ids]['killany']=game['players'][ids]['target']          
                     else:
+                        game['players'][ids]['target']['defence']-=1
                         game['players'][ids]['killany']=None
                     game['players'][ids]['text']+=game['players'][ids]['name']+' стреляет в '+game['players'][ids]['target']['name']+'!'
                 
@@ -376,10 +380,11 @@ def reallyshoot(game):
           if game['players'][ids]['red']==1:
             if game['players'][ids]['cankill']==1:
               if game['players'][ids]['golos']==1:
-                if game['players'][ids]['target']['defence']!=1:
+                if game['players'][ids]['target']['defence']<1:
                     game['players'][ids]['target']['killed']=1
                     game['players'][ids]['killany']=game['players'][ids]['target']          
                 else:
+                    game['players'][ids]['target']['defence']-=1
                     game['players'][ids]['killany']=None
                 game['players'][ids]['text']+=game['players'][ids]['name']+' стреляет в '+game['players'][ids]['target']['name']+'!'
               else:
