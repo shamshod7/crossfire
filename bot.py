@@ -30,7 +30,7 @@ def start(m):
             i=0
             for ids in games[int(x[1])]['players']:
                 i+=1         
-              if games[int(x[1])]['play']==0:
+            if games[int(x[1])]['play']==0:
                 games[int(x[1])]['players'].update(createuser(m.from_user.id, m.from_user.first_name, i+1))
                 for ids in games[int(x[1])]['players']:
                     if games[int(x[1])]['players'][ids]['id']==m.from_user.id:
