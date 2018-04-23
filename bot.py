@@ -132,6 +132,11 @@ def xod(game):
         roless=['agent','killer', 'glavar', 'prohojii', 'primanka','agent', 'killer']
     elif len(game['players'])==8:
         roless=['glavar', 'prohojii', 'podrivnik','gangster','killer', 'killer', 'telohranitel','redprimanka']
+    elif len(game['players'])==9:
+        roless=['glavar', 'prohojii', 'podrivnik','agent','killer', 'killer', 'agent','killer', 'agent'] #'loialistblue','povstanetsred'
+    elif len(game['players'])==10:
+        roless=['glavar', 'prohojii', 'mirotvorets','agent','killer', 'killer', 'agent','killer', 'agent'] 
+        
     pick=[]
     for g in game['players']:
         x=random.randint(0, len(game['players'])-1)
@@ -163,6 +168,15 @@ def xod(game):
         elif game['players'][g]['role']=='mirotvorets':
             text='Ты миротворец'
             roletext.append('Миротворец')
+        elif game['players'][g]['role']=='podrivnik':
+            text='Ты подрывник'
+            roletext.append('Подрывник')
+        elif game['players'][g]['role']=='gangster':
+            text='Ты гангстер'
+            roletext.append('Гангстер')
+        elif game['players'][g]['role']=='redprimanka':
+            text='Ты красная приманка'
+            roletext.append('Красная приманка')
             
         bot.send_message(game['players'][g]['id'], text)
     players=[]
@@ -212,6 +226,14 @@ def shuffle1(game):
             text='Ты главарь'
         elif game['players'][g]['role']=='telohranitel':
             text='Ты телохранитель'
+        elif game['players'][g]['role']=='podrivnik':
+            text='Ты подрывник'
+        elif game['players'][g]['role']=='mirotvorets':
+            text='Ты миротворец'
+        elif game['players'][g]['role']=='gangster':
+            text='Ты гангстер'
+        elif game['players'][g]['role']=='redprimanka':
+            text='Ты красная приманка'
         bot.send_message(game['players'][g]['id'], text)
     t=threading.Timer(5, shuffle2, args=[game])
     t.start()
@@ -297,6 +319,21 @@ def shuffle2(game):
             game['players'][g]['candef']=1
             text='Ты телохранитель'
             game['players'][g]['blue']=1
+        elif game['players'][g]['role']=='podrivnik':
+            game['players'][g]['cankill']=0
+            text='Ты подрывник'
+            game['players'][g]['yellow']=1
+         elif game['players'][g]['role']=='mirotvorets':
+            game['players'][g]['candef']=1
+            text='Ты миротворец'
+            game['players'][g]['yellow']=1
+        elif game['players'][g]['role']=='gangster':
+            text='Ты гангстер'
+            game['players'][g]['blue']=1
+            game['players'][g]['cankill']=1
+        elif game['players'][g]['role']=='redprimanka':
+            text='Ты красная приманка'
+            game['players'][g]['red']=1
         bot.send_message(game['players'][g]['id'], text)
     t=threading.Timer(240, shoot, args=[game])
     t.start()
@@ -332,10 +369,35 @@ def inline(call):
             for z in game['players']:
                 if game['players'][z]['number']==int(call.data):
                     target=game['players'][z]
-            game['players'][call.from_user.id]['text']=game['players'][call.from_user.id]['name']+' стреляет в '+target['name']
-            medit('Выбор сделан: '+target['name'],call.from_user.id,call.message.message_id)
-            game['players'][call.from_user.id]['message']['edit']=0
-            game['players'][call.from_user.id]['target']=target
+            if game['players'][call.from_user.id]['role']!='gangster':
+                game['players'][call.from_user.id]['text']=game['players'][call.from_user.id]['name']+' стреляет в '+target['name']
+                medit('Выбор сделан: '+target['name'],call.from_user.id,call.message.message_id)
+                game['players'][call.from_user.id]['message']['edit']=0
+                game['players'][call.from_user.id]['target']=target
+            else:
+              if game['players'][call.from_user.id]['picks']>0:
+                if game['players'][call.from_user.id]['picks']==2:
+                    game['players'][call.from_user.id]['text']+=game['players'][call.from_user.id]['name']+' стреляет в '+target['name']+'\n'
+                else:
+                    game['players'][call.from_user.id]['text']+=game['players'][call.from_user.id]['name']+' стреляет в '+target['name']
+                medit('Выбор сделан: '+target['name'],call.from_user.id,call.message.message_id)
+                game['players'][call.from_user.id]['message']['edit']=0
+                if game['players'][call.from_user.id]['target']==None:
+                    game['players'][call.from_user.id]['target']=target
+                else:
+                    game['players'][call.from_user.id]['target2']=target
+                game['players'][call.from_user.id]['picks']-=1
+                for g in game['players']:
+                    Keyboard=types.InlineKeyboardMarkup()
+                    for ids in game['players']:
+                        if game['players'][ids]['id']!=game['players'][g]['id'] and game['players'][ids]['id']!=game['players'][g]['target']['id']:
+                            Keyboard.add(types.InlineKeyboardButton(text=game['players'][ids]['name'], callback_data=str(game['players'][ids]['number'])))
+                msg=bot.send_message(call.from_user.id, 'Теперь выберите вторую цель')
+                game['players'][call.from_user.id]['message']={'msg':msg,
+                                       'edit':1
+                                      }
+              else:
+                medit('Выбор сделан: '+target['name'],call.from_user.id,call.message.message_id)
             
         
 
@@ -368,12 +430,24 @@ def reallyshoot(game):
                 if game['players'][ids]['cankill']==1:
                     if game['players'][ids]['target']['defence']<1:
                         game['players'][ids]['target']['killed']=1
+                        game['players'][ids]['target']['killedby'].append(game['players'][ids]['role'])
                         game['players'][ids]['target']['golos']=0
                         game['players'][ids]['killany']=game['players'][ids]['target']          
                     else:
                         game['players'][ids]['target']['defence']-=1
                         game['players'][ids]['killany']=None
                     game['players'][ids]['text']+=game['players'][ids]['name']+' стреляет в '+game['players'][ids]['target']['name']+'!'
+            if game['players'][ids]['target2']!=None:
+                if game['players'][ids]['cankill']==1:
+                    if game['players'][ids]['target2']['defence']<1:
+                        game['players'][ids]['target2']['killed']=1
+                        game['players'][ids]['target']['killedby'].append(game['players'][ids]['role'])
+                        game['players'][ids]['target2']['golos']=0
+                        game['players'][ids]['killany2']=game['players'][ids]['target2']          
+                    else:
+                        game['players'][ids]['target2']['defence']-=1
+                        game['players'][ids]['killany2']=None
+                    game['players'][ids]['text']+=game['players'][ids]['name']+' стреляет в '+game['players'][ids]['target2']['name']+'!'
                 
     for ids in game['players']:
         if game['players'][ids]['target']!=None:
@@ -382,6 +456,7 @@ def reallyshoot(game):
               if game['players'][ids]['golos']==1:
                 if game['players'][ids]['target']['defence']<1:
                     game['players'][ids]['target']['killed']=1
+                    game['players'][ids]['target']['killedby'].append(game['players'][ids]['role'])
                     game['players'][ids]['killany']=game['players'][ids]['target']          
                 else:
                     game['players'][ids]['target']['defence']-=1
@@ -395,6 +470,7 @@ def reallyshoot(game):
         text+=game['players'][ids]['text']+'\n'
     bot.send_message(game['id'],'По-настоящему выстрелившие:\n'+text)
     text=''
+    role=game['players'][ids]['role']
     live=emojize(':neutral_face:', use_aliases=True)
     dead=emojize(':skull:', use_aliases=True)
     blue=emojize(':large_blue_circle:', use_aliases=True)
@@ -402,6 +478,11 @@ def reallyshoot(game):
     yellow=emojize(':full_moon:', use_aliases=True)
     pobeda=emojize(':thumbsup:', use_aliases=True)
     porajenie=emojize(':-1:', use_aliases=True)
+    podrivnik=0
+    for podriv in game['players']:
+        if game['players'][podriv]['role']=='podrivnik':
+            if game['players'][podriv]['killed']==0:
+                podrivnik=1
     for ids in game['players']:
         if game['players'][ids]['blue']==1:
             color=blue
@@ -430,17 +511,28 @@ def reallyshoot(game):
                 glavar=game['players'][idss]
         if game['players'][ids]['blue']==1:
             if glavar['killed']==0:
+              if podrivnik!=1:
                 win=pobeda+'Выиграл\n'
+              else:
+                win=porajenie+'Проиграл\n'
             else:
                 win=porajenie+'Проиграл\n'
             if game['players'][ids]['killany']!=None:
                 if game['players'][ids]['killany']['role']=='prohojii':
                     win=porajenie+'Проиграл (убил прохожего)\n'
+                if game['players'][ids]['killany2']['role']=='prohojii':
+                    win=porajenie+'Проиграл (убил прохожего)\n'
                 if game['players'][ids]['killany']['role']=='primanka':
                     win=porajenie+'Проиграл (убил приманку)\n'
+                if game['players'][ids]['killany2']['role']=='primanka':
+                    win=porajenie+'Проиграл (убил приманку)\n'
         elif game['players'][ids]['red']==1:
+          if game['players'][ids]['role']!='redprimanka':
             if glavar['killed']==1:
+              if podrivnik!=1:
                 win=pobeda+'Выиграл\n'
+              else:
+                win=porajenie+'Проиграл\n'
             else:
                 win=porajenie+'Проиграл\n'
             if game['players'][ids]['killany']!=None:
@@ -448,15 +540,34 @@ def reallyshoot(game):
                         win=porajenie+'Проиграл (убил прохожего)\n'
                 if game['players'][ids]['killany']['role']=='primanka':
                         win=porajenie+'Проиграл (убил приманку)\n'
+          else:            
+            if glavar['killed']==1 or game['players'][ids]['killed']==1:
+              if podrivnik!=1:
+                win=pobeda+'Выиграл\n'
+              else:
+                win=porajenie+'Проиграл\n'
+            else:
+                win=porajenie+'Проиграл\n'
+            if 'gangster' or 'agent' in game['players'][ids]['killedby']:
+                if podrivnik!=1:
+                    win=pobeda+'Выиграл\n'
+                else:
+                    win=porajenie+'Проиграл\n'
         elif game['players'][ids]['yellow']==1:
             if game['players'][ids]['role']=='prohojii':
                 if game['players'][ids]['killed']==1:
                     win=porajenie+'Проиграл\n'
                 else:
+                  if podrivnik!=1:
                     win=pobeda+'Выиграл\n'
+                  else:
+                    win=porajenie+'Проиграл\n'
             if game['players'][ids]['role']=='primanka':
                     if game['players'][ids]['killed']==1:
+                      if podrivnik!=1:
                         win=pobeda+'Выиграл\n'
+                      else:
+                        win=porajenie+'Проиграл\n'
                     else:
                         win=porajenie+'Проиграл\n'
             if game['players'][ids]['role']=='mirotvorets':
@@ -467,7 +578,15 @@ def reallyshoot(game):
                     if i==1:
                         win=porajenie+'Проиграл\n'
                     else:
+                      if podrivnik!=1:
                         win=pobeda+'Выиграл\n'
+                      else:
+                        win=porajenie+'Проиграл\n'
+            if role=='podrivnik':
+                if game['players'][ids]['killed']==0:
+                    win=pobeda+'Выиграл\n'
+                else:
+                    win=porajenie+'Проиграл\n'
         text+=game['players'][ids]['name']+': '+color+role+','+alive+','+win
     bot.send_message(game['id'], 'Результаты игры:\n'+text)
     del games[game['id']]
@@ -491,20 +610,24 @@ def createuser(id, name, x):
         'name':name,
         'id':id,
         'number':x,
-        'text':None,
+        'text':'',
         'shuffle':0,
         'target':None,
+        'target2':None
         'killed':0,
         'cankill':0,
         'defence':0,
         'killany':None,
+        'killany2':None,
         'candef':0,
         'blue':0,
         'red':0,
         'yellow':0,
         'win':0,
         'golos':1,
-        'message':0
+        'message':0,
+        'picks':2,
+        'killedby':[]
     }
           }
     
