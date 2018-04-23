@@ -166,6 +166,7 @@ def xod(game):
         i=random.randint(0, len(roletext)-1)
         if i not in numbers:
             roletext1.append(roletext[i])
+            numbers.append(i)
     for bb in roletext1:
         roletextfinal+=bb      
     text=''
