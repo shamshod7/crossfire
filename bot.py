@@ -141,13 +141,13 @@ def xod(game):
     for g in game['players']:
         if game['players'][g]['role']=='agent':
             text='Ты агент'
-            roletext.append('Агент\n')
+            roletext.append('Агент')
         elif game['players'][g]['role']=='killer':
             text='Ты киллер'
             roletext.append('Киллер')
         elif game['players'][g]['role']=='prohojii':
             text='Ты прохожий'
-            roletext+='Прохожий'
+            roletext.append('Прохожий')
         elif game['players'][g]['role']=='primanka':
             text='Ты приманка'
             roletext.append('Приманка')
