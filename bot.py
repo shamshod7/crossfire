@@ -308,7 +308,10 @@ def shoot(game):
             if game['players'][ids]['id']!=game['players'][g]['id']:
                 Keyboard.add(types.InlineKeyboardButton(text=game['players'][ids]['name'], callback_data=str(game['players'][ids]['number'])))
         msg=bot.send_message(game['players'][g]['id'], 'Кого ты выбираешь целью?', reply_markup=Keyboard)
-        game['toedit'].append(msg)
+        game['players'][g]['message']={'msg':msg,
+                                       'edit':1
+                                      }
+                                       
     bot.send_message(game['id'], 'Теперь выбирайте, на кого хотите направить пистолеты!')
     t=threading.Timer(45, endshoot, args=[game])
     t.start()
@@ -328,15 +331,16 @@ def inline(call):
                     target=game['players'][z]
             game['players'][call.from_user.id]['text']=game['players'][call.from_user.id]['name']+' стреляет в '+target['name']
             medit('Выбор сделан: '+target['name'],call.from_user.id,call.message.message_id)
+            game['players'][call.from_user.id]['message']['edit']=0
             game['players'][call.from_user.id]['target']=target
             
         
 
 def endshoot(game):
     text=''
-    for msg in game['toedit']:
-        if 'Кого ты выбираешь целью?' in msg.text:
-            medit('Время вышло!', msg.chat.id, msg.message_id)
+    for msg in game['players']:
+        if game['players'][msg]['message']['edit']==1:
+            medit('Время вышло!', game['players'][msg]['message']['msg'].chat.id, game['players'][msg]['message']['msg'].message_id)
     for ids in game['players']:
         if game['players'][ids]['text']!=None:
             text+=game['players'][ids]['text']+'\n'
@@ -494,7 +498,8 @@ def createuser(id, name, x):
         'red':0,
         'yellow':0,
         'win':0,
-        'golos':1
+        'golos':1,
+        'message':0
     }
           }
     
