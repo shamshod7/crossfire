@@ -305,6 +305,7 @@ def shoot(game):
                 Keyboard.add(types.InlineKeyboardButton(text=game['players'][ids]['name'], callback_data=str(game['players'][ids]['number'])))
         msg=bot.send_message(game['players'][g]['id'], 'Кого ты выбираешь целью?', reply_markup=Keyboard)
         game['toedit'].append(msg)
+    bot.send_message(game['id'], 'Теперь выбирайте, на кого хотите направить пистолеты!')
     t=threading.Timer(30, endshoot, args=[game])
     t.start()
         
@@ -379,7 +380,7 @@ def reallyshoot(game):
     text=''
     for ids in game['players']:
         text+=game['players'][ids]['text']+'\n'
-    bot.send_message(game['id'],'По-настоящему выстрельнувшие:\n'+text)
+    bot.send_message(game['id'],'По-настоящему выстрелившие:\n'+text)
     text=''
     live=emojize(':neutral_face:', use_aliases=True)
     dead=emojize(':skull:', use_aliases=True)
