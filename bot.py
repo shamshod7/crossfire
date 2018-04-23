@@ -26,7 +26,7 @@ def start(m):
     if len(x)==2:
        try:
         if m.from_user.id not in games[int(x[1])]['players']:
-         if len(games[int(x[1])]['players'])<=10 and len(games[int(x[1])]['players'])>=4:
+         if len(games[int(x[1])]['players'])<=10:
           if int(x[1])<0:
             i=0
             for ids in games[int(x[1])]['players']:
