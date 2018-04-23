@@ -407,7 +407,7 @@ def endshoot(game):
         if game['players'][msg]['message']['edit']==1:
             medit('Время вышло!', game['players'][msg]['message']['msg'].chat.id, game['players'][msg]['message']['msg'].message_id)
     for ids in game['players']:
-        if game['players'][ids]['text']!=None:
+        if game['players'][ids]['text']!='':
             text+=game['players'][ids]['text']+'\n'
         else:
             text+='*'+game['players'][ids]['name']+'*'+'💨не стреляет\n'
