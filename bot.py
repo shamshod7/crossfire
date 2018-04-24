@@ -74,7 +74,7 @@ def startgame(m):
 def begin(id):
   if id in games:
    if games[id]['play']==0:
-    if len(games[id]['players'])>=4:
+    if len(games[id]['players'])>=5:
         for ids in games[id]['todel']:
             try:
                 bot.delete_message(id, ids)
@@ -353,7 +353,7 @@ def shoot(game):
                                       }
                                        
     bot.send_message(game['id'], 'Теперь выбирайте, на кого хотите направить пистолеты!')
-    t=threading.Timer(45, endshoot, args=[game])
+    t=threading.Timer(30, endshoot, args=[game])
     t.start()
         
 
