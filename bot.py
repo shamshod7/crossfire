@@ -32,6 +32,22 @@ if True:
     user.remove({})
 
 
+@bot.message_handler(commands=['stats'])
+def stats(m):
+    x=user.find_one({'id':m.from_user.id})
+    if x!=None:
+        try:
+            vinrate=round((x['win']/x['games'])*100, 1)
+        except:
+            vinrate=0
+        user.update_one({'id':m.from_user.id}, {'$set':{'name':m.from_user.first_name}})
+        bot.send_message(m.chat.id, 'Статистика пользователя '+m.from_user.first_name+':\n'+
+                     '*Игр сыграно:* '+str(x['games'])+'\n*Победы:* '+str(x['win'])+'\n*Поражения:* '+str(x['loose'])+
+                     '\n*Винрейт:* '+str(vinrate), parse_mode='markdown')
+    else:
+        bot.send_message(m.chat.id, 'Сначала напишите боту /start!')
+    
+    
 @bot.message_handler(commands=['start'])
 def start(m):
     x=user.find_one({'id':m.from_user.id})
