@@ -91,16 +91,39 @@ def start(m):
         if m.chat.id==m.from_user.id:
             bot.send_message(m.from_user.id, 'Игра crossfire')
 
+def secnd(id):
+    games[id]['timebeforestart']-=1
+    if games[id]['timebeforestart']<=0:
+        begin(id)
+    else:
+        Keyboard=types.InlineKeyboardMarkup()
+        Keyboard.add(types.InlineKeyboardButton(text='Присоединиться', url='telegram.me/crossfirebot?start='+str(m.chat.id)))
+        if games[id]['timebeforestart']==180:
+            msg=bot.send_message(m.chat.id, 'Осталось 3 минуты! Жмите "Присоединиться", чтобы поучаствовать в перестрелке!', reply_markup=Keyboard)
+            games[id]['todel'].append(msg.message_id)
+        elif games[id]['timebeforestart']==60:
+            msg=bot.send_message(m.chat.id, 'Осталось 60 секунд! Жмите "Присоединиться", чтобы поучаствовать в перестрелке!', reply_markup=Keyboard)
+            games[id]['todel'].append(msg.message_id)
+        elif games[id]['timebeforestart']==30:
+            msg=bot.send_message(m.chat.id, 'Осталось 30 секунд! Жмите "Присоединиться", чтобы поучаствовать в перестрелке!', reply_markup=Keyboard)
+            games[id]['todel'].append(msg.message_id)
+        elif games[id]['timebeforestart']==10:
+            msg=bot.send_message(m.chat.id, 'Осталось 10 секунд! Жмите "Присоединиться", чтобы поучаствовать в перестрелке!', reply_markup=Keyboard)
+            games[id]['todel'].append(msg.message_id)
+        t=threading.Timer(1, secnd, args=[id])
+        t.start()
+            
+            
 @bot.message_handler(commands=['startgame'])
 def startgame(m):
   if m.chat.id<0:
     if m.chat.id not in games:
-        t=threading.Timer(300, begin, args=[m.chat.id])
-        t.start()
-        games.update(creategame(m.chat.id, t))   
+        games.update(creategame(m.chat.id))  
+        tt=threading.Timer(1, secnd, args=[m.chat.id])
+        tt.start()
         Keyboard=types.InlineKeyboardMarkup()
-        Keyboard.add(types.InlineKeyboardButton(text='Join', url='telegram.me/crossfirebot?start='+str(m.chat.id)))
-        msg=bot.send_message(m.chat.id, 'Присоединиться', reply_markup=Keyboard)
+        Keyboard.add(types.InlineKeyboardButton(text='Присоединиться', url='telegram.me/crossfirebot?start='+str(m.chat.id)))
+        msg=bot.send_message(m.chat.id, 'Жмите, чтобы присоединиться', reply_markup=Keyboard)
         for ids in games:
             if games[ids]['id']==m.chat.id:
                 game=games[ids]
@@ -108,7 +131,7 @@ def startgame(m):
     else:
       if games[m.chat.id]['play']==0:
         Keyboard=types.InlineKeyboardMarkup()
-        Keyboard.add(types.InlineKeyboardButton(text='Join', url='telegram.me/crossfirebot?start='+str(m.chat.id)))
+        Keyboard.add(types.InlineKeyboardButton(text='Присоединиться', url='telegram.me/crossfirebot?start='+str(m.chat.id)))
         msg=bot.send_message(m.chat.id, 'Игра уже запущена! Жмите "присоединиться"!', reply_markup=Keyboard)
         for ids in games:
             if games[ids]['id']==m.chat.id:
@@ -689,14 +712,14 @@ def reallyshoot(game):
         
      
         
-def creategame(id, t):
+def creategame(id):
     return {id:{
         'players':{},
         'id':id,
-        'timer':t,
         'todel':[],
         'toedit':[],
-        'play':0
+        'play':0,
+        'timebeforestart':300
     }
            }
         
