@@ -28,9 +28,6 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
                                  parse_mode=parse_mode)
 
 
-if True:
-    user.remove({})
-
 
 @bot.message_handler(commands=['stats'])
 def stats(m):
@@ -52,6 +49,7 @@ def stats(m):
 def start(m):
     x=user.find_one({'id':m.from_user.id})
     if x==None:
+        
         user.insert_one({'id':m.from_user.id,
                          'name':m.from_user.first_name,
                          'win':0,
