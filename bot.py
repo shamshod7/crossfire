@@ -14,6 +14,34 @@ bot = telebot.TeleBot(token)
 
 games={}
 
+client1=os.environ['database']
+client=MongoClient(client1)
+db=client.god
+user=db.users
+token=db.tokens
+mob=db.mobs
+
+try:
+    user.find_many({}, {'$set':{'win':0,
+                                'loose':0,
+                                'games':0,
+                                'blue':0,
+                                'red':0,
+                                'yellow':0,
+                                'agent':0,
+                                'killer':0,
+                                'glavar':0,
+                                'prohojii':0,
+                                'primanka':0,
+                                'redprimanka':0,
+                                'podrivnik':0,
+                                'gangster':0,
+                                'telohranitel':0,
+                                'mirotvorets':0
+                               }})
+    print('yes')
+except:             
+    pass
 
 def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdown'):
     return bot.edit_message_text(chat_id=chat_id,message_id=message_id,text=message_text,reply_markup=reply_markup,
