@@ -35,8 +35,26 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
 
 @bot.message_handler(commands=['start'])
 def start(m):
-    x=
-    user.insert_one
+    x=user.find_one({'id':m.from_user.id})
+    if x==None:
+        user.insert_one({'id':m.from_user.id,
+                         'win':0,
+                         'loose':0,
+                         'games':0,
+                         'red':0,
+                         'blue':0,
+                         'yellow':0,
+                         'agent':0,
+                         'killer':0,
+                         'glavar':0,
+                         'prohojii':0,
+                         'primanka':0,
+                         'mirotvorets':0,
+                         'gangster':0,
+                         'podrivnik':0,
+                         'redprimanka':0,
+                         'telohranitel':0
+                        })
     x=m.text.split('/start')
     if len(x)==2:
        try:
