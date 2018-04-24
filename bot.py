@@ -261,6 +261,8 @@ def shuffle1(game):
             game['players'][ids]['role']=roles[0]
     bot.send_message(game['id'], 'Ваши роли были переданы человеку над вами! Теперь посмотрите свои новые роли.')
     for g in game['players']:
+        bot.send_message(game['players'][g]['id'], 'Ваши роли были переданы человеку над вами! Теперь посмотрите свои новые роли.')
+    for g in game['players']:
         if game['players'][g]['role']=='agent':
             text='Ты агент'
         elif game['players'][g]['role']=='killer':
@@ -341,6 +343,8 @@ def shuffle2(game):
     for ids in centers:
         text2+=ids+'\n'
     bot.send_message(game['id'], 'Ваши роли были перемешаны по 3 штуки! Центры перемешивания: *\n'+text2+'*', parse_mode='markdown')
+    for g in game['players']:
+        bot.send_message(game['players'][g]['id'], 'Ваши роли были перемешаны по 3 штуки! Центры перемешивания: *\n'+text2+'*', parse_mode='markdown')
     for g in game['players']:
         if game['players'][g]['role']=='agent':
             game['players'][g]['cankill']=1
