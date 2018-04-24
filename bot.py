@@ -671,35 +671,7 @@ def reallyshoot(game):
     bot.send_message(game['id'], 'Результаты игры:\n'+text)
     del games[game['id']]
         
-        
-       ''' 
-       if game['players'][ids]['killed']==1:
-                win=pobeda+'Выиграл\n'
-                else:
-                    win=porajenie+'Проиграл\n'
-       
-        if game['players'][ids]['role']=='agent':
-            role='Агент'
-        elif game['players'][ids]['role']=='killer':
-            role='Киллер'
-        elif game['players'][ids]['role']=='prohojii':
-            role='Прохожий'
-        elif game['players'][ids]['role']=='primanka':
-            role='Приманка'
-        elif game['players'][ids]['role']=='glavar':
-            role='Главарь'
-        elif game['players'][ids]['role']=='telohranitel':
-            role='Телохранитель'
-        elif game['players'][ids]['role']=='mirotvorets':
-            role='Миротворец'
-        elif game['players'][ids]['role']=='gangster':
-            role='Гангстер'
-        elif game['players'][ids]['role']=='podrivnik':
-            role='Подрывник'
-        elif game['players'][ids]['role']=='redprimanka':
-            role='Красная приманка'
-        '''
-        
+     
         
 def creategame(id, t):
     return {id:{
