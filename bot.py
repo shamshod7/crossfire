@@ -97,7 +97,7 @@ def secnd(id):
         begin(id)
     else:
         Keyboard=types.InlineKeyboardMarkup()
-        Keyboard.add(types.InlineKeyboardButton(text='Присоединиться', url='telegram.me/crossfirebot?start='+str(m.chat.id)))
+        Keyboard.add(types.InlineKeyboardButton(text='Присоединиться', url='telegram.me/crossfirebot?start='+str(id)))
         if games[id]['timebeforestart']==180:
             msg=bot.send_message(m.chat.id, 'Осталось 3 минуты! Жмите "Присоединиться", чтобы поучаствовать в перестрелке!', reply_markup=Keyboard)
             games[id]['todel'].append(msg.message_id)
