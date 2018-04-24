@@ -22,7 +22,7 @@ user=db.users
 token=db.tokens
 mob=db.mobs
 
-try:
+if True:
     user.find_many({}, {'$set':{'win':0,
                                 'loose':0,
                                 'games':0,
@@ -41,8 +41,7 @@ try:
                                 'mirotvorets':0
                                }})
     print('yes')
-except:             
-    pass
+
 
 def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdown'):
     return bot.edit_message_text(chat_id=chat_id,message_id=message_id,text=message_text,reply_markup=reply_markup,
