@@ -43,7 +43,7 @@ def stats(m):
         user.update_one({'id':m.from_user.id}, {'$set':{'name':m.from_user.first_name}})
         bot.send_message(m.chat.id, 'Статистика пользователя '+m.from_user.first_name+':\n'+
                      '*Игр сыграно:* '+str(x['games'])+'\n*Победы:* '+str(x['win'])+'\n*Поражения:* '+str(x['loose'])+
-                     '\n*Винрейт:* '+str(vinrate), parse_mode='markdown')
+                     '\n*Винрейт:* '+str(vinrate)+'%', parse_mode='markdown')
     else:
         bot.send_message(m.chat.id, 'Сначала напишите боту /start!')
     
