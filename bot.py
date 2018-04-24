@@ -23,22 +23,7 @@ token=db.tokens
 mob=db.mobs
 
 if True:
-    user.update_many({}, {'$set':{'win':0,
-                                'loose':0,
-                                'games':0,
-                                'blue':0,
-                                'red':0,
-                                'yellow':0,
-                                'agent':0,
-                                'killer':0,
-                                'glavar':0,
-                                'prohojii':0,
-                                'primanka':0,
-                                'redprimanka':0,
-                                'podrivnik':0,
-                                'gangster':0,
-                                'telohranitel':0,
-                                'mirotvorets':0
+    user.update_many({}, {'$set':{'id':None
                                }})
     print('yes')
 
