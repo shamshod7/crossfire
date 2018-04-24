@@ -28,6 +28,10 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
                                  parse_mode=parse_mode)
 
 
+if True:
+    user.remove({})
+
+
 @bot.message_handler(commands=['start'])
 def start(m):
     x=user.find_one({'id':m.from_user.id})
@@ -660,7 +664,7 @@ def reallyshoot(game):
             user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'alive':1}})
         if win==pobeda+'Выиграл\n':
             user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'win':1}})
-        elif win=porajenie+'Проиграл\n':
+        elif win==porajenie+'Проиграл\n':
             user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'loose':1}})
         user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'games':1}})
             
