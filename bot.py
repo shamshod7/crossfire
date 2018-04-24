@@ -331,9 +331,9 @@ def shuffle2(game):
             g['role']=roles[x]
             pick.append(x)
         if first==len(game['players']):
-            first=2
+            first=3
         elif first==len(game['players'])-1:
-            first=1
+            first=2
         else:
             first+=2
         i+=1
