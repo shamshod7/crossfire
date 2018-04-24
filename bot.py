@@ -33,6 +33,7 @@ def start(m):
     x=user.find_one({'id':m.from_user.id})
     if x==None:
         user.insert_one({'id':m.from_user.id,
+                         'name':m.from_user.first_name,
                          'win':0,
                          'loose':0,
                          'games':0,
@@ -50,6 +51,7 @@ def start(m):
                          'redprimanka':0,
                          'telohranitel':0
                         })
+        print('Юзер создал аккаунт! Его имя: '+m.from_user.first_name)
     x=m.text.split('/start')
     if len(x)==2:
        try:
