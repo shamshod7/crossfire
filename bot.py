@@ -400,7 +400,7 @@ def shoot(game):
                                       }
                                        
     bot.send_message(game['id'], 'Теперь выбирайте, на кого хотите направить пистолеты!')
-    t=threading.Timer(30, endshoot, args=[game])
+    t=threading.Timer(60, endshoot, args=[game])
     t.start()
         
 
