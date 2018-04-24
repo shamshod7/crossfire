@@ -49,7 +49,8 @@ def start(m):
                          'gangster':0,
                          'podrivnik':0,
                          'redprimanka':0,
-                         'telohranitel':0
+                         'telohranitel':0,
+                         'alive':0
                         })
         print('Юзер создал аккаунт! Его имя: '+m.from_user.first_name)
     x=m.text.split('/start')
@@ -532,6 +533,14 @@ def reallyshoot(game):
             role='Главарь'
         elif game['players'][ids]['role']=='telohranitel':
             role='Телохранитель'
+        elif game['players'][ids]['role']=='mirotvorets':
+            role='Миротворец'
+        elif game['players'][ids]['role']=='gangster':
+            role='Гангстер'
+        elif game['players'][ids]['role']=='podrivnik':
+            role='Подрывник'
+        elif game['players'][ids]['role']=='redprimanka':
+            role='Красная приманка'
         if game['players'][ids]['killed']==1:
             alive=dead+'Мёртв'
         else:
@@ -621,8 +630,71 @@ def reallyshoot(game):
                 else:
                     win=porajenie+'Проиграл\n'
         text+=game['players'][ids]['name']+': '+color+role+','+alive+','+win
+        if color==red:
+            user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'red':1}})
+        elif color==blue:
+            user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'blue':1}})
+        elif color==yellow:
+            user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'yellow':1}})
+        if role=='Агент':
+            user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'agent':1}})
+        elif role=='Киллер':
+            user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'killer':1}})
+        elif role=='Прохожий':
+            user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'prohojii':1}})
+        elif role=='Приманка':
+            user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'primanka':1}})
+        elif role=='Главарь':
+            user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'glavar':1}})
+        elif role=='Телохранитель':
+            user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'telohranitel':1}})
+        elif role=='Миротворец':
+            user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'mirotvorets':1}})
+        elif role=='Гангстер':
+            user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'gangster':1}})
+        elif role=='Подрывник':
+            user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'podrivnik':1}})
+        elif role=='Красная приманка':
+            user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'redprimanka':1}})
+        if alive==live+'Жив':
+            user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'alive':1}})
+        if win==pobeda+'Выиграл\n':
+            user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'win':1}})
+        elif win=porajenie+'Проиграл\n':
+            user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'loose':1}})
+        user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'games':1}})
+            
     bot.send_message(game['id'], 'Результаты игры:\n'+text)
     del games[game['id']]
+        
+        
+       ''' 
+       if game['players'][ids]['killed']==1:
+                win=pobeda+'Выиграл\n'
+                else:
+                    win=porajenie+'Проиграл\n'
+       
+        if game['players'][ids]['role']=='agent':
+            role='Агент'
+        elif game['players'][ids]['role']=='killer':
+            role='Киллер'
+        elif game['players'][ids]['role']=='prohojii':
+            role='Прохожий'
+        elif game['players'][ids]['role']=='primanka':
+            role='Приманка'
+        elif game['players'][ids]['role']=='glavar':
+            role='Главарь'
+        elif game['players'][ids]['role']=='telohranitel':
+            role='Телохранитель'
+        elif game['players'][ids]['role']=='mirotvorets':
+            role='Миротворец'
+        elif game['players'][ids]['role']=='gangster':
+            role='Гангстер'
+        elif game['players'][ids]['role']=='podrivnik':
+            role='Подрывник'
+        elif game['players'][ids]['role']=='redprimanka':
+            role='Красная приманка'
+        '''
         
         
 def creategame(id, t):
