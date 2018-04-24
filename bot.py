@@ -23,7 +23,7 @@ token=db.tokens
 mob=db.mobs
 
 if True:
-    user.find_many({}, {'$set':{'win':0,
+    user.update_many({}, {'$set':{'win':0,
                                 'loose':0,
                                 'games':0,
                                 'blue':0,
