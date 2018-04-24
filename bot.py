@@ -23,8 +23,8 @@ token=db.tokens
 mob=db.mobs
 
 if True:
-    user.update_many({}, {'$set':{'id':None
-                               }})
+    user.remove({
+                               })
     print('yes')
 
 
@@ -35,6 +35,8 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
 
 @bot.message_handler(commands=['start'])
 def start(m):
+    x=
+    user.insert_one
     x=m.text.split('/start')
     if len(x)==2:
        try:
