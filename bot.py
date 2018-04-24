@@ -676,7 +676,7 @@ def reallyshoot(game):
             user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'alive':1}})
         if win==pobeda+'Выиграл\n':
             user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'win':1}})
-        elif win==porajenie+'Проиграл\n':
+        elif win==porajenie+'Проиграл\n' or win==porajenie+'Проиграл (убил приманку)\n' or win==porajenie+'Проиграл (убил прохожего)\n':
             user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'loose':1}})
         user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'games':1}})
             
