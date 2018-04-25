@@ -752,7 +752,7 @@ def creategame(id):
         'play':0,
         'timebeforestart':300,
         'users':None,
-        'userlist':''
+        'userlist':'Игроки:\n\n'
     }
            }
         
