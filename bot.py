@@ -378,8 +378,10 @@ def shuffle2(game):
             first=3
         elif first==len(game['players'])-1:
             first=2
+        elif first==len(game['players'])-2:
+            first=1
         else:
-            first+=2
+            first+=3
         i+=1
     text2=''
     for ids in centers:
