@@ -80,6 +80,9 @@ def start(m):
                 i+=1         
             if games[int(x[1])]['play']==0:
                 games[int(x[1])]['players'].update(createuser(m.from_user.id, m.from_user.first_name, i+1))
+                text=[m.from_user.first_name]('tg://user?id=m.from_user.id')
+                medit(games[int(x[1])]['userlist']+text+'\n', games[int(x[1])]['id'], games[int(x[1])]['users'])
+                games[int(x[1])]['userlist']+=text+'\n'
                 for ids in games[int(x[1])]['players']:
                     if games[int(x[1])]['players'][ids]['id']==m.from_user.id:
                         player=games[int(x[1])]['players'][ids]
@@ -133,6 +136,8 @@ def startgame(m):
         Keyboard=types.InlineKeyboardMarkup()
         Keyboard.add(types.InlineKeyboardButton(text='Присоединиться', url='telegram.me/crossfirebot?start='+str(m.chat.id)))
         msg=bot.send_message(m.chat.id, 'Игра уже запущена! Жмите "присоединиться"!', reply_markup=Keyboard)
+        msg2=bot.send_message(m.chat.id, 'Игроки:\n')
+        games[m.chat.id]['users']=msg2.message_id
         for ids in games:
             if games[ids]['id']==m.chat.id:
                 game=games[ids]
@@ -181,7 +186,7 @@ def forcem(m):
                 i=10
     if i==1:
         if m.chat.id in games:
-            begin(m.chat.id)
+            games[m.chat.id]['timebeforestart']=1
     else:
         bot.send_message(m.chat.id, 'Только администратор может использовать эту команду!')
         
@@ -199,7 +204,7 @@ def xod(game):
     elif len(game['players'])==6:
         roless=['agent','killer', 'glavar', 'prohojii', 'primanka','mirotvorets']
     elif len(game['players'])==7:
-        roless=['agent','killer', 'glavar', 'prohojii', 'primanka','agent', 'killer']
+        roless=['agent','killer', 'glavar', 'podrivnik', 'prohojii','agent', 'killer']
     elif len(game['players'])==8:
         roless=['glavar', 'prohojii', 'podrivnik','gangster','killer', 'killer', 'telohranitel','redprimanka']
     elif len(game['players'])==9:
@@ -719,7 +724,9 @@ def creategame(id):
         'todel':[],
         'toedit':[],
         'play':0,
-        'timebeforestart':300
+        'timebeforestart':300,
+        'users':None,
+        'userlist':''
     }
            }
         
