@@ -267,6 +267,9 @@ def xod(game):
         text+=gg+'\n'
     bot.send_message(game['id'], 'Роли: \n*'+roletextfinal+'*', parse_mode='markdown')
     bot.send_message(game['id'], 'Игроки: \n'+'*'+text+'*', parse_mode='markdown')
+    for gg in game['players']:
+        bot.send_message(game['players'][gg]['id'], 'Роли: \n*'+roletextfinal+'*', parse_mode='markdown')
+        bot.send_message(game['players'][gg]['id'], 'Игроки: \n'+'*'+text+'*', parse_mode='markdown')
     t=threading.Timer(5, shuffle1, args=[game])
     t.start()
             
