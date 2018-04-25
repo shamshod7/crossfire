@@ -97,7 +97,8 @@ def start(m):
 @bot.message_handler(commands=['flee'])
 def flee(m):
     if m.chat.id in games:
-        games[m.chat.id]['players'].remove(m.from_user.id)
+      if m.from_user.id in games[m.chat.id]['players']:
+        del games[m.chat.id]['players'][m.from_user.id]
         bot.send_message(m.chat.id, m.from_user.first_name+' сбежал!')
             
             
