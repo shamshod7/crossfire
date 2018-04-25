@@ -135,6 +135,8 @@ def startgame(m):
         Keyboard=types.InlineKeyboardMarkup()
         Keyboard.add(types.InlineKeyboardButton(text='Присоединиться', url='telegram.me/crossfirebot?start='+str(m.chat.id)))
         msg=bot.send_message(m.chat.id, 'Жмите, чтобы присоединиться', reply_markup=Keyboard)
+        msg2=bot.send_message(m.chat.id, 'Игроки:\n')
+        games[m.chat.id]['users']=msg2.message_id
         for ids in games:
             if games[ids]['id']==m.chat.id:
                 game=games[ids]
@@ -144,8 +146,6 @@ def startgame(m):
         Keyboard=types.InlineKeyboardMarkup()
         Keyboard.add(types.InlineKeyboardButton(text='Присоединиться', url='telegram.me/crossfirebot?start='+str(m.chat.id)))
         msg=bot.send_message(m.chat.id, 'Игра уже запущена! Жмите "присоединиться"!', reply_markup=Keyboard)
-        msg2=bot.send_message(m.chat.id, 'Игроки:\n')
-        games[m.chat.id]['users']=msg2.message_id
         for ids in games:
             if games[ids]['id']==m.chat.id:
                 game=games[ids]
