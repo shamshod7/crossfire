@@ -80,13 +80,13 @@ def start(m):
                 i+=1         
             if games[int(x[1])]['play']==0:
                 games[int(x[1])]['players'].update(createuser(m.from_user.id, m.from_user.first_name, i+1))
-                text=m.from_user.first_name
-                
-                
+                text=m.from_user.first_name            
                 for ids in games[int(x[1])]['players']:
                     if games[int(x[1])]['players'][ids]['id']==m.from_user.id:
                         player=games[int(x[1])]['players'][ids]
                 bot.send_message(m.from_user.id, 'Вы успешно присоединились!')
+                medit(games[int(x[1])]['userlist']+text+'\n', games[int(x[1])]['id'], games[int(x[1])]['users'])
+                games[int(x[1])]['userlist']+=text+'\n'
                 bot.send_message(games[int(x[1])]['id'], player['name']+' присоединился!')
          else:
             bot.send_message(m.from_user.id, 'Слишком много игроков! Мест не осталось!')
