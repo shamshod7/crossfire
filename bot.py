@@ -252,8 +252,10 @@ def xod(game):
         elif game['players'][g]['role']=='redprimanka':
             text='Ты красная приманка'
             roletext.append('Красная приманка')
-            
-        bot.send_message(game['players'][g]['id'], text)
+        try:    
+          bot.send_message(game['players'][g]['id'], text)
+        except:
+            pass
     players=[]
     roletext1=[]
     numbers=[]
@@ -270,8 +272,11 @@ def xod(game):
         players.append(game['players'][g]['name'])
     for gg in players:
         text+=gg+'\n'
-    bot.send_message(game['id'], 'Роли: \n*'+roletextfinal+'*', parse_mode='markdown')
-    bot.send_message(game['id'], 'Игроки: \n'+'*'+text+'*', parse_mode='markdown')
+    try:
+      bot.send_message(game['id'], 'Роли: \n*'+roletextfinal+'*', parse_mode='markdown')
+      bot.send_message(game['id'], 'Игроки: \n'+'*'+text+'*', parse_mode='markdown')
+    except:
+        pass
     for gg in game['players']:
         bot.send_message(game['players'][gg]['id'], 'Роли: \n*'+roletextfinal+'*', parse_mode='markdown')
         bot.send_message(game['players'][gg]['id'], 'Игроки: \n'+'*'+text+'*', parse_mode='markdown')
@@ -292,7 +297,10 @@ def shuffle1(game):
             game['players'][ids]['role']=roles[0]
     bot.send_message(game['id'], 'Ваши роли были переданы человеку над вами! Теперь посмотрите свои новые роли.')
     for g in game['players']:
-        bot.send_message(game['players'][g]['id'], 'Ваши роли были переданы человеку над вами! Теперь посмотрите свои новые роли.')
+        try:
+          bot.send_message(game['players'][g]['id'], 'Ваши роли были переданы человеку над вами! Теперь посмотрите свои новые роли.')
+        except:
+            pass
     for g in game['players']:
         if game['players'][g]['role']=='agent':
             text='Ты агент'
@@ -314,7 +322,10 @@ def shuffle1(game):
             text='Ты гангстер'
         elif game['players'][g]['role']=='redprimanka':
             text='Ты красная приманка'
-        bot.send_message(game['players'][g]['id'], text)
+        try:
+          bot.send_message(game['players'][g]['id'], text)
+        except:
+            pass
     t=threading.Timer(5, shuffle2, args=[game])
     t.start()
         
@@ -375,7 +386,10 @@ def shuffle2(game):
         text2+=ids+'\n'
     bot.send_message(game['id'], 'Ваши роли были перемешаны по 3 штуки! Центры перемешивания: *\n'+text2+'*', parse_mode='markdown')
     for g in game['players']:
-        bot.send_message(game['players'][g]['id'], 'Ваши роли были перемешаны по 3 штуки! Центры перемешивания: *\n'+text2+'*', parse_mode='markdown')
+        try:
+          bot.send_message(game['players'][g]['id'], 'Ваши роли были перемешаны по 3 штуки! Центры перемешивания: *\n'+text2+'*', parse_mode='markdown')
+        except:
+            pass
     for g in game['players']:
         if game['players'][g]['role']=='agent':
             game['players'][g]['cankill']=1
@@ -416,7 +430,10 @@ def shuffle2(game):
         elif game['players'][g]['role']=='redprimanka':
             text='Ты красная приманка'
             game['players'][g]['red']=1
-        bot.send_message(game['players'][g]['id'], text)
+        try:
+          bot.send_message(game['players'][g]['id'], text)
+        except:
+            pass
     t=threading.Timer(240, shoot, args=[game])
     t.start()
       
@@ -429,10 +446,13 @@ def shoot(game):
         for ids in game['players']:
             if game['players'][ids]['id']!=game['players'][g]['id']:
                 Keyboard.add(types.InlineKeyboardButton(text=game['players'][ids]['name'], callback_data=str(game['players'][ids]['number'])))
-        msg=bot.send_message(game['players'][g]['id'], 'Кого ты выбираешь целью?', reply_markup=Keyboard)
-        game['players'][g]['message']={'msg':msg,
+        try:
+          msg=bot.send_message(game['players'][g]['id'], 'Кого ты выбираешь целью?', reply_markup=Keyboard)
+          game['players'][g]['message']={'msg':msg,
                                        'edit':1
                                       }
+        except:
+            pass
                                        
     bot.send_message(game['id'], 'Теперь выбирайте, на кого хотите направить пистолеты!')
     t=threading.Timer(60, endshoot, args=[game])
