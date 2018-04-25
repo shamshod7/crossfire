@@ -71,7 +71,7 @@ def start(m):
         print('Юзер создал аккаунт! Его имя: '+m.from_user.first_name)
     x=m.text.split('/start')
     if len(x)==2:
-       try:
+       #try:
         if m.from_user.id not in games[int(x[1])]['players']:
          if len(games[int(x[1])]['players'])<10:
           if int(x[1])<0:
@@ -90,9 +90,9 @@ def start(m):
                 bot.send_message(games[int(x[1])]['id'], player['name']+' присоединился!')
          else:
             bot.send_message(m.from_user.id, 'Слишком много игроков! Мест не осталось!')
-       except:
-        if m.chat.id==m.from_user.id:
-            bot.send_message(m.from_user.id, 'Игра crossfire')
+      # except:
+      #  if m.chat.id==m.from_user.id:
+      #      bot.send_message(m.from_user.id, 'Игра crossfire')
 
 def secnd(id):
     games[id]['timebeforestart']-=1
