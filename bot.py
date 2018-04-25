@@ -94,6 +94,13 @@ def start(m):
         if m.chat.id==m.from_user.id:
             bot.send_message(m.from_user.id, 'Игра crossfire')
 
+@bot.message_handler(commands=['flee'])
+def flee(m):
+    if m.chat.id in games:
+        games[m.chat.id]['players'].remove(m.from_user.id)
+        bot.send_message(m.chat.id, m.from_user.first_name+' сбежал!')
+            
+            
 def secnd(id):
     games[id]['timebeforestart']-=1
     if games[id]['timebeforestart']<=0:
