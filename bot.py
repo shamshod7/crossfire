@@ -610,13 +610,10 @@ def reallyshoot(game):
             if game['players'][ids]['killany']!=None:
                 if game['players'][ids]['killany']['role']=='prohojii':
                     win=porajenie+'Проиграл (убил прохожего)\n'
-                           
-              
                 if game['players'][ids]['killany2']!=None:
                     if game['players'][ids]['killany2']['role']=='prohojii':
                         win=porajenie+'Проиграл (убил прохожего)\n'
-                if game['players'][ids]['killany2']!=None:
-               
+                if game['players'][ids]['killany2']!=None:           
         elif game['players'][ids]['red']==1:
           if game['players'][ids]['role']!='redprimanka':
             if glavar['killed']==1:
