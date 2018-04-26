@@ -578,6 +578,7 @@ def inline(call):
                 for g in game['players']:
                     Keyboard=types.InlineKeyboardMarkup()
                     for ids in game['players']:
+                      if game['players'][g]['target']!=None:
                         if game['players'][ids]['id']!=game['players'][g]['id'] and game['players'][ids]['id']!=game['players'][g]['target']['id']:
                             Keyboard.add(types.InlineKeyboardButton(text=game['players'][ids]['name'], callback_data=str(game['players'][ids]['number'])))
                 msg=bot.send_message(call.from_user.id, 'Теперь выберите вторую цель', reply_markup=Keyboard)
