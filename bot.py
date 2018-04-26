@@ -72,13 +72,9 @@ def start(m):
     x=m.text.split('/start')
     if len(x)==2:
        try:
-        print('1')
         if m.from_user.id not in games[int(x[1])]['players']:
-         print('2')
          if len(games[int(x[1])]['players'])<10:
-          print('3')
           if int(x[1])<0:
-            print('4')
             i=0
             for ids in games[int(x[1])]['players']:
                 i+=1         
@@ -141,7 +137,7 @@ def startgame(m):
         tt.start()
         Keyboard=types.InlineKeyboardMarkup()
         Keyboard.add(types.InlineKeyboardButton(text='Присоединиться', url='telegram.me/crossfirebot?start='+str(m.chat.id)))
-        msg=bot.send_message(m.chat.id, 'Жмите, чтобы присоединиться', reply_markup=Keyboard)
+        msg=bot.send_message(m.chat.id, m.from_user.first_name+' Начал(а) игру! Жмите кнопку ниже, чтобы присоединиться', reply_markup=Keyboard)
         msg2=bot.send_message(m.chat.id, 'Игроки:\n')
         games[m.chat.id]['users']=msg2.message_id
         for ids in games:
