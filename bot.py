@@ -80,12 +80,14 @@ def start(m):
                 i+=1         
             if games[int(x[1])]['play']==0:
                 games[int(x[1])]['players'].update(createuser(m.from_user.id, m.from_user.first_name, i+1))
-                text=m.from_user.first_name            
+                text=''           
                 for ids in games[int(x[1])]['players']:
                     if games[int(x[1])]['players'][ids]['id']==m.from_user.id:
                         player=games[int(x[1])]['players'][ids]
                 bot.send_message(m.from_user.id, 'Вы успешно присоединились!')
-                medit(games[int(x[1])]['userlist']+text+'\n', games[int(x[1])]['id'], games[int(x[1])]['users'])
+                for g in games[int(x[1])]['players']:
+                    text+=games[int(x[1])]['players'][g]['name']+'\n'
+                medit(text, games[int(x[1])]['id'], games[int(x[1])]['users'])
                 games[int(x[1])]['userlist']+=text+'\n'
                 bot.send_message(games[int(x[1])]['id'], player['name']+' присоединился!')
          else:
@@ -97,6 +99,7 @@ def start(m):
 @bot.message_handler(commands=['flee'])
 def flee(m):
     if m.chat.id in games:
+     if games[m.chat.id]['play']!=1:
       if m.from_user.id in games[m.chat.id]['players']:
         del games[m.chat.id]['players'][m.from_user.id]
         bot.send_message(m.chat.id, m.from_user.first_name+' сбежал!')
