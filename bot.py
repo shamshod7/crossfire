@@ -89,7 +89,7 @@ def start(m):
                 for g in games[int(x[1])]['players']:
                     text+=games[int(x[1])]['players'][g]['name']+'\n'
                     b+=1
-                medit('Игроки: '+str(i)+'\n\n'+text, games[int(x[1])]['id'], games[int(x[1])]['users'])
+                medit('Игроки: '+str(b)+'\n\n'+text, games[int(x[1])]['id'], games[int(x[1])]['users'])
                 games[int(x[1])]['userlist']+=text+'\n'
                 bot.send_message(games[int(x[1])]['id'], player['name']+' присоединился!')
          else:
