@@ -75,12 +75,9 @@ def start(m):
         if m.from_user.id not in games[int(x[1])]['players']:
          if len(games[int(x[1])]['players'])<10:
           if int(x[1])<0:
-            i=0
-            for g in games[int(x[1])]['players']:
-                
-                    i+=1              
+            i=0              
             if games[int(x[1])]['play']==0:
-                games[int(x[1])]['players'].update(createuser(m.from_user.id, m.from_user.first_name, i+1))
+                games[int(x[1])]['players'].update(createuser(m.from_user.id, m.from_user.first_name))
                 text=''           
                 for ids in games[int(x[1])]['players']:
                     if games[int(x[1])]['players'][ids]['id']==m.from_user.id:
@@ -99,7 +96,7 @@ def start(m):
         if m.chat.id==m.from_user.id:
             bot.send_message(m.from_user.id, 'Игра crossfire')
 
-#@bot.message_handler(commands=['flee'])
+@bot.message_handler(commands=['flee'])
 def flee(m):
     if m.chat.id in games:
      if games[m.chat.id]['play']!=1:
@@ -240,12 +237,11 @@ def begin(id):
                 bot.delete_message(id, ids)
             except:
                 pass
-       
+        i=1
+        for ids in games[id]['players']:
+            games[id]['players'][ids]['number']=i
+            i+=1
         bot.send_message(id, 'Игра начинается!')
-        try:
-            games[id]['timer'].cancel()
-        except:
-            pass
         games[id]['play']=1
         xod(games[id])
     else:
@@ -837,12 +833,12 @@ def creategame(id):
            }
         
 
-def createuser(id, name, x):
+def createuser(id, name):
     return{id:{
         'role':None,
         'name':name,
         'id':id,
-        'number':x,
+        'number':None,
         'text':'',
         'shuffle':0,
         'target':None,
