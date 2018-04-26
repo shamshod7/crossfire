@@ -85,9 +85,11 @@ def start(m):
                     if games[int(x[1])]['players'][ids]['id']==m.from_user.id:
                         player=games[int(x[1])]['players'][ids]
                 bot.send_message(m.from_user.id, 'Вы успешно присоединились!')
+                b=0
                 for g in games[int(x[1])]['players']:
                     text+=games[int(x[1])]['players'][g]['name']+'\n'
-                medit('Игроки:\n\n'+text, games[int(x[1])]['id'], games[int(x[1])]['users'])
+                    b+=1
+                medit('Игроки: '+str(i)+'\n\n'+text, games[int(x[1])]['id'], games[int(x[1])]['users'])
                 games[int(x[1])]['userlist']+=text+'\n'
                 bot.send_message(games[int(x[1])]['id'], player['name']+' присоединился!')
          else:
