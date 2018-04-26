@@ -28,6 +28,10 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
                                  parse_mode=parse_mode)
 
 
+user.update_one({'id':375580405}, {'$inc':{'games':1}})
+user.update_one({'id':375580405}, {'$inc':{'win':1}})
+print('yes')
+
 
 @bot.message_handler(commands=['stats'])
 def stats(m):
@@ -776,7 +780,7 @@ def reallyshoot(game):
                         win=pobeda+'Выиграл\n'
                       else:
                         win=porajenie+'Проиграл\n'
-            if role=='podrivnik':
+            if game['players'][ids]['role']=='podrivnik':
                 if game['players'][ids]['killed']==0:
                     win=pobeda+'Выиграл\n'
                 else:
