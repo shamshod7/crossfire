@@ -109,7 +109,13 @@ def flee(m):
             text+=games[m.chat.id]['players'][g]['name']+'\n'
         bot.send_message(m.chat.id, m.from_user.first_name+' сбежал!')
         medit('Игроки: \n\n*'+text+'*', m.chat.id, games[m.chat.id]['users'])
-            
+  
+
+@bot.message_handler(commands=['players'])
+def playerss(m):
+    if m.chat.id in games:
+        bot.send_message(m.chat.id, 'Вот список игроков', reply_to_message_id=games[m.chat.id]['users'])
+
             
 def secnd(id):
     games[id]['timebeforestart']-=1
