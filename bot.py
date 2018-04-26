@@ -75,9 +75,9 @@ def start(m):
         if m.from_user.id not in games[int(x[1])]['players']:
          if len(games[int(x[1])]['players'])<10:
           if int(x[1])<0:
-            i=1
+            i=0
             for g in games[int(x[1])]['players']:
-                if games[int(x[1])]['players'][g]['number']==i:
+                
                     i+=1              
             if games[int(x[1])]['play']==0:
                 games[int(x[1])]['players'].update(createuser(m.from_user.id, m.from_user.first_name, i+1))
