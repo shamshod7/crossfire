@@ -99,7 +99,7 @@ def start(m):
         if m.chat.id==m.from_user.id:
             bot.send_message(m.from_user.id, 'Игра crossfire')
 
-@bot.message_handler(commands=['flee'])
+#@bot.message_handler(commands=['flee'])
 def flee(m):
     if m.chat.id in games:
      if games[m.chat.id]['play']!=1:
