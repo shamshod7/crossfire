@@ -872,7 +872,7 @@ while True:
     from requests.exceptions import ReadTimeout
     from requests.exceptions import ConnectionError
     try:
-        bot.polling(none_stop=True)
+        bot.polling()
     except(ReadTimeout, ConnectionError):
         pass
 
