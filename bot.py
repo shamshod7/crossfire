@@ -171,7 +171,7 @@ def help(m):
 '*Желтый*:\n'+
 'Выигрыш зависит только от доп.условий (все они описаны выше)\n', parse_mode='markdown')
         except:
-            bot.send_message(m.chat.id, 'Начни диалог с ботом (@crossfirebot), чтобы я мог отправить тебе помощь!)
+            bot.send_message(m.chat.id, 'Начни диалог с ботом (@crossfirebot), чтобы я мог отправить тебе помощь!')
 
 @bot.message_handler(commands=['players'])
 def playerss(m):
