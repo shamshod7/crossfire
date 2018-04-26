@@ -104,8 +104,8 @@ def flee(m):
         text=''
         for g in games[m.chat.id]['players']:
                     text+=games[m.chat.id]['players'][g]['name']+'\n'
-        del games[m.chat.id]['players'][m.from_user.id]
         medit('Игроки:\n\n'+text, games[m.chat.id]['id'], games[m.chat.id]['users'])
+        del games[m.chat.id]['players'][m.from_user.id]
         bot.send_message(m.chat.id, m.from_user.first_name+' сбежал!')
             
             
