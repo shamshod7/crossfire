@@ -89,7 +89,7 @@ def start(m):
                 for g in games[int(x[1])]['players']:
                     text+=games[int(x[1])]['players'][g]['name']+'\n'
                     b+=1
-                medit('Игроки: '+str(b)+'\n\n'+text, games[int(x[1])]['id'], games[int(x[1])]['users'])
+                medit('Игроки: '+str(b)+'\n\n*'+text+'*', games[int(x[1])]['id'], games[int(x[1])]['users'])
                 games[int(x[1])]['userlist']+=text+'\n'
                 bot.send_message(games[int(x[1])]['id'], player['name']+' присоединился!')
          else:
@@ -108,7 +108,7 @@ def flee(m):
         for g in games[m.chat.id]['players']:
             text+=games[m.chat.id]['players'][g]['name']+'\n'
         bot.send_message(m.chat.id, m.from_user.first_name+' сбежал!')
-        medit('Игроки: \n\n'+text, m.chat.id, games[m.chat.id]['users'])
+        medit('Игроки: \n\n*'+text+'*', m.chat.id, games[m.chat.id]['users'])
             
             
 def secnd(id):
@@ -144,7 +144,7 @@ def startgame(m):
         Keyboard=types.InlineKeyboardMarkup()
         Keyboard.add(types.InlineKeyboardButton(text='Присоединиться', url='telegram.me/crossfirebot?start='+str(m.chat.id)))
         msg=bot.send_message(m.chat.id, m.from_user.first_name+' Начал(а) игру! Жмите кнопку ниже, чтобы присоединиться', reply_markup=Keyboard)
-        msg2=bot.send_message(m.chat.id, 'Игроки:\n')
+        msg2=bot.send_message(m.chat.id, 'Игроки:\n', parse_mode='markdown')
         games[m.chat.id]['users']=msg2.message_id
         for ids in games:
             if games[ids]['id']==m.chat.id:
