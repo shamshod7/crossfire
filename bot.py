@@ -559,7 +559,7 @@ def inline(call):
                 if game['players'][z]['number']==int(call.data):
                     target=game['players'][z]
             if game['players'][call.from_user.id]['role']!='gangster':
-                game['players'][call.from_user.id]['text']='*'+game['players'][call.from_user.id]['name']+'*'+'🔫стреляет в '+target['name']
+                game['players'][call.from_user.id]['text']='*'+game['players'][call.from_user.id]['name']+'*'+'🔫стреляет в '+target['name']+'\n'
                 medit('Выбор сделан: '+target['name'],call.from_user.id,call.message.message_id)
                 game['players'][call.from_user.id]['message']['edit']=0
                 game['players'][call.from_user.id]['target']=target
@@ -568,7 +568,7 @@ def inline(call):
                 if game['players'][call.from_user.id]['picks']==2:
                     game['players'][call.from_user.id]['text']+='*'+game['players'][call.from_user.id]['name']+'*'+'🔫стреляет в '+target['name']+'\n'
                 else:
-                    game['players'][call.from_user.id]['text']+='*'+game['players'][call.from_user.id]['name']+'*'+'🔫стреляет в '+target['name']
+                    game['players'][call.from_user.id]['text']+='*'+game['players'][call.from_user.id]['name']+'*'+'🔫стреляет в '+target['name']+'\n'
                 medit('Выбор сделан: '+target['name'],call.from_user.id,call.message.message_id)
                 game['players'][call.from_user.id]['message']['edit']=0
                 if game['players'][call.from_user.id]['target']==None:
