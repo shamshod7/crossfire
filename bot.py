@@ -29,11 +29,10 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
 
 
 
-user.update_one({'id':375580405}, {'$inc':{'games':-1}})
-user.update_one({'id':375580405}, {'$inc':{'loose':-1}})
-user.update_one({'id':184932836}, {'$inc':{'games':-1}})
-user.update_one({'id':184932836}, {'$inc':{'loose':-1}})
-print('yes')
+#user.update_one({'id':375580405}, {'$inc':{'games':-1}})
+#user.update_one({'id':375580405}, {'$inc':{'loose':-1}})
+
+#print('yes')
 
 @bot.message_handler(commands=['stats'])
 def stats(m):
