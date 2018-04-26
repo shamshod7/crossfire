@@ -521,7 +521,7 @@ def shuffle2(game):
           bot.send_message(game['players'][g]['id'], text)
         except:
             pass
-    t=threading.Timer(10, shoot, args=[game])
+    t=threading.Timer(240, shoot, args=[game])
     t.start()
       
 
