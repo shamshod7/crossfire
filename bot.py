@@ -104,7 +104,11 @@ def flee(m):
      if games[m.chat.id]['play']!=1:
       if m.from_user.id in games[m.chat.id]['players']:
         del games[m.chat.id]['players'][m.from_user.id]
+        text=''
+        for g in games[m.chat.id]['players']:
+            text+=games[m.chat.id]['players'][g]['name']+'\n'
         bot.send_message(m.chat.id, m.from_user.first_name+' сбежал!')
+        medit('Игроки: \n\n'+text, m.chat.id, games[m.chat.id]['users'])
             
             
 def secnd(id):
