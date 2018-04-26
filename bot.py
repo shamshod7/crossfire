@@ -231,7 +231,7 @@ def startgame(m):
 def begin(id):
   if id in games:
    if games[id]['play']==0:
-    if len(games[id]['players'])>=5:
+    if len(games[id]['players'])==3:
         for ids in games[id]['todel']:
             try:
                 bot.delete_message(id, ids)
@@ -280,7 +280,7 @@ def xod(game):
     if len(game['players'])==2:
         roless=['glavar','killer']
     elif len(game['players'])==3:
-        roless=['agent','killer', 'glavar']
+        roless=['gangster','killer', 'glavar']
     elif len(game['players'])==4:
         roless=['agent','killer', 'glavar', 'prohojii']
     elif len(game['players'])==5:
