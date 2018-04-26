@@ -781,7 +781,7 @@ def reallyshoot(game):
                     win=pobeda+'Выиграл\n'
                 else:
                     win=porajenie+'Проиграл\n'
-        text+=game['players'][ids]['name']+': '+color+role+','+alive+','+win
+            x='''text+=game['players'][ids]['name']+': '+color+role+','+alive+','+win
         if color==red:
             user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'red':1}})
         elif color==blue:
@@ -815,7 +815,7 @@ def reallyshoot(game):
         elif win==porajenie+'Проиграл\n' or win==porajenie+'Проиграл (убил приманку)\n' or win==porajenie+'Проиграл (убил прохожего)\n':
             user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'loose':1}})
         user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'games':1}})
-            
+   '''         
     bot.send_message(game['id'], 'Результаты игры:\n'+text)
     del games[game['id']]
         
