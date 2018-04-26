@@ -232,7 +232,7 @@ def startgame(m):
 def begin(id):
   if id in games:
    if games[id]['play']==0:
-    if len(games[id]['players'])==3:
+    if len(games[id]['players'])>=5:
         for ids in games[id]['todel']:
             try:
                 bot.delete_message(id, ids)
@@ -781,7 +781,7 @@ def reallyshoot(game):
                     win=pobeda+'Выиграл\n'
                 else:
                     win=porajenie+'Проиграл\n'
-            x='''text+=game['players'][ids]['name']+': '+color+role+','+alive+','+win
+        text+=game['players'][ids]['name']+': '+color+role+','+alive+','+win
         if color==red:
             user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'red':1}})
         elif color==blue:
@@ -815,7 +815,7 @@ def reallyshoot(game):
         elif win==porajenie+'Проиграл\n' or win==porajenie+'Проиграл (убил приманку)\n' or win==porajenie+'Проиграл (убил прохожего)\n':
             user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'loose':1}})
         user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'games':1}})
-   '''         
+            
     bot.send_message(game['id'], 'Результаты игры:\n'+text)
     del games[game['id']]
         
