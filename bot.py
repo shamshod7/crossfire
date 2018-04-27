@@ -48,7 +48,7 @@ def infom(m):
                          'Гангстер: '+str(x['gangster'])+' игр\n'+
                          'Подрывник: '+str(x['podrivnik'])+' игр\n'+
                          'Красная приманка: '+str(x['redprimanka'])+' игр\n'+
-                         'Телохранитель: '+str(x['telohranitel'])+' игр', parse_mode='markup')
+                         'Телохранитель: '+str(x['telohranitel'])+' игр', parse_mode='markdown')
 
 @bot.message_handler(commands=['stats'])
 def stats(m):
