@@ -29,6 +29,27 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
 
 
 
+@bot.message_handler(commands=['info'])
+def infom(m):
+    x=user.find_one({'id':m.from_user.id})
+    if x!=None:
+        bot.send_message(m.chat.id, 'Статистика пользователя '+m.from_user.first_name+':\n'+
+                     '*Статистика по цветам:*\n'+
+                         'Синий: '+str(x['blue'])+' игр\n'+
+                         'Красный: '+str(x['red'])+' игр\n'+
+                         'Жёлтый: '+str(x['yellow'])+' игр\n\n'+
+                         '*Статистика по персонажам:*\n'+
+                         'Агент: '+str(x['agent'])+' игр\n'+
+                         'Киллер: '+str(x['killer'])+' игр\n'+
+                         'Главарь: '+str(x['glavar'])+' игр\n'+
+                         'Прохожий: '+str(x['prohojii'])+' игр\n'+
+                         'Приманка: '+str(x['primanka'])+' игр\n'+
+                         'Миротворец: '+str(x['mirotvorets'])+' игр\n'+
+                         'Гангстер: '+str(x['gangster'])+' игр\n'+
+                         'Подрывник: '+str(x['podrivnik'])+' игр\n'+
+                         'Красная приманка: '+str(x['redprimanka'])+' игр\n'+
+                         'Телохранитель: '+str(x['telohranitel'])+' игр', parse_mode='markup')
+
 @bot.message_handler(commands=['stats'])
 def stats(m):
     x=user.find_one({'id':m.from_user.id})
