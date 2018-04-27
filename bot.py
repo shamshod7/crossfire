@@ -28,7 +28,6 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
                                  parse_mode=parse_mode)
 
 
-
 @bot.message_handler(commands=['info'])
 def infom(m):
     x=user.find_one({'id':m.from_user.id})
@@ -308,7 +307,7 @@ def xod(game):
     elif len(game['players'])==5:
         roless=['agent','killer', 'glavar', 'prohojii', 'primanka']
     elif len(game['players'])==6:
-        roless=['agent','killer', 'glavar', 'prohojii', 'primanka','mirotvorets']
+        roless=['agent','killer', 'glavar', 'prohojii', 'redprimanka','mirotvorets']
     elif len(game['players'])==7:
         roless=['agent','killer', 'glavar', 'podrivnik', 'prohojii','agent', 'killer']
     elif len(game['players'])==8:
