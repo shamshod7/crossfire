@@ -93,9 +93,10 @@ def start(m):
     x=m.text.split('/start')
     if len(x)==2:
        try:
-        if m.from_user.id not in games[int(x[1])]['players']:
-         if len(games[int(x[1])]['players'])<10:
-          if int(x[1])<0:
+        if m.from_user.id==m.chat.id:
+         if m.from_user.id not in games[int(x[1])]['players']:
+          if len(games[int(x[1])]['players'])<10:
+           if int(x[1])<0:
             i=0              
             if games[int(x[1])]['play']==0:
                 games[int(x[1])]['players'].update(createuser(m.from_user.id, m.from_user.first_name))
@@ -111,7 +112,7 @@ def start(m):
                 medit('Игроки: '+str(b)+'\n\n*'+text+'*', games[int(x[1])]['id'], games[int(x[1])]['users'])
                 games[int(x[1])]['userlist']+=text+'\n'
                 bot.send_message(games[int(x[1])]['id'], player['name']+' присоединился!')
-         else:
+          else:
             bot.send_message(m.from_user.id, 'Слишком много игроков! Мест не осталось!')
        except:
         if m.chat.id==m.from_user.id:
