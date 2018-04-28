@@ -124,8 +124,8 @@ def extendd(m):
     if m.chat.id in games:
         if games[m.chat.id]['play']!=1:
             if m.from_user.id in games[m.chat.id]['players']:
-                x=m.text.split('/extend ')
-                if x==2:
+                x=m.text.split('/extend')
+                if len(x)==2:
                     try:
                         games[m.chat.id]['timebeforestart']+=int(x[1])
                         if games[m.chat.id]['timebeforestart']>=300:
@@ -136,6 +136,9 @@ def extendd(m):
                     except:
                         games[m.chat.id]['timebeforestart']+=30
                         bot.send_message(m.chat.id, 'Время до начала перестрелки увеличено на 30 секунд! Осталось '+str(games[m.chat.id]['timebeforestart'])+' секунд.')
+                else:
+                    games[m.chat.id]['timebeforestart']+=30
+                    bot.send_message(m.chat.id, 'Время до начала перестрелки увеличено на 30 секунд! Осталось '+str(games[m.chat.id]['timebeforestart'])+' секунд.')
     
             
 @bot.message_handler(commands=['flee'])
