@@ -133,6 +133,9 @@ def extendd(m):
                             bot.send_message(m.chat.id, 'Время до начала перестрелки увеличено! Осталось 5 минут.')
                         else:
                             bot.send_message(m.chat.id, 'Время до начала перестрелки увеличено на '+x[1]+'! Осталось '+str(games[m.chat.id]['timebeforestart'])+' секунд.')
+                    except:
+                        games[m.chat.id]['timebeforestart']+=30
+                        bot.send_message(m.chat.id, 'Время до начала перестрелки увеличено на 30 секунд! Осталось '+str(games[m.chat.id]['timebeforestart'])+' секунд.')
     
             
 @bot.message_handler(commands=['flee'])
