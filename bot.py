@@ -134,7 +134,11 @@ def flee(m):
 def help(m):
     if m.chat.id<0:
         try:
-            bot.send_message(m.from_user.id, '*Правила игры "Crossfire*"\n'+
+            bot.send_message(m.chat.id, 'Отправил помощь тебе в личку')
+        except:
+            bot.send_message(m.chat.id, 'Начни диалог с ботом (@crossfirebot), чтобы я мог отправить тебе помощь!')
+    try:
+        bot.send_message(m.from_user.id, '*Правила игры "Crossfire*"\n'+
 '"Crossfire" или "Перекрёстный огонь" - настольная игра, которая была перенесена в telegram. Суть её заключается в том, чтобы выполнить'+
                      'цель своей роли. Об этом позже.\nИгра основана на блефе и логике, почти как мафия. Но отличие заключается в том, '+
                      'что все участники начинают играть одновременно, и заканчивают тоже. Игра длится 5 минут, ни больше, ни меньше. \n\n'+
@@ -211,10 +215,8 @@ def help(m):
 'Затем роли D, E и C, и по такому же алгоритму.'+
 'Центы располагаются через два. Не может игрок не попасть в перемешку.'+
 'Ваша третья роль является финальной. Именно за нее вы должны играть в итоге.' , parse_mode='markdown')
-            bot.send_message(m.chat.id, 'Отправил помощь тебе в личку')
-        except:
-            bot.send_message(m.chat.id, 'Начни диалог с ботом (@crossfirebot), чтобы я мог отправить тебе помощь!')
-
+    except:
+        pass
 @bot.message_handler(commands=['players'])
 def playerss(m):
     if m.chat.id in games:
