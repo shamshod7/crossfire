@@ -118,6 +118,23 @@ def start(m):
         if m.chat.id==m.from_user.id:
             bot.send_message(m.from_user.id, 'Игра crossfire')
 
+            
+@bot.message_handler(commands=['extend']) 
+def extendd(m):
+    if m.chat.id in games:
+        if games[m.chat.id]['play']!=1:
+            if m.from_user.id in games[m.chat.id]['players']:
+                x=m.text.split('/extend ')
+                if x==2:
+                    try:
+                        games[m.chat.id]['timebeforestart']+=int(x[1])
+                        if games[m.chat.id]['timebeforestart']>=300:
+                            games[m.chat.id]['timebeforestart']=300
+                            bot.send_message(m.chat.id, 'Время до начала перестрелки увеличено! Осталось 5 минут.')
+                        else:
+                            bot.send_message(m.chat.id, 'Время до начала перестрелки увеличено на '+x[1]+'! Осталось '+str(games[m.chat.id]['timebeforestart'])+' секунд.')
+    
+            
 @bot.message_handler(commands=['flee'])
 def flee(m):
     if m.chat.id in games:
