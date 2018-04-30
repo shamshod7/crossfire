@@ -142,7 +142,12 @@ def extendd(m):
                                     if i!=1:
                                         i=10
                             if i==1:
-                                games[m.chat.id]['timebeforestart']=1
+                                games[m.chat.id]['timebeforestart']+=int(x[1])
+                                a=x[1]
+                                if games[m.chat.id]['timebeforestart']<=0:
+                                    pass
+                                else:
+                                    bot.send_message(m.chat.id,'Время до начала перестрелки увеличено на '+a+'! Осталось '+str(games[m.chat.id]['timebeforestart'])+' секунд.')
                             else:
                                 bot.send_message(m.chat.id, 'Только администратор может использовать эту команду!')
                     except:
