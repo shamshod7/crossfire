@@ -125,7 +125,7 @@ def extendd(m):
             if m.from_user.id in games[m.chat.id]['players']:
                 x=m.text.split('/extend')
                 if len(x)==2:
-                    try:
+                    #try:
                         if int(x[1])>=1:
                             games[m.chat.id]['timebeforestart']+=int(x[1])
                             if games[m.chat.id]['timebeforestart']>=300:
@@ -135,6 +135,7 @@ def extendd(m):
                                 bot.send_message(m.chat.id, 'Время до начала перестрелки увеличено на '+x[1]+'! Осталось '+str(games[m.chat.id]['timebeforestart'])+' секунд.')
                         else:
                             x=bot.get_chat_administrators(m.chat.id)
+                            i=10
                             for z in x:       
                                 if m.from_user.id==z.user.id:
                                     i=1
@@ -150,11 +151,11 @@ def extendd(m):
                                     bot.send_message(m.chat.id,'Время до начала перестрелки увеличено на '+a+'! Осталось '+str(games[m.chat.id]['timebeforestart'])+' секунд.')
                             else:
                                 bot.send_message(m.chat.id, 'Только администратор может использовать эту команду!')
-                    except:
-                        games[m.chat.id]['timebeforestart']+=30
-                        if games[m.chat.id]['timebeforestart']>=300:
-                            games[m.chat.id]['timebeforestart']=300
-                        bot.send_message(m.chat.id, 'Время до начала перестрелки увеличено на 30! Осталось '+str(games[m.chat.id]['timebeforestart'])+' секунд.')
+                    #except:
+                    #    games[m.chat.id]['timebeforestart']+=30
+                    #    if games[m.chat.id]['timebeforestart']>=300:
+                    #        games[m.chat.id]['timebeforestart']=300
+                    #    bot.send_message(m.chat.id, 'Время до начала перестрелки увеличено на 30! Осталось '+str(games[m.chat.id]['timebeforestart'])+' секунд.')
                 else:
                     games[m.chat.id]['timebeforestart']+=30
                     if games[m.chat.id]['timebeforestart']>=300:
