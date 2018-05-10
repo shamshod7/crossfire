@@ -507,7 +507,29 @@ def shuffle1(game):
     t.start()
         
     
-                     
+ 
+def roletotext(x):
+        if x=='agent':
+            text='Ты агент'
+        elif x=='killer':
+            text='Ты киллер'
+        elif x=='prohojii':
+            text='Ты прохожий'
+        elif x=='primanka':
+            text='Ты приманка'
+        elif x=='glavar':
+            text='Ты главарь'
+        elif x=='telohranitel':
+            text='Ты телохранитель'
+        elif x=='podrivnik':
+            text='Ты подрывник'
+        elif x=='mirotvorets':
+            text='Ты миротворец'
+        elif x=='gangster':
+            text='Ты гангстер'
+        elif x=='redprimanka':
+            text='Ты красная приманка'
+        return text
 
 def shuffle2(game):
     roles=[]
@@ -535,7 +557,7 @@ def shuffle2(game):
                     top=game['players'][ids]
             else:
                 if game['players'][ids]['number']==len(game['players']):
-                    top=game['players'][ids]              
+                    top=game['players'][ids]            
         users=[]
         roles=[]
         users.append(mid)
@@ -551,6 +573,7 @@ def shuffle2(game):
                 x=random.randint(0, 2)
             g['role']=roles[x]
             pick.append(x)
+            bot.send_message(g['id'], roletotext(roles[x]))
         if first==len(game['players']):
             first=3
         elif first==len(game['players'])-1:
@@ -573,46 +596,32 @@ def shuffle2(game):
         if game['players'][g]['role']=='agent':
             game['players'][g]['cankill']=1
             game['players'][g]['blue']=1
-            text='Ты агент'
         elif game['players'][g]['role']=='killer':
             game['players'][g]['cankill']=1
             game['players'][g]['red']=1
-            text='Ты киллер'
         elif game['players'][g]['role']=='prohojii':
             game['players'][g]['cankill']=0
             game['players'][g]['yellow']=1
-            text='Ты прохожий'
         elif game['players'][g]['role']=='primanka':
             game['players'][g]['cankill']=0
             game['players'][g]['yellow']=1
-            text='Ты приманка'
         elif game['players'][g]['role']=='glavar':
             game['players'][g]['cankill']=0
-            text='Ты главарь'
             game['players'][g]['blue']=1
         elif game['players'][g]['role']=='telohranitel':
             game['players'][g]['candef']=1
-            text='Ты телохранитель'
             game['players'][g]['blue']=1
         elif game['players'][g]['role']=='podrivnik':
             game['players'][g]['cankill']=0
-            text='Ты подрывник'
             game['players'][g]['yellow']=1
         elif game['players'][g]['role']=='mirotvorets':
             game['players'][g]['candef']=1
-            text='Ты миротворец'
             game['players'][g]['yellow']=1
         elif game['players'][g]['role']=='gangster':
-            text='Ты гангстер'
             game['players'][g]['blue']=1
             game['players'][g]['cankill']=1
         elif game['players'][g]['role']=='redprimanka':
-            text='Ты красная приманка'
             game['players'][g]['red']=1
-        try:
-          bot.send_message(game['players'][g]['id'], text)
-        except:
-            pass
     t=threading.Timer(240, shoot, args=[game])
     t.start()
       
