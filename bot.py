@@ -381,9 +381,9 @@ def xod(game):
     elif len(game['players'])==6:
         roless=['agent','killer', 'glavar', 'prohojii', 'killer','telohranitel']
     elif len(game['players'])==7:
-        roless=['agent','killer', 'glavar', 'podrivnik', 'prohojii','agent', 'killer']
+        roless=['agent','killer', 'glavar', 'mirotvorets', 'prohojii','agent', 'killer']
     elif len(game['players'])==8:
-        roless=['glavar', 'prohojii', 'podrivnik','gangster','killer', 'killer', 'telohranitel','redprimanka']
+        roless=['glavar', 'prohojii', 'podrivnik','gangster','killer', 'killer', 'killer','agent']
     elif len(game['players'])==9:
         roless=['glavar', 'prohojii', 'podrivnik','agent','killer', 'killer', 'agent','killer', 'agent'] #'loialistblue','povstanetsred'
     elif len(game['players'])==10:
