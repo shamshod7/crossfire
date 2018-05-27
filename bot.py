@@ -13,6 +13,9 @@ from pymongo import MongoClient
 token = os.environ['TELEGRAM_TOKEN']
 bot = telebot.TeleBot(token)
 
+from requests.exceptions import ReadTimeout
+from requests.exceptions import ConnectionError
+
 games={}
 
 client1=os.environ['database']
@@ -970,8 +973,7 @@ def createuser(id, name):
 
 
 while True:
-    from requests.exceptions import ReadTimeout
-    from requests.exceptions import ConnectionError
+   
     try:
         bot.polling()
     except(ReadTimeout, ConnectionError):
