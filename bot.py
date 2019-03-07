@@ -687,10 +687,13 @@ def shuffle2(game):
         bot.send_message(game['players'][g]['id'], roletotext(game['players'][g]['role']))
     for ids in game['players']:
         player=game['players'][ids]
+        kb=types.InlineKeyboardMarkup()
         if player['cankill']==1:
-            kb=types.InlineKeyboardMarkup()
             kb.add(types.InlineKeyboardButton(text='Показать оружие', callback_data='showgun'))
             bot.send_message(player['id'], 'Нажмите, чтобы показать всем оружие.', reply_markup=kb)
+        if player['role']=='glavar' or player['role']=='prohojii' or player['role']=='primanka':
+            kb.add(types.InlineKeyboardButton(text='Сказать всем, что у вас нет оружия.', callback_data='showpocket'))
+            bot.send_message(player['id'], 'Нажмите, чтобы сказать, что вы безоружный.', reply_markup=kb)
        
     t=threading.Timer(120, shoot, args=[game])
     t.start()
@@ -730,7 +733,7 @@ def inline(call):
             x=1
             player=games[ids]['players'][call.from_user.id]
     if x==1:
-        if call.data!='showgun': 
+        if call.data!='showgun' and call.data!='showpocket': 
             for z in game['players']:
                 if game['players'][z]['number']==int(call.data):
                     target=game['players'][z]
@@ -768,8 +771,13 @@ def inline(call):
         else:
             if call.data=='showgun':
                 if player['cankill']==1:
-                    bot.send_message(game['id'], player['name']+' достал из кармана пистолет и показал всем!')
+                    bot.send_message(game['id'], '🔫|'+player['name']+' достал из кармана пистолет и показал всем!')
                     medit('Выбор сделан.', call.message.chat.id, call.message.message_id)
+            if call.data=='showpocket':
+                if player['role']=='glavar' or player['role']=='prohojii' or player['role']=='primanka':
+                    bot.send_message(game['id'], '👐|'+player['name']+' вывернул карманы и показал, что он безоружный!')
+                    medit('Выбор сделан.', call.message.chat.id, call.message.message_id)
+                
 
 def endshoot(game):
     text=''
