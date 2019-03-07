@@ -1050,17 +1050,9 @@ def createuser(id, name):
     }
           }
     
-                      
-                      
-                      
+ 
 
+bot.polling(none_stop=True)
 
-
-while True:
-   
-    try:
-        bot.polling()
-    except(ReadTimeout, ConnectionError):
-        pass
 
 
