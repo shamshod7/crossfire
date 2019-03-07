@@ -373,24 +373,84 @@ def forcem(m):
         
 
 def xod(game):
+    gangster=0
+    prohojii=0
+    primanka=0
+    mirotvorets=0
+    podrivnik=0
+    telohranitel=0
+    agent=0
+    killer=0
+    list2=[]
     if len(game['players'])==2:
         roless=['glavar','killer']
     elif len(game['players'])==3:
         roless=['gangster','killer', 'glavar']
     elif len(game['players'])==4:
-        roless=['agent','killer', 'glavar', 'prohojii']
+        prohojii=75
+        primanka=75
+        roless=['agent','killer', 'glavar']       
     elif len(game['players'])==5:
-        roless=['agent','killer', 'glavar', 'prohojii', 'primanka']
+        agent=20
+        killer=20
+        prohojii=50
+        primanka=50
+        podrivnik=4
+        roless=['agent','killer', 'glavar']
     elif len(game['players'])==6:
-        roless=['agent','killer', 'glavar', 'prohojii', 'killer','telohranitel']
+        mirotvorets=40
+        killer=75
+        podrivnik=15
+        primanka=30
+        telohranitel=60
+        roless=['agent','killer', 'glavar', 'prohojii']
     elif len(game['players'])==7:
-        roless=['agent','killer', 'glavar', 'mirotvorets', 'prohojii','agent', 'killer']
-    elif len(game['players'])==8:
-        roless=['glavar', 'prohojii', 'podrivnik','gangster','killer', 'killer', 'killer','agent']
-    elif len(game['players'])==9:
-        roless=['glavar', 'prohojii', 'podrivnik','agent','killer', 'killer', 'agent','killer', 'agent'] #'loialistblue','povstanetsred'
-    elif len(game['players'])==10:
-        roless=['glavar', 'prohojii', 'mirotvorets','agent','killer', 'killer', 'agent','killer', 'agent', 'podrivnik'] 
+        agent=50
+        killer=75
+        primanka=50
+        telohranitel=50
+        prohojii=50
+        mirotvorets=50
+        podrivnik=25
+        roless=['agent','killer', 'glavar']
+    elif len(game['players'])>=8:
+        gangster=35
+        prohojii=65
+        primanka=50
+        mirotvorets=25
+        podrivnik=35
+        telohranitel=40
+        agent=25
+        killer=25
+        roless=['glavar','killer', 'killer','agent']
+    #elif len(game['players'])==9:
+    #    roless=['glavar', 'prohojii', 'podrivnik','agent','killer', 'killer', 'agent','killer', 'agent'] #'loialistblue','povstanetsred'
+    #elif len(game['players'])==10:
+    #    roless=['glavar', 'prohojii', 'mirotvorets','agent','killer', 'killer', 'agent','killer', 'agent', 'podrivnik'] 
+        
+    while len(roless)<len(game['players']):
+        toadd=[]
+        if random.randint(1,100)<=agent:
+            toadd.append('agent')
+        if random.randint(1,100)<=killer:
+            toadd.append('killer')
+        if random.randint(1,100)<=gangster:
+            toadd.append('gangster')
+        if random.randint(1,100)<=prohojii:
+            toadd.append('prohojii')
+        if random.randint(1,100)<=primanka:
+            toadd.append('primanka')
+        if random.randint(1,100)<=mirotvorets:
+            toadd.append('mirotvorets')
+        if random.randint(1,100)<=podrivnik:
+            toadd.append('podrivnik')
+        if random.randint(1,100)<=telohranitel:
+            toadd.append('telohranitel')
+        if len(toadd)>0:
+            x=random.choice(toadd)
+            roless.append(x)
+            
+        
         
     pick=[]
     for g in game['players']:
@@ -399,7 +459,6 @@ def xod(game):
             x=random.randint(0, len(game['players'])-1)
         game['players'][g]['role']=roless[x]
         pick.append(x)
-        print(game)
     roletext=[]
     for g in game['players']:
         if game['players'][g]['role']=='agent':
@@ -432,10 +491,10 @@ def xod(game):
         elif game['players'][g]['role']=='redprimanka':
             text='Ты красная приманка'
             roletext.append('Красная приманка')
-        try:    
-          bot.send_message(game['players'][g]['id'], text)
-        except:
-            pass
+        #try:    
+        #  bot.send_message(game['players'][g]['id'], text)
+        #except:
+        #    pass
     players=[]
     roletext1=[]
     numbers=[]
@@ -475,7 +534,7 @@ def shuffle1(game):
             i+=1
         except:
             game['players'][ids]['role']=roles[0]
-    bot.send_message(game['id'], 'Ваши роли были переданы человеку над вами! Теперь посмотрите свои новые роли.')
+    #bot.send_message(game['id'], 'Ваши роли были переданы человеку над вами! Теперь посмотрите свои новые роли.')
     for g in game['players']:
         try:
           bot.send_message(game['players'][g]['id'], 'Ваши роли были переданы человеку над вами! Теперь посмотрите свои новые роли.')
@@ -506,32 +565,32 @@ def shuffle1(game):
           bot.send_message(game['players'][g]['id'], text)
         except:
             pass
-    t=threading.Timer(5, shuffle2, args=[game])
+    t=threading.Timer(1, shuffle2, args=[game])
     t.start()
         
     
  
 def roletotext(x):
         if x=='agent':
-            text='Ты агент'
+            text='Ты агент! Твоя цель - убить всех киллеров!'
         elif x=='killer':
-            text='Ты киллер'
+            text='Ты киллер! Твоя цель - убить главаря!'
         elif x=='prohojii':
-            text='Ты прохожий'
+            text='Ты прохожий! Твоя цель - выжить! У тебя нет оружия.'
         elif x=='primanka':
-            text='Ты приманка'
+            text='Ты приманка! Твоя цель - быть убитым(ой)! У тебя нет оружия.'
         elif x=='glavar':
-            text='Ты главарь'
+            text='Ты главарь! Твоя цель - выжить! У тебя нет оружия.'
         elif x=='telohranitel':
-            text='Ты телохранитель'
+            text='Ты телохранитель! Твоя цель - защитить главаря!'
         elif x=='podrivnik':
-            text='Ты подрывник'
+            text='Ты подрывник! Твоя цель - выжить! Если это произойдет, все остальные проиграют! У тебя нет оружия.'
         elif x=='mirotvorets':
-            text='Ты миротворец'
+            text='Ты миротворец! Твоя цель - спасти прохожих!'
         elif x=='gangster':
-            text='Ты гангстер'
+            text='Ты гангстер! Твоя цель - убить всех киллеров! У тебя 2 патрона.'
         elif x=='redprimanka':
-            text='Ты красная приманка'
+            text='Ты красная приманка! Твоя цель - быть убитым одним из "синих"! У тебя нет оружия.'
         return text
 
 def shuffle2(game):
@@ -576,7 +635,7 @@ def shuffle2(game):
                 x=random.randint(0, 2)
             g['role']=roles[x]
             pick.append(x)
-            bot.send_message(g['id'], roletotext(roles[x]))
+            #bot.send_message(g['id'], roletotext(roles[x]))
         if first==len(game['players']):
             first=3
         elif first==len(game['players'])-1:
@@ -587,14 +646,14 @@ def shuffle2(game):
             first+=3
         i+=1
     text2=''
-    for ids in centers:
-        text2+=ids+'\n'
-    bot.send_message(game['id'], 'Ваши роли были перемешаны по 3 штуки! Центры перемешивания: *\n'+text2+'*', parse_mode='markdown')
-    for g in game['players']:
-        try:
-          bot.send_message(game['players'][g]['id'], 'Ваши роли были перемешаны по 3 штуки! Центры перемешивания: *\n'+text2+'*', parse_mode='markdown')
-        except:
-            pass
+    #for ids in centers:
+    #    text2+=ids+'\n'
+    #bot.send_message(game['id'], 'Ваши роли были перемешаны по 3 штуки! Центры перемешивания: *\n'+text2+'*', parse_mode='markdown')
+    #for g in game['players']:
+    #    try:
+    #      bot.send_message(game['players'][g]['id'], 'Ваши роли были перемешаны по 3 штуки! Центры перемешивания: *\n'+text2+'*', parse_mode='markdown')
+    #    except:
+    #        pass
     for g in game['players']:
         if game['players'][g]['role']=='agent':
             game['players'][g]['cankill']=1
@@ -625,7 +684,15 @@ def shuffle2(game):
             game['players'][g]['cankill']=1
         elif game['players'][g]['role']=='redprimanka':
             game['players'][g]['red']=1
-    t=threading.Timer(240, shoot, args=[game])
+        bot.send_message(game['players'][g]['id'], roletotext(game['players'][g]['role']))
+    for ids in game['players']:
+        player=game['players'][ids]
+        if player['cankill']==1:
+            kb=types.InlineKeyboardMarkup()
+            kb.add(types.InlineKeyboardButton(text='Показать оружие', callback_data='showgun'))
+            bot.send_message(player['id'], 'Нажмите, чтобы показать всем оружие.', reply_markup=kb)
+       
+    t=threading.Timer(120, shoot, args=[game])
     t.start()
       
 
@@ -638,7 +705,10 @@ def shoot(game):
             if game['players'][ids]['id']!=game['players'][g]['id']:
                 Keyboard.add(types.InlineKeyboardButton(text=game['players'][ids]['name'], callback_data=str(game['players'][ids]['number'])))
         try:
-          msg=bot.send_message(game['players'][g]['id'], 'Кого ты выбираешь целью?', reply_markup=Keyboard)
+          if game['players'][g]['candef']!=1:
+              msg=bot.send_message(game['players'][g]['id'], 'Кого ты хочешь пристрелить?', reply_markup=Keyboard)
+          else:
+              msg=bot.send_message(game['players'][g]['id'], 'Кого ты хочешь защитить?', reply_markup=Keyboard)
           game['players'][g]['message']={'msg':msg,
                                        'edit':1
                                       }
@@ -658,7 +728,9 @@ def inline(call):
         if call.from_user.id in games[ids]['players']: 
             game=games[ids]
             x=1
+            player=games[ids]['players'][call.from_user.id]
     if x==1:
+        if call.data!='showgun': 
             for z in game['players']:
                 if game['players'][z]['number']==int(call.data):
                     target=game['players'][z]
@@ -693,7 +765,11 @@ def inline(call):
               else:
                 medit('Выбор сделан: '+target['name'],call.from_user.id,call.message.message_id)
             
-        
+        else:
+            if call.data=='showgun':
+                if player['cankill']==1:
+                    bot.send_message(game['id'], player['name']+' достал из кармана пистолет и показал всем!')
+                    medit('Выбор сделан.', call.message.chat.id, call.message.message_id)
 
 def endshoot(game):
     text=''
