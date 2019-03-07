@@ -327,7 +327,7 @@ def startgame(m):
 def begin(id):
   if id in games:
    if games[id]['play']==0:
-    if len(games[id]['players'])>=5:
+    if len(games[id]['players'])>=4:
         for ids in games[id]['todel']:
             try:
                 bot.delete_message(id, ids)
