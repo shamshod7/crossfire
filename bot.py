@@ -684,7 +684,7 @@ def shuffle2(game):
     for ids in game['players']:
         player=game['players'][ids]
         kb=types.InlineKeyboardMarkup()
-        if player['cankill']==1:
+        if player['cankill']==1 or player['role']=='primanka':
             kb.add(types.InlineKeyboardButton(text='Показать оружие', callback_data='showgun'))
             bot.send_message(player['id'], 'Нажмите, чтобы показать всем оружие.', reply_markup=kb)
         if player['role']=='glavar' or player['role']=='prohojii' or player['role']=='primanka':
@@ -767,7 +767,7 @@ def inline(call):
             
         else:
             if call.data=='showgun':
-                if player['cankill']==1:
+                if player['cankill']==1 or player['role']=='primanka':
                     bot.send_message(game['id'], '🔫|'+player['name']+' достал из кармана пистолет и показал всем!')
                     medit('Выбор сделан.', call.message.chat.id, call.message.message_id)
             if call.data=='showpocket':
@@ -1013,7 +1013,7 @@ def creategame(id):
         'todel':[],
         'toedit':[],
         'play':0,
-        'timebeforestart':300,
+        'timebeforestart':180,
         'users':None,
         'userlist':'Игроки:\n\n'
     }
