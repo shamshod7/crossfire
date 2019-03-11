@@ -396,7 +396,7 @@ def xod(game):
         killer=20
         prohojii=50
         primanka=50
-        podrivnik=4
+        podrivnik=0
         roless=['agent','killer', 'glavar']
     elif len(game['players'])==6:
         mirotvorets=40
@@ -513,12 +513,12 @@ def xod(game):
     for gg in players:
         text+=gg+'\n'
     try:
-      bot.send_message(game['id'], 'Роли: \n*'+roletextfinal+'*', parse_mode='markdown')
+      #bot.send_message(game['id'], 'Роли: \n*'+roletextfinal+'*', parse_mode='markdown')
       bot.send_message(game['id'], 'Игроки: \n'+'*'+text+'*', parse_mode='markdown')
     except:
         pass
     for gg in game['players']:
-        bot.send_message(game['players'][gg]['id'], 'Роли: \n*'+roletextfinal+'*', parse_mode='markdown')
+        #bot.send_message(game['players'][gg]['id'], 'Роли: \n*'+roletextfinal+'*', parse_mode='markdown')
         bot.send_message(game['players'][gg]['id'], 'Игроки: \n'+'*'+text+'*', parse_mode='markdown')
     t=threading.Timer(1, shuffle1, args=[game])
     t.start()
@@ -691,8 +691,8 @@ def shuffle2(game):
             kb.add(types.InlineKeyboardButton(text='Сказать всем, что у вас нет оружия.', callback_data='showpocket'))
             bot.send_message(player['id'], 'Нажмите, чтобы сказать, что вы безоружный.', reply_markup=kb)
        
-    bot.send_message(game['id'], 'У вас 100 секунд на обсуждение!')
-    t=threading.Timer(100, shoot, args=[game])
+    bot.send_message(game['id'], 'У вас 120 секунд на обсуждение!')
+    t=threading.Timer(120, shoot, args=[game])
     t.start()
       
 
@@ -706,9 +706,9 @@ def shoot(game):
                 Keyboard.add(types.InlineKeyboardButton(text=game['players'][ids]['name'], callback_data=str(game['players'][ids]['number'])))
         try:
           if game['players'][g]['candef']!=1:
-              msg=bot.send_message(game['players'][g]['id'], 'Кого ты хочешь пристрелить? У тебя 30 секунд для выбора.', reply_markup=Keyboard)
+              msg=bot.send_message(game['players'][g]['id'], 'Кого ты хочешь пристрелить? У тебя 60 секунд для выбора.', reply_markup=Keyboard)
           else:
-              msg=bot.send_message(game['players'][g]['id'], 'Кого ты хочешь защитить? У тебя 30 секунд для выбора.', reply_markup=Keyboard)
+              msg=bot.send_message(game['players'][g]['id'], 'Кого ты хочешь защитить? У тебя 60 секунд для выбора.', reply_markup=Keyboard)
           game['players'][g]['message']={'msg':msg,
                                        'edit':1
                                       }
@@ -716,7 +716,7 @@ def shoot(game):
             pass
                                        
     bot.send_message(game['id'], 'Теперь выбирайте, на кого хотите направить пистолеты!')
-    t=threading.Timer(30, endshoot, args=[game])
+    t=threading.Timer(60, endshoot, args=[game])
     t.start()
         
 
