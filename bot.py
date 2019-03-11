@@ -66,6 +66,11 @@ def stats(m):
     else:
         bot.send_message(m.chat.id, 'Сначала напишите боту /start!')
     
+@bot.message_handler(commands=['update'])
+def update(m):
+    if m.from_user.id==441399484:
+        users.update_many({},{'$set':{'detective':0}})
+        bot.send_message(441399484, 'yes')
     
 @bot.message_handler(commands=['start'])
 def start(m):
@@ -89,9 +94,9 @@ def start(m):
                          'podrivnik':0,
                          'redprimanka':0,
                          'telohranitel':0,
+                         'detective':0,
                          'alive':0
                         })
-        print('Юзер создал аккаунт! Его имя: '+m.from_user.first_name)
     x=m.text.split('/start')
     if len(x)==2:
        try:
@@ -640,7 +645,7 @@ def shuffle2(game):
         if player['role']=='detective':
             for idss in game['players']:
                 if game['players'][idss]['id']!=player['id']:
-                    kb.add(types.InlineKeyboardButton(text='Проверить роль '+game['players'][idss]['name'], callback_data='check '+game['players'][idss]['id']))
+                    kb.add(types.InlineKeyboardButton(text='Проверить роль '+game['players'][idss]['name'], callback_data='check '+str(game['players'][idss]['id'])))
         if x==1:
             bot.send_message(player['id'], 'Жать кнопку или нет - решать вам.', reply_markup=kb)
        
@@ -963,6 +968,8 @@ def reallyshoot(game):
             user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'podrivnik':1}})
         elif role=='Красная приманка':
             user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'redprimanka':1}})
+        elif role=='Детектив':
+            user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'detective':1}})
         if alive==live+'Жив':
             user.update_one({'id':game['players'][ids]['id']}, {'$inc':{'alive':1}})
         if win==pobeda+'Выиграл\n':
