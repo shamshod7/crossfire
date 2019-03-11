@@ -69,7 +69,7 @@ def stats(m):
 @bot.message_handler(commands=['update'])
 def update(m):
     if m.from_user.id==441399484:
-        users.update_many({},{'$set':{'detective':0}})
+        user.update_many({},{'$set':{'detective':0}})
         bot.send_message(441399484, 'yes')
     
 @bot.message_handler(commands=['start'])
