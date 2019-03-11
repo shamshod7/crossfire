@@ -684,12 +684,19 @@ def shuffle2(game):
     for ids in game['players']:
         player=game['players'][ids]
         kb=types.InlineKeyboardMarkup()
+        x=0
         if player['cankill']==1 or player['role']=='primanka':
             kb.add(types.InlineKeyboardButton(text='Показать оружие', callback_data='showgun'))
-            bot.send_message(player['id'], 'Нажмите, чтобы показать всем оружие.', reply_markup=kb)
+            x=1
         if player['role']=='glavar' or player['role']=='prohojii' or player['role']=='primanka':
             kb.add(types.InlineKeyboardButton(text='Сказать всем, что у вас нет оружия.', callback_data='showpocket'))
-            bot.send_message(player['id'], 'Нажмите, чтобы сказать, что вы безоружный.', reply_markup=kb)
+            x=1
+        if player['role']=='detective':
+            for idss in game['players']:
+                if game['players'][idss]['id']!=player['id']:
+                    kb.add(types.InlineKeyboardButton(text='Проверить роль '+game['players'][idss]['name'], callback_data='check '+game['players'][idss]['id']))
+        if x==1:
+            bot.send_message(player['id'], 'Жать кнопку или нет - решать вам.', reply_markup=kb)
        
     bot.send_message(game['id'], 'У вас 120 секунд на обсуждение!')
     t=threading.Timer(120, shoot, args=[game])
@@ -730,51 +737,61 @@ def inline(call):
             x=1
             player=games[ids]['players'][call.from_user.id]
     if x==1:
-        if call.data!='showgun' and call.data!='showpocket': 
-            for z in game['players']:
-                if game['players'][z]['number']==int(call.data):
-                    target=game['players'][z]
-            if game['players'][call.from_user.id]['role']!='gangster':
-                game['players'][call.from_user.id]['text']='*'+game['players'][call.from_user.id]['name']+'*'+'🔫стреляет в '+target['name']+'\n'
-                medit('Выбор сделан: '+target['name'],call.from_user.id,call.message.message_id)
-                game['players'][call.from_user.id]['message']['edit']=0
-                game['players'][call.from_user.id]['target']=target
-            else:
-              if game['players'][call.from_user.id]['picks']>0:
-                if game['players'][call.from_user.id]['picks']==2:
-                    game['players'][call.from_user.id]['text']+='*'+game['players'][call.from_user.id]['name']+'*'+'🔫стреляет в '+target['name']+'\n'
-                else:
-                    game['players'][call.from_user.id]['text']+='*'+game['players'][call.from_user.id]['name']+'*'+'🔫стреляет в '+target['name']+'\n'
-                medit('Выбор сделан: '+target['name'],call.from_user.id,call.message.message_id)
-                game['players'][call.from_user.id]['message']['edit']=0
-                if game['players'][call.from_user.id]['target']==None:
+        if 'check' not in call.data:
+            if call.data!='showgun' and call.data!='showpocket': 
+                for z in game['players']:
+                    if game['players'][z]['number']==int(call.data):
+                        target=game['players'][z]
+                if game['players'][call.from_user.id]['role']!='gangster':
+                    game['players'][call.from_user.id]['text']='*'+game['players'][call.from_user.id]['name']+'*'+'🔫стреляет в '+target['name']+'\n'
+                    medit('Выбор сделан: '+target['name'],call.from_user.id,call.message.message_id)
+                    game['players'][call.from_user.id]['message']['edit']=0
                     game['players'][call.from_user.id]['target']=target
                 else:
-                    game['players'][call.from_user.id]['target2']=target
-                game['players'][call.from_user.id]['picks']-=1
-                for g in game['players']:
-                    Keyboard=types.InlineKeyboardMarkup()
-                    for ids in game['players']:
-                      if game['players'][g]['target']!=None:
-                        if game['players'][ids]['id']!=game['players'][g]['id'] and game['players'][ids]['id']!=game['players'][g]['target']['id']:
-                            Keyboard.add(types.InlineKeyboardButton(text=game['players'][ids]['name'], callback_data=str(game['players'][ids]['number'])))
-                msg=bot.send_message(call.from_user.id, 'Теперь выберите вторую цель', reply_markup=Keyboard)
-                game['players'][call.from_user.id]['message']={'msg':msg,
-                                       'edit':1
-                                      }
-              else:
-                medit('Выбор сделан: '+target['name'],call.from_user.id,call.message.message_id)
-            
-        else:
-            if call.data=='showgun':
-                if player['cankill']==1 or player['role']=='primanka':
-                    bot.send_message(game['id'], '🔫|'+player['name']+' достал из кармана пистолет и показал всем!')
-                    medit('Выбор сделан.', call.message.chat.id, call.message.message_id)
-            if call.data=='showpocket':
-                if player['role']=='glavar' or player['role']=='prohojii' or player['role']=='primanka':
-                    bot.send_message(game['id'], '👐|'+player['name']+' вывернул карманы и показал, что он безоружный!')
-                    medit('Выбор сделан.', call.message.chat.id, call.message.message_id)
+                  if game['players'][call.from_user.id]['picks']>0:
+                    if game['players'][call.from_user.id]['picks']==2:
+                        game['players'][call.from_user.id]['text']+='*'+game['players'][call.from_user.id]['name']+'*'+'🔫стреляет в '+target['name']+'\n'
+                    else:
+                        game['players'][call.from_user.id]['text']+='*'+game['players'][call.from_user.id]['name']+'*'+'🔫стреляет в '+target['name']+'\n'
+                    medit('Выбор сделан: '+target['name'],call.from_user.id,call.message.message_id)
+                    game['players'][call.from_user.id]['message']['edit']=0
+                    if game['players'][call.from_user.id]['target']==None:
+                        game['players'][call.from_user.id]['target']=target
+                    else:
+                        game['players'][call.from_user.id]['target2']=target
+                    game['players'][call.from_user.id]['picks']-=1
+                    for g in game['players']:
+                        Keyboard=types.InlineKeyboardMarkup()
+                        for ids in game['players']:
+                          if game['players'][g]['target']!=None:
+                            if game['players'][ids]['id']!=game['players'][g]['id'] and game['players'][ids]['id']!=game['players'][g]['target']['id']:
+                                Keyboard.add(types.InlineKeyboardButton(text=game['players'][ids]['name'], callback_data=str(game['players'][ids]['number'])))
+                    msg=bot.send_message(call.from_user.id, 'Теперь выберите вторую цель', reply_markup=Keyboard)
+                    game['players'][call.from_user.id]['message']={'msg':msg,
+                                           'edit':1
+                                          }
+                  else:
+                    medit('Выбор сделан: '+target['name'],call.from_user.id,call.message.message_id)
                 
+            else:
+                if call.data=='showgun':
+                    if player['cankill']==1 or player['role']=='primanka':
+                        bot.send_message(game['id'], '🔫|'+player['name']+' достал из кармана пистолет и показал всем!')
+                        medit('Выбор сделан.', call.message.chat.id, call.message.message_id)
+                if call.data=='showpocket':
+                    if player['role']=='glavar' or player['role']=='prohojii' or player['role']=='primanka':
+                        bot.send_message(game['id'], '👐|'+player['name']+' вывернул карманы и показал, что он безоружный!')
+                        medit('Выбор сделан.', call.message.chat.id, call.message.message_id)
+        else:
+            if player['checked']==0:
+                i=int(call.data.split(' ')[1])
+                for ids in game['players']:
+                    target=game['players'][ids]
+                    if target['id']==i:
+                        if player['checked']==0:
+                            player['checked']=1
+                            medit('Выбрано: чек роли.', call.message.chat.id, call.message.message_id)
+                            bot.send_message(player['id'], 'Роль игрока '+target['name']+': '+rolename(target['role'])+'!')
 
 def endshoot(game):
     text=''
@@ -1005,7 +1022,30 @@ def reallyshoot(game):
     del games[game['id']]
         
      
-        
+def rolename(role):
+    x='Неизвестная роль, обратитесь к @Loshadkin.'
+    if role=='agent':
+        x='Агент'
+    elif role=='killer':
+        x='Киллер'
+    elif role=='prohojii':
+        x='Прохожий'
+    elif role=='primanka':
+        x='Приманка'
+    elif role=='glavar':
+        x='Главарь'
+    elif role=='telohranitel':
+        x='Телохранитель'
+    elif role=='mirotvorets':
+        x='Миротворец'
+    elif role=='gangster':
+        x='Гангстер'
+    elif role=='podrivnik':
+        x='Подрывник'
+    elif role=='redprimanka':
+        x='Красная приманка'
+    return x
+    
 def creategame(id):
     return {id:{
         'players':{},
