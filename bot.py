@@ -643,6 +643,7 @@ def shuffle2(game):
             kb.add(types.InlineKeyboardButton(text='Сказать всем, что у вас нет оружия.', callback_data='showpocket'))
             x=1
         if player['role']=='detective':
+            x=1
             for idss in game['players']:
                 if game['players'][idss]['id']!=player['id']:
                     kb.add(types.InlineKeyboardButton(text='Проверить роль '+game['players'][idss]['name'], callback_data='check '+str(game['players'][idss]['id'])))
