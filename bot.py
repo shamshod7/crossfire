@@ -34,22 +34,22 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
 def infom(m):
     x=user.find_one({'id':m.from_user.id})
     if x!=None:
-        bot.send_message(m.chat.id, 'Foydalanuvchi natijasi - '+m.from_user.first_name+':\n'+
-                     '*Ranglarga ko`ra natijasi:*\n'+
-                         'Ko`k: '+str(x['blue'])+' o`yin\n'+
-                         'Qizil: '+str(x['red'])+' o`yin\n'+
-                         'Sariq: '+str(x['yellow'])+' o`yin\n\n'+
-                         '*Qaxramonlarga ko`ra natiijasi:*\n'+
-                         'Agent: '+str(x['agent'])+' o`yin\n'+
-                         'Killer: '+str(x['killer'])+' o`yin\n'+
-                         'Boss: '+str(x['glavar'])+' o`yin\n'+
-                         'Guvoh: '+str(x['prohojii'])+' o`yin\n'+
-                         'Xo`rak: '+str(x['primanka'])+' o`yin\n'+
-                         'Tinchlikparvar: '+str(x['mirotvorets'])+' o`yin\n'+
-                         'Gangster: '+str(x['gangster'])+' o`yin\n'+
-                         'Portlatuvchi: '+str(x['podrivnik'])+' o`yin\n'+
-                         'Qizil xo`rak: '+str(x['redprimanka'])+' o`yin\n'+
-                         'Tansohchi: '+str(x['telohranitel'])+' o`yin', parse_mode='markdown')
+        bot.send_message(m.chat.id, 'Статистика пользователя '+m.from_user.first_name+':\n'+
+                     '*Статистика по цветам:*\n'+
+                         'Синий: '+str(x['blue'])+' игр\n'+
+                         'Красный: '+str(x['red'])+' игр\n'+
+                         'Жёлтый: '+str(x['yellow'])+' игр\n\n'+
+                         '*Статистика по персонажам:*\n'+
+                         'Агент: '+str(x['agent'])+' игр\n'+
+                         'Киллер: '+str(x['killer'])+' игр\n'+
+                         'Главарь: '+str(x['glavar'])+' игр\n'+
+                         'Прохожий: '+str(x['prohojii'])+' игр\n'+
+                         'Приманка: '+str(x['primanka'])+' игр\n'+
+                         'Миротворец: '+str(x['mirotvorets'])+' игр\n'+
+                         'Гангстер: '+str(x['gangster'])+' игр\n'+
+                         'Подрывник: '+str(x['podrivnik'])+' игр\n'+
+                         'Красная приманка: '+str(x['redprimanka'])+' игр\n'+
+                         'Телохранитель: '+str(x['telohranitel'])+' игр', parse_mode='markdown')
 
 @bot.message_handler(commands=['stats'])
 def stats(m):
@@ -60,11 +60,11 @@ def stats(m):
         except:
             vinrate=0
         user.update_one({'id':m.from_user.id}, {'$set':{'name':m.from_user.first_name}})
-        bot.send_message(m.chat.id, 'Foydalanuvchi natijasi - '+m.from_user.first_name+':\n'+
-                     '*O`yin o`ynagan:* '+str(x['games'])+'\n*G`alaba:* '+str(x['win'])+'\n*Mag`lubiyat:* '+str(x['loose'])+
-                     '\n*Yutuq:* '+str(vinrate)+'%', parse_mode='markdown')
+        bot.send_message(m.chat.id, 'Статистика пользователя '+m.from_user.first_name+':\n'+
+                     '*Игр сыграно:* '+str(x['games'])+'\n*Победы:* '+str(x['win'])+'\n*Поражения:* '+str(x['loose'])+
+                     '\n*Винрейт:* '+str(vinrate)+'%', parse_mode='markdown')
     else:
-        bot.send_message(m.chat.id, 'Oldin botga /start bering!')
+        bot.send_message(m.chat.id, 'Сначала напишите боту /start!')
     
     
 @bot.message_handler(commands=['start'])
@@ -91,7 +91,7 @@ def start(m):
                          'telohranitel':0,
                          'alive':0
                         })
-        print('User akkaunt yaratdi! Uning nomi: '+m.from_user.first_name)
+        print('Юзер создал аккаунт! Его имя: '+m.from_user.first_name)
     x=m.text.split('/start')
     if len(x)==2:
        try:
@@ -106,19 +106,19 @@ def start(m):
                 for ids in games[int(x[1])]['players']:
                     if games[int(x[1])]['players'][ids]['id']==m.from_user.id:
                         player=games[int(x[1])]['players'][ids]
-                bot.send_message(m.from_user.id, 'O`yinga omadli qo`shildingiz!')
+                bot.send_message(m.from_user.id, 'Вы успешно присоединились!')
                 b=0
                 for g in games[int(x[1])]['players']:
                     text+=games[int(x[1])]['players'][g]['name']+'\n'
                     b+=1
-                medit('O`yinchilar: '+str(b)+'\n\n*'+text+'*', games[int(x[1])]['id'], games[int(x[1])]['users'])
+                medit('Игроки: '+str(b)+'\n\n*'+text+'*', games[int(x[1])]['id'], games[int(x[1])]['users'])
                 games[int(x[1])]['userlist']+=text+'\n'
-                bot.send_message(games[int(x[1])]['id'], player['name']+' o`yinga qo`shildi!')
+                bot.send_message(games[int(x[1])]['id'], player['name']+' присоединился!')
           else:
-            bot.send_message(m.from_user.id, 'O`yinchilar ko`payib ketdi! Joy qolmadi!')
+            bot.send_message(m.from_user.id, 'Слишком много игроков! Мест не осталось!')
        except:
         if m.chat.id==m.from_user.id:
-            bot.send_message(m.from_user.id, 'Super Mafia o`yiniga hush kelibsiz')
+            bot.send_message(m.from_user.id, 'Игра crossfire')
 
             
 @bot.message_handler(commands=['extend']) 
@@ -133,9 +133,9 @@ def extendd(m):
                             games[m.chat.id]['timebeforestart']+=int(x[1])
                             if games[m.chat.id]['timebeforestart']>=300:
                                 games[m.chat.id]['timebeforestart']=300
-                                bot.send_message(m.chat.id, 'Otishmagacha bo`lgan vaqt uzaytirildi! 5 daqiqa qoldi.')
+                                bot.send_message(m.chat.id, 'Время до начала перестрелки увеличено! Осталось 5 минут.')
                             else:
-                                bot.send_message(m.chat.id, 'Otishmagacha bo`lgan vaqt '+x[1]+' sekunga uzaytirildi! '+str(games[m.chat.id]['timebeforestart'])+' sekund qoldi.')
+                                bot.send_message(m.chat.id, 'Время до начала перестрелки увеличено на '+x[1]+'! Осталось '+str(games[m.chat.id]['timebeforestart'])+' секунд.')
                         else:
                             x=bot.get_chat_administrators(m.chat.id)
                             i=10
@@ -151,19 +151,19 @@ def extendd(m):
                                 if games[m.chat.id]['timebeforestart']<=0:
                                     pass
                                 else:
-                                    bot.send_message(m.chat.id,'Otishmagacha bo`lgan vaqt '+a+' sekunga uzaytirildi! '+str(games[m.chat.id]['timebeforestart'])+' sekund qoldi.')
+                                    bot.send_message(m.chat.id,'Время до начала перестрелки увеличено на '+a+'! Осталось '+str(games[m.chat.id]['timebeforestart'])+' секунд.')
                             else:
-                                bot.send_message(m.chat.id, 'Faqat adminstratorgina ushbu buyuruqni ishlatishi mumkin!')
+                                bot.send_message(m.chat.id, 'Только администратор может использовать эту команду!')
                     except:
                         games[m.chat.id]['timebeforestart']+=30
                         if games[m.chat.id]['timebeforestart']>=300:
                             games[m.chat.id]['timebeforestart']=300
-                        bot.send_message(m.chat.id, 'Otishmagacha bo`lgan vaqt 30 sekunga uzaytirildi! '+str(games[m.chat.id]['timebeforestart'])+' sekund qoldi.')
+                        bot.send_message(m.chat.id, 'Время до начала перестрелки увеличено на 30! Осталось '+str(games[m.chat.id]['timebeforestart'])+' секунд.')
                 else:
                     games[m.chat.id]['timebeforestart']+=30
                     if games[m.chat.id]['timebeforestart']>=300:
                             games[m.chat.id]['timebeforestart']=300
-                    bot.send_message(m.chat.id, 'Otishmagacha bo`lgan vaqt 30 sekunga uzaytirildi! '+str(games[m.chat.id]['timebeforestart'])+' sekund qoldi.')
+                    bot.send_message(m.chat.id, 'Время до начала перестрелки увеличено на 30! Осталось '+str(games[m.chat.id]['timebeforestart'])+' секунд.')
     
             
 @bot.message_handler(commands=['flee'])
@@ -175,15 +175,15 @@ def flee(m):
         text=''
         for g in games[m.chat.id]['players']:
             text+=games[m.chat.id]['players'][g]['name']+'\n'
-        bot.send_message(m.chat.id, m.from_user.first_name+' qochib ketdi!')
-        medit('O`yinchilar: \n\n*'+text+'*', m.chat.id, games[m.chat.id]['users'])
+        bot.send_message(m.chat.id, m.from_user.first_name+' сбежал!')
+        medit('Игроки: \n\n*'+text+'*', m.chat.id, games[m.chat.id]['users'])
   
 
 @bot.message_handler(commands=['help'])
 def help(m):
     if m.chat.id<0:
         try:
-            bot.send_message(m.chat.id, 'Yordamni shaxsiy xat orqali yubordim!')
+            bot.send_message(m.chat.id, 'Отправил помощь тебе в личку')
         except:
             bot.send_message(m.chat.id, 'Начни диалог с ботом (@crossfirebot), чтобы я мог отправить тебе помощь!')
     try:
@@ -269,7 +269,7 @@ def help(m):
 @bot.message_handler(commands=['players'])
 def playerss(m):
     if m.chat.id in games:
-        bot.send_message(m.chat.id, 'Mana o`yinchilar jadvali:', reply_to_message_id=games[m.chat.id]['users'])
+        bot.send_message(m.chat.id, 'Вот список игроков', reply_to_message_id=games[m.chat.id]['users'])
 
             
 def secnd(id):
@@ -278,18 +278,18 @@ def secnd(id):
         begin(id)
     else:
         Keyboard=types.InlineKeyboardMarkup()
-        Keyboard.add(types.InlineKeyboardButton(text='Qo`shilish', url='telegram.me/CasinoUzbot?start='+str(id)))
+        Keyboard.add(types.InlineKeyboardButton(text='Присоединиться', url='telegram.me/crossfirebot?start='+str(id)))
         if games[id]['timebeforestart']==180:
-            msg=bot.send_message(id, '3 daqiqa qoldi! Otishmada qatnashish uchun "Qo`shilish" knopkasini bosing!', reply_markup=Keyboard)
+            msg=bot.send_message(id, 'Осталось 3 минуты! Жмите "Присоединиться", чтобы поучаствовать в перестрелке!', reply_markup=Keyboard)
             games[id]['todel'].append(msg.message_id)
         elif games[id]['timebeforestart']==60:
-            msg=bot.send_message(id, '60 sekund qoldi! Otishmada qatnashish uchun "Qo`shilish" knopkasini bosing!', reply_markup=Keyboard)
+            msg=bot.send_message(id, 'Осталось 60 секунд! Жмите "Присоединиться", чтобы поучаствовать в перестрелке!', reply_markup=Keyboard)
             games[id]['todel'].append(msg.message_id)
         elif games[id]['timebeforestart']==30:
-            msg=bot.send_message(id, '30 sekund qoldi! Otishmada qatnashish uchun "Qo`shilish" knopkasini bosing!', reply_markup=Keyboard)
+            msg=bot.send_message(id, 'Осталось 30 секунд! Жмите "Присоединиться", чтобы поучаствовать в перестрелке!', reply_markup=Keyboard)
             games[id]['todel'].append(msg.message_id)
         elif games[id]['timebeforestart']==10:
-            msg=bot.send_message(id, '10 sekund qoldi! Otishmada qatnashish uchun "Qo`shilish" knopkasini bosing!', reply_markup=Keyboard)
+            msg=bot.send_message(id, 'Осталось 10 секунд! Жмите "Присоединиться", чтобы поучаствовать в перестрелке!', reply_markup=Keyboard)
             games[id]['todel'].append(msg.message_id)
         t=threading.Timer(1, secnd, args=[id])
         t.start()
@@ -303,9 +303,9 @@ def startgame(m):
         tt=threading.Timer(1, secnd, args=[m.chat.id])
         tt.start()
         Keyboard=types.InlineKeyboardMarkup()
-        Keyboard.add(types.InlineKeyboardButton(text='Qo`shilish', url='telegram.me/CasinoUzbot?start='+str(m.chat.id)))
-        msg=bot.send_message(m.chat.id, m.from_user.first_name+' o`yinni boshladi! Qo`shilish pastdagi knopkani bosing', reply_markup=Keyboard)
-        msg2=bot.send_message(m.chat.id, 'O`yinchilar:\n', parse_mode='markdown')
+        Keyboard.add(types.InlineKeyboardButton(text='Присоединиться', url='telegram.me/crossfirebot?start='+str(m.chat.id)))
+        msg=bot.send_message(m.chat.id, m.from_user.first_name+' Начал(а) игру! Жмите кнопку ниже, чтобы присоединиться', reply_markup=Keyboard)
+        msg2=bot.send_message(m.chat.id, 'Игроки:\n', parse_mode='markdown')
         games[m.chat.id]['users']=msg2.message_id
         for ids in games:
             if games[ids]['id']==m.chat.id:
@@ -314,20 +314,20 @@ def startgame(m):
     else:
       if games[m.chat.id]['play']==0:
         Keyboard=types.InlineKeyboardMarkup()
-        Keyboard.add(types.InlineKeyboardButton(text='Qo`shilish', url='telegram.me/CasinoUzbot?start='+str(m.chat.id)))
-        msg=bot.send_message(m.chat.id, 'O`yin allaqachon boshlangan! "Qo`shilish" knopkasini bosing!', reply_markup=Keyboard)
+        Keyboard.add(types.InlineKeyboardButton(text='Присоединиться', url='telegram.me/crossfirebot?start='+str(m.chat.id)))
+        msg=bot.send_message(m.chat.id, 'Игра уже запущена! Жмите "присоединиться"!', reply_markup=Keyboard)
         for ids in games:
             if games[ids]['id']==m.chat.id:
                 game=games[ids]
         game['todel'].append(msg.message_id)
   else:
-    bot.send_message(m.chat.id, 'Faqat gruppadagina o`ynash mumkin!')
-       
+    bot.send_message(m.chat.id, 'Играть можно только в группах!')
+    
    
 def begin(id):
   if id in games:
    if games[id]['play']==0:
-    if len(games[id]['players'])>=4:
+    if len(games[id]['players'])>=5:
         for ids in games[id]['todel']:
             try:
                 bot.delete_message(id, ids)
@@ -337,7 +337,7 @@ def begin(id):
         for ids in games[id]['players']:
             games[id]['players'][ids]['number']=i
             i+=1
-        bot.send_message(id, 'O`yin boshlanayabdi!')
+        bot.send_message(id, 'Игра начинается!')
         games[id]['play']=1
         xod(games[id])
     else:
@@ -346,7 +346,7 @@ def begin(id):
                 bot.delete_message(id, ids)
             except:
                 pass
-        bot.send_message(id, 'O`yinchilar yetarli emas!')
+        bot.send_message(id, 'Недостаточно игроков!')
         try:
             del games[id]
         except:
@@ -368,7 +368,7 @@ def forcem(m):
         if m.chat.id in games:
             games[m.chat.id]['timebeforestart']=1
     else:
-        bot.send_message(m.chat.id, 'Faqat adminstrator ushbu buyuruqni ishlatishi mumkin!')
+        bot.send_message(m.chat.id, 'Только администратор может использовать эту команду!')
         
         
 
@@ -403,35 +403,35 @@ def xod(game):
     roletext=[]
     for g in game['players']:
         if game['players'][g]['role']=='agent':
-            text='Sen Agentsan'
-            roletext.append('Agent')
+            text='Ты агент'
+            roletext.append('Агент')
         elif game['players'][g]['role']=='killer':
-            text='Sen Killersan'
-            roletext.append('Killer')
+            text='Ты киллер'
+            roletext.append('Киллер')
         elif game['players'][g]['role']=='prohojii':
-            text='Sen Guvohsan'
-            roletext.append('Guvoh')
+            text='Ты прохожий'
+            roletext.append('Прохожий')
         elif game['players'][g]['role']=='primanka':
-            text='Sen Xo`raksan'
-            roletext.append('Xo`rak')
+            text='Ты приманка'
+            roletext.append('Приманка')
         elif game['players'][g]['role']=='glavar':
-            text='Sen Boss'
-            roletext.append('Boss')
+            text='Ты главарь'
+            roletext.append('Главарь')
         elif game['players'][g]['role']=='telohranitel':
-            text='Sen Tansohchisan'
-            roletext.append('Tansohchi')
+            text='Ты телохранитель'
+            roletext.append('Телохранитель')
         elif game['players'][g]['role']=='mirotvorets':
-            text='Sen Tinchlikparvarsan'
-            roletext.append('Tinchlikparvar')
+            text='Ты миротворец'
+            roletext.append('Миротворец')
         elif game['players'][g]['role']=='podrivnik':
-            text='Sen Portlatuvchisan'
-            roletext.append('Portlatuvchi')
+            text='Ты подрывник'
+            roletext.append('Подрывник')
         elif game['players'][g]['role']=='gangster':
-            text='Sen Gangstersan'
-            roletext.append('Gangster')
+            text='Ты гангстер'
+            roletext.append('Гангстер')
         elif game['players'][g]['role']=='redprimanka':
-            text='Sen Qizil Xo`raksan'
-            roletext.append('Qizil Xo`rak')
+            text='Ты красная приманка'
+            roletext.append('Красная приманка')
         try:    
           bot.send_message(game['players'][g]['id'], text)
         except:
@@ -453,13 +453,13 @@ def xod(game):
     for gg in players:
         text+=gg+'\n'
     try:
-      bot.send_message(game['id'], 'Rollar: \n*'+roletextfinal+'*', parse_mode='markdown')
-      bot.send_message(game['id'], 'O`yinchilar: \n'+'*'+text+'*', parse_mode='markdown')
+      bot.send_message(game['id'], 'Роли: \n*'+roletextfinal+'*', parse_mode='markdown')
+      bot.send_message(game['id'], 'Игроки: \n'+'*'+text+'*', parse_mode='markdown')
     except:
         pass
     for gg in game['players']:
-        bot.send_message(game['players'][gg]['id'], 'Rollar: \n*'+roletextfinal+'*', parse_mode='markdown')
-        bot.send_message(game['players'][gg]['id'], 'O`yinchilar: \n'+'*'+text+'*', parse_mode='markdown')
+        bot.send_message(game['players'][gg]['id'], 'Роли: \n*'+roletextfinal+'*', parse_mode='markdown')
+        bot.send_message(game['players'][gg]['id'], 'Игроки: \n'+'*'+text+'*', parse_mode='markdown')
     t=threading.Timer(5, shuffle1, args=[game])
     t.start()
             
@@ -475,33 +475,33 @@ def shuffle1(game):
             i+=1
         except:
             game['players'][ids]['role']=roles[0]
-    bot.send_message(game['id'], 'Sizning rolingiz sizdan yuqoridagi o`yinchiga berildi! Endi o`zingizni yangi rolingizni ko`ring.')
+    bot.send_message(game['id'], 'Ваши роли были переданы человеку над вами! Теперь посмотрите свои новые роли.')
     for g in game['players']:
         try:
-          bot.send_message(game['players'][g]['id'], 'Sizning rolingiz sizdan yuqoridagi o`yinchiga berildi! Endi o`zingizni yangi rolingizni ko`ring.')
+          bot.send_message(game['players'][g]['id'], 'Ваши роли были переданы человеку над вами! Теперь посмотрите свои новые роли.')
         except:
             pass
     for g in game['players']:
         if game['players'][g]['role']=='agent':
-            text='Siz Agentsiz'
+            text='Ты агент'
         elif game['players'][g]['role']=='killer':
-            text='Siz Killersiz'
+            text='Ты киллер'
         elif game['players'][g]['role']=='prohojii':
-            text='Siz Guvohsiz'
+            text='Ты прохожий'
         elif game['players'][g]['role']=='primanka':
-            text='Siz Xo`raksiz'
+            text='Ты приманка'
         elif game['players'][g]['role']=='glavar':
-            text='Siz Boss'
+            text='Ты главарь'
         elif game['players'][g]['role']=='telohranitel':
-            text='Siz Tansohchisiz'
+            text='Ты телохранитель'
         elif game['players'][g]['role']=='podrivnik':
-            text='Siz Portlatuvchisiz'
+            text='Ты подрывник'
         elif game['players'][g]['role']=='mirotvorets':
-            text='Siz Tinchlikparvarsiz'
+            text='Ты миротворец'
         elif game['players'][g]['role']=='gangster':
-            text='Siz Gangstersiz'
+            text='Ты гангстер'
         elif game['players'][g]['role']=='redprimanka':
-            text='Siz Qizil Xo`raksiz'
+            text='Ты красная приманка'
         try:
           bot.send_message(game['players'][g]['id'], text)
         except:
@@ -513,25 +513,25 @@ def shuffle1(game):
  
 def roletotext(x):
         if x=='agent':
-            text='Siz Agentsiz'
+            text='Ты агент'
         elif x=='killer':
-            text='Siz Killersiz'
+            text='Ты киллер'
         elif x=='prohojii':
-            text='Siz Guvohsiz'
+            text='Ты прохожий'
         elif x=='primanka':
-            text='Siz Xo`raksiz'
+            text='Ты приманка'
         elif x=='glavar':
-            text='Siz Boss'
+            text='Ты главарь'
         elif x=='telohranitel':
-            text='Siz Tansohchisiz'
+            text='Ты телохранитель'
         elif x=='podrivnik':
-            text='Siz Portlatuvchisiz'
+            text='Ты подрывник'
         elif x=='mirotvorets':
-            text='Siz Tinchlikparvarsiz'
+            text='Ты миротворец'
         elif x=='gangster':
-            text='Siz Gangstersiz'
+            text='Ты гангстер'
         elif x=='redprimanka':
-            text='Siz Qizil Xoraksiz'
+            text='Ты красная приманка'
         return text
 
 def shuffle2(game):
@@ -589,10 +589,10 @@ def shuffle2(game):
     text2=''
     for ids in centers:
         text2+=ids+'\n'
-    bot.send_message(game['id'], 'Sizlarning rollaringiz 3 marta aralashtirildi! Aralashtirilish markazlari: *\n'+text2+'*', parse_mode='markdown')
+    bot.send_message(game['id'], 'Ваши роли были перемешаны по 3 штуки! Центры перемешивания: *\n'+text2+'*', parse_mode='markdown')
     for g in game['players']:
         try:
-          bot.send_message(game['players'][g]['id'], 'Sizlarning rollaringiz 3 marta aralashtirildi! Aralashtirilish markazlari: *\n'+text2+'*', parse_mode='markdown')
+          bot.send_message(game['players'][g]['id'], 'Ваши роли были перемешаны по 3 штуки! Центры перемешивания: *\n'+text2+'*', parse_mode='markdown')
         except:
             pass
     for g in game['players']:
@@ -638,14 +638,14 @@ def shoot(game):
             if game['players'][ids]['id']!=game['players'][g]['id']:
                 Keyboard.add(types.InlineKeyboardButton(text=game['players'][ids]['name'], callback_data=str(game['players'][ids]['number'])))
         try:
-          msg=bot.send_message(game['players'][g]['id'], 'Kimni nishon sifatida tanlaysan?', reply_markup=Keyboard)
+          msg=bot.send_message(game['players'][g]['id'], 'Кого ты выбираешь целью?', reply_markup=Keyboard)
           game['players'][g]['message']={'msg':msg,
                                        'edit':1
                                       }
         except:
             pass
                                        
-    bot.send_message(game['id'], 'Endi qurolni kimga qaratishni tanlang!')
+    bot.send_message(game['id'], 'Теперь выбирайте, на кого хотите направить пистолеты!')
     t=threading.Timer(60, endshoot, args=[game])
     t.start()
         
@@ -978,3 +978,4 @@ while True:
         bot.polling()
     except(ReadTimeout, ConnectionError):
         pass
+
