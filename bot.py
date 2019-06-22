@@ -275,7 +275,7 @@ def secnd(id):
         begin(id)
     else:
         Keyboard=types.InlineKeyboardMarkup()
-        Keyboard.add(types.InlineKeyboardButton(text='Присоединиться', url='telegram.me/crossfirebot?start='+str(id)))
+        Keyboard.add(types.InlineKeyboardButton(text='Присоединиться', url='telegram.me/casinouzbot?start='+str(id)))
         if games[id]['timebeforestart']==180:
             msg=bot.send_message(id, 'Осталось 3 минуты! Жмите "Присоединиться", чтобы поучаствовать в перестрелке!', reply_markup=Keyboard)
             games[id]['todel'].append(msg.message_id)
@@ -300,7 +300,7 @@ def startgame(m):
         tt=threading.Timer(1, secnd, args=[m.chat.id])
         tt.start()
         Keyboard=types.InlineKeyboardMarkup()
-        Keyboard.add(types.InlineKeyboardButton(text='Присоединиться', url='telegram.me/crossfirebot?start='+str(m.chat.id)))
+        Keyboard.add(types.InlineKeyboardButton(text='Присоединиться', url='telegram.me/casinouzbot?start='+str(m.chat.id)))
         msg=bot.send_message(m.chat.id, m.from_user.first_name+' Начал(а) игру! Жмите кнопку ниже, чтобы присоединиться', reply_markup=Keyboard)
         msg2=bot.send_message(m.chat.id, 'Игроки:\n', parse_mode='markdown')
         games[m.chat.id]['users']=msg2.message_id
@@ -311,7 +311,7 @@ def startgame(m):
     else:
       if games[m.chat.id]['play']==0:
         Keyboard=types.InlineKeyboardMarkup()
-        Keyboard.add(types.InlineKeyboardButton(text='Присоединиться', url='telegram.me/crossfirebot?start='+str(m.chat.id)))
+        Keyboard.add(types.InlineKeyboardButton(text='Присоединиться', url='telegram.me/casinouzbot?start='+str(m.chat.id)))
         msg=bot.send_message(m.chat.id, 'Игра уже запущена! Жмите "присоединиться"!', reply_markup=Keyboard)
         for ids in games:
             if games[ids]['id']==m.chat.id:
