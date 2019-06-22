@@ -278,18 +278,18 @@ def secnd(id):
         begin(id)
     else:
         Keyboard=types.InlineKeyboardMarkup()
-        Keyboard.add(types.InlineKeyboardButton(text='Присоединиться', url='telegram.me/casinouzbot?start='+str(id)))
+        Keyboard.add(types.InlineKeyboardButton(text='Qo`shilish', url='telegram.me/casinouzbot?start='+str(id)))
         if games[id]['timebeforestart']==180:
-            msg=bot.send_message(id, 'Осталось 3 минуты! Жмите "Присоединиться", чтобы поучаствовать в перестрелке!', reply_markup=Keyboard)
+            msg=bot.send_message(id, '3 daqiqa qoldi! Otishmada qatnashish uchun "Qo`shilish" knopkasini bosing!', reply_markup=Keyboard)
             games[id]['todel'].append(msg.message_id)
         elif games[id]['timebeforestart']==60:
-            msg=bot.send_message(id, 'Осталось 60 секунд! Жмите "Присоединиться", чтобы поучаствовать в перестрелке!', reply_markup=Keyboard)
+            msg=bot.send_message(id, '60 sekund qoldi! Otishmada qatnashish uchun "Qo`shilish" knopkasini bosing!', reply_markup=Keyboard)
             games[id]['todel'].append(msg.message_id)
         elif games[id]['timebeforestart']==30:
-            msg=bot.send_message(id, 'Осталось 30 секунд! Жмите "Присоединиться", чтобы поучаствовать в перестрелке!', reply_markup=Keyboard)
+            msg=bot.send_message(id, '30 sekund qoldi! Otishmada qatnashish uchun "Qo`shilish" knopkasini bosing!', reply_markup=Keyboard)
             games[id]['todel'].append(msg.message_id)
         elif games[id]['timebeforestart']==10:
-            msg=bot.send_message(id, 'Осталось 10 секунд! Жмите "Присоединиться", чтобы поучаствовать в перестрелке!', reply_markup=Keyboard)
+            msg=bot.send_message(id, '10 sekund qoldi! Otishmada qatnashish uchun "Qo`shilish" knopkasini bosing!', reply_markup=Keyboard)
             games[id]['todel'].append(msg.message_id)
         t=threading.Timer(1, secnd, args=[id])
         t.start()
