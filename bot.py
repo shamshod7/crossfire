@@ -34,22 +34,22 @@ def medit(message_text,chat_id, message_id,reply_markup=None,parse_mode='Markdow
 def infom(m):
     x=user.find_one({'id':m.from_user.id})
     if x!=None:
-        bot.send_message(m.chat.id, 'Статистика пользователя '+m.from_user.first_name+':\n'+
-                     '*Статистика по цветам:*\n'+
-                         'Синий: '+str(x['blue'])+' игр\n'+
-                         'Красный: '+str(x['red'])+' игр\n'+
-                         'Жёлтый: '+str(x['yellow'])+' игр\n\n'+
-                         '*Статистика по персонажам:*\n'+
-                         'Агент: '+str(x['agent'])+' игр\n'+
-                         'Киллер: '+str(x['killer'])+' игр\n'+
-                         'Главарь: '+str(x['glavar'])+' игр\n'+
-                         'Прохожий: '+str(x['prohojii'])+' игр\n'+
-                         'Приманка: '+str(x['primanka'])+' игр\n'+
-                         'Миротворец: '+str(x['mirotvorets'])+' игр\n'+
-                         'Гангстер: '+str(x['gangster'])+' игр\n'+
-                         'Подрывник: '+str(x['podrivnik'])+' игр\n'+
-                         'Красная приманка: '+str(x['redprimanka'])+' игр\n'+
-                         'Телохранитель: '+str(x['telohranitel'])+' игр', parse_mode='markdown')
+        bot.send_message(m.chat.id, 'Foydalanuvchi natijasi - '+m.from_user.first_name+':\n'+
+                     '*Ranglarga ko`ra natijasi:*\n'+
+                         'Ko`k: '+str(x['blue'])+' o`yin\n'+
+                         'Qizil: '+str(x['red'])+' o`yin\n'+
+                         'Sariq: '+str(x['yellow'])+' o`yin\n\n'+
+                         '*Qaxramonlarga ko`ra natiijasi:*\n'+
+                         'Agent: '+str(x['agent'])+' o`yin\n'+
+                         'Killer: '+str(x['killer'])+' o`yin\n'+
+                         'Boss: '+str(x['glavar'])+' o`yin\n'+
+                         'Guvoh: '+str(x['prohojii'])+' o`yin\n'+
+                         'Xo`rak: '+str(x['primanka'])+' o`yin\n'+
+                         'Tinchlikparvar: '+str(x['mirotvorets'])+' o`yin\n'+
+                         'Gangster: '+str(x['gangster'])+' o`yin\n'+
+                         'Portlatuvchi: '+str(x['podrivnik'])+' o`yin\n'+
+                         'Qizil xo`rak: '+str(x['redprimanka'])+' o`yin\n'+
+                         'Tansohchi: '+str(x['telohranitel'])+' o`yin', parse_mode='markdown')
 
 @bot.message_handler(commands=['stats'])
 def stats(m):
@@ -60,11 +60,11 @@ def stats(m):
         except:
             vinrate=0
         user.update_one({'id':m.from_user.id}, {'$set':{'name':m.from_user.first_name}})
-        bot.send_message(m.chat.id, 'Статистика пользователя '+m.from_user.first_name+':\n'+
-                     '*Игр сыграно:* '+str(x['games'])+'\n*Победы:* '+str(x['win'])+'\n*Поражения:* '+str(x['loose'])+
-                     '\n*Винрейт:* '+str(vinrate)+'%', parse_mode='markdown')
+        bot.send_message(m.chat.id, 'Foydalanuvchi natijasi - '+m.from_user.first_name+':\n'+
+                     '*O`yin o`ynagan:* '+str(x['games'])+'\n*G`alaba:* '+str(x['win'])+'\n*Mag`lubiyat:* '+str(x['loose'])+
+                     '\n*Yutuq:* '+str(vinrate)+'%', parse_mode='markdown')
     else:
-        bot.send_message(m.chat.id, 'Сначала напишите боту /start!')
+        bot.send_message(m.chat.id, 'Oldin botga /start bering!')
     
     
 @bot.message_handler(commands=['start'])
