@@ -303,8 +303,8 @@ def startgame(m):
         tt=threading.Timer(1, secnd, args=[m.chat.id])
         tt.start()
         Keyboard=types.InlineKeyboardMarkup()
-        Keyboard.add(types.InlineKeyboardButton(text='Присоединиться', url='telegram.me/casinouzbot?start='+str(m.chat.id)))
-        msg=bot.send_message(m.chat.id, m.from_user.first_name+' Начал(а) игру! Жмите кнопку ниже, чтобы присоединиться', reply_markup=Keyboard)
+        Keyboard.add(types.InlineKeyboardButton(text='Qo`shilish', url='telegram.me/casinouzbot?start='+str(m.chat.id)))
+        msg=bot.send_message(m.chat.id, m.from_user.first_name+' o`yinni boshladi! Qo`shilish pastdagi knopkani bosing!', reply_markup=Keyboard)
         msg2=bot.send_message(m.chat.id, 'Игроки:\n', parse_mode='markdown')
         games[m.chat.id]['users']=msg2.message_id
         for ids in games:
@@ -314,14 +314,14 @@ def startgame(m):
     else:
       if games[m.chat.id]['play']==0:
         Keyboard=types.InlineKeyboardMarkup()
-        Keyboard.add(types.InlineKeyboardButton(text='Присоединиться', url='telegram.me/crossfirebot?start='+str(m.chat.id)))
-        msg=bot.send_message(m.chat.id, 'Игра уже запущена! Жмите "присоединиться"!', reply_markup=Keyboard)
+        Keyboard.add(types.InlineKeyboardButton(text='Qo`shilish', url='telegram.me/casinouzbot?start='+str(m.chat.id)))
+        msg=bot.send_message(m.chat.id, 'O`yin allaqachon boshlangan! "Qo`shilish" knopkasini bosing!', reply_markup=Keyboard)
         for ids in games:
             if games[ids]['id']==m.chat.id:
                 game=games[ids]
         game['todel'].append(msg.message_id)
   else:
-    bot.send_message(m.chat.id, 'Играть можно только в группах!')
+    bot.send_message(m.chat.id, 'Faqat gruppadagina o`ynash mumkin!')
     
    
 def begin(id):
