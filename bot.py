@@ -337,7 +337,7 @@ def begin(id):
         for ids in games[id]['players']:
             games[id]['players'][ids]['number']=i
             i+=1
-        bot.send_message(id, 'Игра начинается!')
+        bot.send_message(id, 'O`yin boshlanayabdi!')
         games[id]['play']=1
         xod(games[id])
     else:
@@ -346,7 +346,7 @@ def begin(id):
                 bot.delete_message(id, ids)
             except:
                 pass
-        bot.send_message(id, 'Недостаточно игроков!')
+        bot.send_message(id, 'O`yinchilar yetarli emas!')
         try:
             del games[id]
         except:
@@ -368,7 +368,7 @@ def forcem(m):
         if m.chat.id in games:
             games[m.chat.id]['timebeforestart']=1
     else:
-        bot.send_message(m.chat.id, 'Только администратор может использовать эту команду!')
+        bot.send_message(m.chat.id, 'Faqat adminstrator ushbu buyuruqni ishlatishi mumkin!')
         
         
 
