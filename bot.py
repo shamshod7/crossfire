@@ -175,8 +175,8 @@ def flee(m):
         text=''
         for g in games[m.chat.id]['players']:
             text+=games[m.chat.id]['players'][g]['name']+'\n'
-        bot.send_message(m.chat.id, m.from_user.first_name+' qochib ketdi!')
-        medit('O`yinchilar: \n\n*'+text+'*', m.chat.id, games[m.chat.id]['users'])
+        bot.send_message(m.chat.id, m.from_user.first_name+' сбежал!')
+        medit('Игроки: \n\n*'+text+'*', m.chat.id, games[m.chat.id]['users'])
   
 
 @bot.message_handler(commands=['help'])
